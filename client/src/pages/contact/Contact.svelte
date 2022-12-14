@@ -3,29 +3,15 @@
     import { BASE_URL } from "../../store/globals.js"
     
 
-    onMount(() => {
-        const email = document.getElementById("email")
-        const message = document.getElementById("message")
-        const contactForm = document.getElementById("contactForm")
-        contactForm.addEventListener("submit", (event) => {
-            event.preventDefault()
-            const body = {
-                email: email.value,
-                message: message.value
-            }
-            return fetch(`${$BASE_URL}/contact`, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(body)
-            }).then((response) => {
-                    if (response.ok) {
-                        console.log("OK. Message sent.")
-                    } else {
-                        console.log("Error. Message not sent.")
-                    }
-                })
-        })
-    })
+    const handleSubmit = async data => {
+        const formData = new FormData(data.currentTarget)
+
+        console.log(formData.get('name'))
+        console.log(formData.get('email'))
+        console.log(formData.get('message'))
+    }
+
+
 </script>
 
 <h3>Any questions? Contact us here</h3>
@@ -34,35 +20,35 @@
 <div id="container">
     <h1>&bull; Keep in Touch &bull;</h1>
   
-    <form action="#" method="post" id="contact_form">
+    <form on:submit|preventDefault="{handleSubmit}" id="contact_form">
       <div class="name">
         <label for="name"></label>
-        <input type="text" placeholder="My name is" name="name" id="name_input" required>
+        <input type="text" placeholder="Name" name="name" id="name_input" required>
       </div>
       <div class="email">
         <label for="email"></label>
-        <input type="email" placeholder="My e-mail is" name="email" id="email_input" required>
+        <input type="email" placeholder="E-mail" name="email" id="email_input" required>
       </div>
       <div class="telephone">
         <label for="name"></label>
-        <input type="text" placeholder="My number is" name="telephone" id="telephone_input" required>
+        <input type="text" placeholder="Number" name="telephone" id="telephone_input" required>
       </div>
       <div class="subject">
         <label for="subject"></label>
-        <select placeholder="Subject line" name="subject" id="subject_input" required>
+        <select placeholder="Subject" name="subject" id="subject_input" required>
           <option disabled hidden selected>Subject line</option>
-          <option>I'd like to start a project</option>
+          <option>I'd like to start a book club</option>
           <option>I'd like to ask a question</option>
-          <option>I'd like to make a proposal</option>
         </select>
       </div>
       <div class="message">
         <label for="message"></label>
-        <textarea name="message" placeholder="I'd like to chat about" id="message_input" cols="30" rows="5" required></textarea>
+        <textarea name="message" placeholder="Message" id="message_input" cols="30" rows="5" required></textarea>
       </div>
       <div class="submit">
-        <input type="submit" value="Send Message" id="form_button" /> 
-      </div>
+        <input type="submit" value="Send Message" id="submit_button" /> 
+        
+    </div>
     </form><!-- // End form -->
   </div><!-- // End #container -->
 
@@ -78,7 +64,7 @@ input, select, textarea {
   margin: 0;
 }
 
-input {
+input, button {
   line-height: normal;
 }
 
@@ -166,7 +152,7 @@ textarea {
 }
 
 
-#form_button {
+#submit_button {
   background: none;
   border: solid 2px #474544;
   color: #474544;
@@ -180,7 +166,7 @@ textarea {
   text-transform: uppercase;
 }
 
-#form_button:hover {
+#submit_button:hover {
   background: #474544;
   color: #F2F3EB;
 }
