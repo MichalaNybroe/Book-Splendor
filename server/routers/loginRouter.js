@@ -27,7 +27,7 @@ function checkPasswordSecurity(req, res, next) {
 router.post("/login", (req, res) => {
     const { email, password } = req.body
 
-    const user = await db.get("SELECT * FROM users WHERE email=?;", [email])
+    const user = await db.query("SELECT * FROM users WHERE email=?;", [email])
 
     if (!user || await !comparePassword(password, user.password)) {
         return res.status(401).send({ message: "Login failed." })
@@ -58,7 +58,7 @@ router.post("/updatePassword",checkPasswordSecurity, (req, res) => {
     // how do we check link security?
     const { email, password } = req.body
 
-    db.run("UPDATE users SET(password=?) WHERE email=(?);", [password, email])
+    db.query("UPDATE users SET(password=?) WHERE email=(?);", [password, email])
     res.status(200).send({ message: "Password Updated." })
 })
 
@@ -66,7 +66,7 @@ router.post("/updatePassword",checkPasswordSecurity, (req, res) => {
 router.post("/signUp", checkPasswordSecurity, (req, res) => {
     const { email, password } = req.body
 
-    db.run("INSERT INTO users(email, password) VALUES(?,?);", [email, encryptPassword(password)])
+    db.query("INSERT INTO users(email, password) VALUES(?,?);", [email, encryptPassword(password)])
     req.session.isLoggedIn = true
     req.session.email = email
     req.session.role = "user"
