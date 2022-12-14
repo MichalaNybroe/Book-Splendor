@@ -15,6 +15,14 @@ app.use(session({
     cookie: { secure: false /*http*/}
 }))
 
+import rateLimit from "express-rate-limit";
+const superLimiter = rateLimit({
+    windowMs: 10 * 60 * 1000,
+    max: 100
+});
+app.use(superLimiter);
+
+
 app.use(express.json())
 
 //Routers
