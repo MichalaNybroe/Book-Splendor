@@ -21,15 +21,14 @@
 */
     }
 
+    //indsæt en alert eller notif (toastr?) når man har sendt en besked? eller videresend til anden side? 
 
 </script>
 
 <h3>Any questions? Contact us here</h3>
 
-
 <div id="container">
     <h1>&bull; Keep in Touch &bull;</h1>
-  
     <form on:submit|preventDefault="{handleSubmit}" id="contact_form">
       <div class="name">
         <label for="name"></label>
@@ -57,10 +56,9 @@
       </div>
       <div class="submit">
         <input type="submit" value="Send Message" id="submit_button" /> 
-        
-    </div>
-    </form><!-- // End form -->
-  </div><!-- // End #container -->
+        </div>
+    </form>
+  </div>
 
 
 <style>
@@ -74,7 +72,7 @@ input, select, textarea {
   margin: 0;
 }
 
-input, button {
+input{
   line-height: normal;
 }
 
