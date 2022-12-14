@@ -17,10 +17,12 @@ db.execute(`CREATE TABLE IF NOT EXISTS users(
 );`)
 
 //Yeah so what do we want in books ? :D
+//author + genre?
 db.execute(`CREATE TABLE IF NOT EXISTS books(
     id INTEGER PRIMARY KEY AUTO_INCREMENT,
     title VARCHAR(255)
 );`)
+
 
 
 if (isInDeleteMode) {

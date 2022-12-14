@@ -1,5 +1,4 @@
 <script>
-    import { onMount } from "svelte";
     import { BASE_URL } from "../../store/globals.js"
     
 
@@ -9,6 +8,17 @@
         console.log(formData.get('name'))
         console.log(formData.get('email'))
         console.log(formData.get('message'))
+
+        /*
+        const res = await fetch('/contact-form.json', {
+      method: 'POST',
+      body: formData,
+    })
+
+    const { message } = await res.json()
+
+    console.log(message)
+*/
     }
 
 
