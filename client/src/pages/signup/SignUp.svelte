@@ -24,9 +24,9 @@
             }
             
             const body = {
-                username: nameInp.value
+                username: nameInp.value,
                 email: emailInp.value,
-                password: passwordInp.value,
+                password: passwordInp.value
             }
 
             return fetch(`${$BASE_URL}/signUp`, {

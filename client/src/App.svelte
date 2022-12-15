@@ -21,8 +21,8 @@
         <Route path="/login"><Login /></Route>
         <Route path="/contact"><Contact /></Route>
         <Route path="/books"><Books /></Route>
-        <Route path=""><SignUp /></Route>
-        <Route path=""><ForgotPassword /></Route>
+        <Route path="/signUp"><SignUp /></Route>
+        <Route path="forgotPassword"><ForgotPassword /></Route>
       </div>
 
     <Footer></Footer>
