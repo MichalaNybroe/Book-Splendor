@@ -46,11 +46,15 @@
 <Router primary={false}>
     <div id="signBox">
         <form id="signForm" action="/singUp" method="POST">
-            <h2>Sign up</h2>
-                <input type="text" id="signNameInp" placeholder="May Flower">
-                <input type="email" id="signEmailInp" placeholder="node@mail.dk">
-                <input type="password" id="signPassInp" placeholder="Enter password">
-                <input type="password" id="signPassInpTwo" placeholder="Reenter password">
+            <h3>Sign up</h3>
+                <label for="name">Username:</label>
+                <input type="text" id="signNameInp" placeholder="May Flower" name="name">
+                <label for="email">Email:</label>
+                <input type="email" id="signEmailInp" placeholder="flower@mail.dk" name="email">
+                <label for="passOne">Password:</label>
+                <input type="password" id="signPassInp" placeholder="*********" name="passOne">
+                <label for="passsTwo">Reenter password:</label>
+                <input type="password" id="signPassInpTwo" placeholder="*********" name="passTwo">
                 <input type="submit" id="signSubmit" value="Sign Up">
         </form>
     </div>
