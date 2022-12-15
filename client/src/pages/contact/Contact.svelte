@@ -144,10 +144,6 @@ input[type='text']:focus, [type='email']:focus, textarea:focus {
   width: 100%;
 }
 
-.telephone {
-  width: 100%;
-}
-
 textarea {
 	line-height: 150%;
 	height: 150px;
