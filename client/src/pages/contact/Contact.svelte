@@ -38,16 +38,12 @@
         <label for="email"></label>
         <input type="email" placeholder="E-mail" name="email" id="email_input" required>
       </div>
-      <div class="telephone">
-        <label for="name"></label>
-        <input type="text" placeholder="Number" name="telephone" id="telephone_input" required>
-      </div>
       <div class="subject">
         <label for="subject"></label>
         <select placeholder="Subject" name="subject" id="subject_input" required>
-          <option disabled hidden selected>Subject line</option>
-          <option>I'd like to start a book club</option>
+          <option disabled hidden selected>I'd like to ask a question</option>
           <option>I'd like to ask a question</option>
+          <option>I'd like to start a book club</option>
         </select>
       </div>
       <div class="message">
