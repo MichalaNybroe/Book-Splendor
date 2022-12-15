@@ -1,5 +1,7 @@
 <script>
     import { BASE_URL } from "../../store/globals.js"
+    import * as Toastr from "toastr"
+    import '../../../node_modules/toastr/build/toastr.css'
     
 
     const handleSubmit = async data => {
@@ -28,7 +30,7 @@
 <h3>Any questions? Contact us here</h3>
 
 <div id="container">
-    <h1>&bull; Keep in Touch &bull;</h1>
+    <h1>&bull; Send Us a Letter &bull;</h1>
     <form on:submit|preventDefault="{handleSubmit}" id="contact_form">
       <div class="name">
         <label for="name"></label>

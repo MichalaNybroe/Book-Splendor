@@ -1,5 +1,8 @@
 import nodemailer from "nodemailer"
 
+//lav den så den importerer fra contact form? 
+//name, to, subject, text, 
+
 export async function sendMail(name, to, subject, text) {
 
     let testAccount = await nodemailer.createTestAccount();
