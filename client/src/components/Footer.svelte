@@ -1,0 +1,1 @@
+<p id="rights">Ⓒ {new Date().getFullYear()} Silke Jensen og Michala Nybroe | All Rights Reserved</p>
