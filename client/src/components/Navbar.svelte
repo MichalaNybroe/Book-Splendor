@@ -20,7 +20,7 @@
 <Router primary={false}>
     <nav>
         <h1 class="margin-left">
-        <Link to="/"><img src="/public/favicon.png" alt="Book-Splendor icon" height="50px"></Link> 
+        <Link to="/"><img src="/favicon.png" alt="Book-Splendor icon" height="50px"></Link> 
         <Link to="/">Home</Link>
         <Link to="/books">Books</Link>
         <Link to="/contact">Contact</Link>
