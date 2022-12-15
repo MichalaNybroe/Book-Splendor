@@ -41,7 +41,7 @@ router.post("/api/books", adminGuard, async (req, res) => {
     //res.send({ changes: result.changes })
 })
 
-router.update("/api/books/:id", adminGuard, (req, res) => {
+router.put("/api/books/:id", adminGuard, (req, res) => {
     // similar to post
 })
 

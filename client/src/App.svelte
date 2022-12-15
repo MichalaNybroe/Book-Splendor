@@ -8,6 +8,8 @@
   import Login from "./pages/login/Login.svelte"
   import Contact from "./pages/contact/Contact.svelte"
   import Books from "./pages/books/Books.svelte"
+  import SignUp from "./pages/signup/SignUp.svelte"
+  import ForgotPassword from "./pages/forgotpassword/ForgotPassword.svelte"
 </script>
 
 <main class="margin-left">
@@ -19,6 +21,8 @@
         <Route path="/login"><Login /></Route>
         <Route path="/contact"><Contact /></Route>
         <Route path="/books"><Books /></Route>
+        <Route path=""><SignUp /></Route>
+        <Route path=""><ForgotPassword /></Route>
       </div>
 
     <Footer></Footer>

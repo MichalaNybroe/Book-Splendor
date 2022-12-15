@@ -24,7 +24,7 @@ function checkPasswordSecurity(req, res, next) {
     next()
 }
 
-router.post("/login", (req, res) => {
+router.post("/login", async (req, res) => {
     const { email, password } = req.body
 
     const user = await db.query("SELECT * FROM users WHERE email=?;", [email])
@@ -64,9 +64,9 @@ router.post("/updatePassword",checkPasswordSecurity, (req, res) => {
 
 
 router.post("/signUp", checkPasswordSecurity, (req, res) => {
-    const { email, password } = req.body
+    const { username, email, password } = req.body
 
-    db.query("INSERT INTO users(email, password) VALUES(?,?);", [email, encryptPassword(password)])
+    db.query("INSERT INTO users(user_name, email, password, admin) VALUES(?,?,?,?);", [username, email, encryptPassword(password), false])
     req.session.isLoggedIn = true
     req.session.email = email
     req.session.role = "user"
