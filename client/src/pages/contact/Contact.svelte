@@ -2,17 +2,13 @@
     import { BASE_URL } from "../../store/globals.js"
     import * as Toastr from "toastr"
     import '../../../node_modules/toastr/build/toastr.css'
+    import { onMount } from "svelte";
     
 
-    const handleSubmit = async data => {
-        const formData = new FormData(data.currentTarget)
+  const handleSubmit = async data => {
+    const formData = new FormData(data.currentTarget)
 
-        console.log(formData.get('name'))
-        console.log(formData.get('email'))
-        console.log(formData.get('message'))
-
-        /*
-        const res = await fetch('/contact-form.json', {
+    const res = await fetch(`${$BASE_URL}/contact`, {
       method: 'POST',
       body: formData,
     })
@@ -20,18 +16,18 @@
     const { message } = await res.json()
 
     console.log(message)
-*/
-    }
+  }
+    
 
     //indsæt en alert eller notif (toastr?) når man har sendt en besked? eller videresend til anden side? 
 
 </script>
 
-<h3>Any questions? Contact us here</h3>
+<!--<h3>Any questions? Contact us here</h3>-->
 
 <div id="container">
     <h1>&bull; Send Us a Letter &bull;</h1>
-    <form on:submit|preventDefault="{handleSubmit}" id="contact_form">
+    <form on:submit|preventDefault="{handleSubmit}" id="contact_form"> <!--on:submit|preventDefault="{handleSubmit}"-->
       <div class="name">
         <label for="name"></label>
         <input type="text" placeholder="Name" name="name" id="name_input" required>
