@@ -35,7 +35,7 @@ router.post("/login", async (req, res) => {
 
     req.session.isLoggedIn = true
     req.session.email = email
-    req.session.role = user.role
+    req.session.admin = user.admin
     res.status(200).send({ message: "Login successful" })
 })
 

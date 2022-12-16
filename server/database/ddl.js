@@ -14,7 +14,7 @@ db.execute(`CREATE TABLE IF NOT EXISTS users(
     email PRIMARY KEY,
     password VARCHAR(255),
     role VARCHAR(50)
-);`)
+);`)//add profilep picture selection storage + profilepage color
 
 db.execute(`CREATE TABLE IF NOT EXISTS series(
     id INTEGER PRIMARY KEY AUTO_INCREMENT,
