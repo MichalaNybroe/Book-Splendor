@@ -84,9 +84,9 @@ if (isInDeleteMode) {
     db.execute(`INSERT INTO series(title) VALUE (?);`, ["The Folk of the Air"])
 
     //books
-    db.execute(`INSERT INTO books(title, description, number, unreleased, img, fk_series) VALUE (?, ?, ?, ?, ?, ?);`, ["The Fellowship of the Ring", "noget", 1, false, "", 1])
-    db.execute(`INSERT INTO books(title, description, number, unreleased, img, fk_series) VALUE (?, ?, ?, ?, ?, ?);`, ["The Two Towers", "noget", 2, false, "", 1])
-    db.execute(`INSERT INTO books(title, description, number, unreleased, img, fk_series) VALUE (?, ?, ?, ?, ?, ?);`, ["The Return of the King", "noget", 3, false, "", 1])
+    db.execute(`INSERT INTO books(title, description, number, unreleased, img, fk_series) VALUE (?, ?, ?, ?, ?, ?);`, ["The Fellowship of the Ring", "noget", 1, false, "https://upload.wikimedia.org/wikipedia/en/8/8e/The_Fellowship_of_the_Ring_cover.gif", 1])
+    db.execute(`INSERT INTO books(title, description, number, unreleased, img, fk_series) VALUE (?, ?, ?, ?, ?, ?);`, ["The Two Towers", "noget", 2, false, "https://upload.wikimedia.org/wikipedia/en/thumb/a/a1/The_Two_Towers_cover.gif/220px-The_Two_Towers_cover.gif", 1])
+    db.execute(`INSERT INTO books(title, description, number, unreleased, img, fk_series) VALUE (?, ?, ?, ?, ?, ?);`, ["The Return of the King", "noget", 3, false, "https://upload.wikimedia.org/wikipedia/en/thumb/1/11/The_Return_of_the_King_cover.gif/220px-The_Return_of_the_King_cover.gif", 1])
 
     //users_books
     // TO DO 
