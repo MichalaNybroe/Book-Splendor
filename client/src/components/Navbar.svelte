@@ -21,7 +21,7 @@
     <nav>
         <h1 class="margin-left">
         <Link to="/"><img src="/favicon.png" alt="Book-Splendor icon" height="50px"></Link> 
-        {#if $user.admin = true}
+        {#if $user = true} <!--  {#if $user.admin = true}-->
             <Link to="/admin/books">Books</Link>
             <Link to="/admin/users">Users</Link>
             <Link to="/admin/reviews">Reviews</Link>

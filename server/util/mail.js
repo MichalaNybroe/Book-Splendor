@@ -19,9 +19,9 @@ export async function sendMail(name, to, subject, text) {
 
     let info = await transporter.sendMail({
         from: `"Book Splendor" <customerService@bookSplendor.dk>`,
-        to: `<${to}>`,
-        subject: subject,
-        text: text
+        to: `${name} <${to}>`,
+        subject: `<${subject}>`,
+        text: `<${text}>`
     })
 
     console.log("Message send: %s", info.messageId);

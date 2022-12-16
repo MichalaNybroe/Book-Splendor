@@ -1,9 +1,36 @@
 <script>
     import { BASE_URL } from "../../store/globals.js"
-    import * as Toastr from "toastr"
     import '../../../node_modules/toastr/build/toastr.css'
     import { onMount } from "svelte";
+
     
+    
+/*
+    const handleSubmit = async data => {
+        const name = document.getElementById("name")
+        const email = document.getElementById("email")
+        const subject = document.getElementById("subject")
+        const message = document.getElementById("message")
+        const contactForm = document.getElementById("contact_form")
+
+        contactForm.addEventListener("submit", (event) => {
+            event.preventDefault()
+            
+            const body = {
+              name: name.value,
+              email: email.value,
+              subject: subject.value,
+              message: message.value
+            }
+            
+            return fetch(`${$BASE_URL}/contact`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(body),
+            })
+          })
+    }
+*/
 
     /*
   const handleSubmit = async data => {
@@ -18,7 +45,7 @@
 
     console.log(message)
   }
-  */
+  
 
   async function handleSubmit() {
 		const mail = {
@@ -38,17 +65,15 @@
                 response.json().then((x) => Toastr.success("You've signed up! :)")) 
         })
     };
-    
+    */
 
     //indsæt en alert eller notif (toastr?) når man har sendt en besked? eller videresend til anden side? 
 
 </script>
 
-<!--<h3>Any questions? Contact us here</h3>-->
-
 <div id="container">
     <h1>&bull; Send Us a Letter &bull;</h1>
-    <form on:submit|preventDefault="{handleSubmit}" id="contact_form"> <!--on:submit|preventDefault="{handleSubmit}"-->
+    <form id="contact_form"> <!--on:submit|preventDefault="{handleSubmit}"-->
       <div class="name">
         <label for="name"></label>
         <input type="text" placeholder="Name" name="name" id="name" required>

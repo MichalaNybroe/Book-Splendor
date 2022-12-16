@@ -4,6 +4,9 @@ dotenv.config()
 import express from "express"
 const app = express()
 
+import cors from "cors"
+app.use(cors({ credentials: true, origin: true }))
+
 import helmet from "helmet"
 app.use(helmet())
 
