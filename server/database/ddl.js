@@ -6,23 +6,15 @@ import { encryptPassword } from "../util/encryption.js"
 const isInDeleteMode = true
 
 if (isInDeleteMode) {
-    db.execute(`DROP TABLE IF EXISTS users;`)
-    db.execute(`DROP TABLE IF EXISTS books;`)
-    db.execute(`DROP TABLE IF EXISTS users_books;`)
-    db.execute(`DROP TABLE IF EXISTS reviews;`)
-    db.execute(`DROP TABLE IF EXISTS authors;`)
-    db.execute(`DROP TABLE IF EXISTS books_authors;`)
-    db.execute(`DROP TABLE IF EXISTS series;`)
-    db.execute(`DROP TABLE IF EXISTS genres;`)
-    db.execute(`DROP TABLE IF EXISTS books_genres;`)
+    db.execute('DROP TABLE IF EXISTS users;');
+    db.execute(`DROP TABLE IF EXISTS books;`);
 }
 
 db.execute(`CREATE TABLE IF NOT EXISTS users(
-    email VARCHAR(500) PRIMARY KEY UNIQUE,
-    user_name VARCHAR(255),
+    email PRIMARY KEY,
     password VARCHAR(255),
-    admin BOOLEAN
-);`)
+    role VARCHAR(50)
+);`)//add profilep picture selection storage + profilepage color
 
 db.execute(`CREATE TABLE IF NOT EXISTS series(
     id INTEGER PRIMARY KEY AUTO_INCREMENT,
@@ -129,5 +121,4 @@ if (isInDeleteMode) {
     db.execute(`INSERT INTO books_genres(fk_books, fk_genres) VALUE (?, ?);`, [2, 2])
     db.execute(`INSERT INTO books_genres(fk_books, fk_genres) VALUE (?, ?);`, [3, 1])
     db.execute(`INSERT INTO books_genres(fk_books, fk_genres) VALUE (?, ?);`, [3, 2])
-
 }

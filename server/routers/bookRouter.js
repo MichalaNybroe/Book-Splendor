@@ -8,11 +8,13 @@ function adminGuard(req, res, next) {
         return res.status(401).send({ message: "Not logged in."})
     }
 
-    if (req.session.userRole !== "admin") {
+    if (req.session.admin !== true) {
         return res.status(401).send({ message: "Not authorized."})
     }
     next()
 }
+
+// save book of the week id
 
 router.get("/api/books", async (req, res) => {
     const books = await db.query("SELECT * FROM books;")
