@@ -10,6 +10,10 @@
   import Books from "./pages/books/Books.svelte"
   import SignUp from "./pages/signup/SignUp.svelte"
   import ForgotPassword from "./pages/forgotpassword/ForgotPassword.svelte"
+  import ManageBooks from "./pages/admin/books/Books.svelte"
+  import ManageUsers from "./pages/admin/users/Users.svelte"
+  import ManageReviews from "./pages/admin/reviews/Reviews.svelte"
+
 </script>
 
 <main class="margin-left">
@@ -22,7 +26,10 @@
         <Route path="/contact"><Contact /></Route>
         <Route path="/books"><Books /></Route>
         <Route path="/signUp"><SignUp /></Route>
-        <Route path="forgotPassword"><ForgotPassword /></Route>
+        <Route path="/forgotPassword"><ForgotPassword /></Route>
+        <Route path="/admin/books"><ManageBooks /></Route>
+        <Route path="/admin/users"><ManageUsers /></Route>
+        <Route path="/admin/reviews"><ManageReviews /></Route>
       </div>
 
     <Footer></Footer>
