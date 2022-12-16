@@ -5,6 +5,7 @@
     import { onMount } from "svelte";
     
 
+    /*
   const handleSubmit = async data => {
     const formData = new FormData(data.currentTarget)
 
@@ -17,6 +18,26 @@
 
     console.log(message)
   }
+  */
+
+  async function handleSubmit() {
+		const mail = {
+			// @ts-ignore
+			name: document.getElementById("name").value,
+			email: document.getElementById("email").value,
+			subject: document.getElementById("subject").value,
+			message: document.getElementById("message").value,
+		};
+		await fetch(`${$BASE_URL}/contact`, {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json;charset=utf-8",
+			},
+			body: JSON.stringify(mail),
+		}).then((response) => {
+                response.json().then((x) => Toastr.success("You've signed up! :)")) 
+        })
+    };
     
 
     //indsæt en alert eller notif (toastr?) når man har sendt en besked? eller videresend til anden side? 
@@ -30,15 +51,15 @@
     <form on:submit|preventDefault="{handleSubmit}" id="contact_form"> <!--on:submit|preventDefault="{handleSubmit}"-->
       <div class="name">
         <label for="name"></label>
-        <input type="text" placeholder="Name" name="name" id="name_input" required>
+        <input type="text" placeholder="Name" name="name" id="name" required>
       </div>
       <div class="email">
         <label for="email"></label>
-        <input type="email" placeholder="E-mail" name="email" id="email_input" required>
+        <input type="email" placeholder="E-mail" name="email" id="email" required>
       </div>
       <div class="subject">
         <label for="subject"></label>
-        <select placeholder="Subject" name="subject" id="subject_input" required>
+        <select placeholder="Subject" name="subject" id="subject" required>
           <option disabled hidden selected>I'd like to ask a question</option>
           <option>I'd like to ask a question</option>
           <option>I'd like to start a book club</option>
@@ -46,7 +67,7 @@
       </div>
       <div class="message">
         <label for="message"></label>
-        <textarea name="message" placeholder="Message" id="message_input" cols="30" rows="5" required></textarea>
+        <textarea name="message" placeholder="Message" id="message" cols="30" rows="5" required></textarea>
       </div>
       <div class="submit">
         <input type="submit" value="Send Message" id="submit_button" /> 
