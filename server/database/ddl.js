@@ -35,6 +35,7 @@ db.execute(`CREATE TABLE IF NOT EXISTS books(
     description VARCHAR(1000),
     number INTEGER,
     unreleased BOOLEAN,
+    img VARCHAR(2000),
     created_date TIMESTAMP NOT NULL DEFAULT NOW()
     CONSTRAINT fk_series FOREIGN KEY (id) REFERENCES series(id)
 );`)
@@ -91,9 +92,9 @@ if (isInDeleteMode) {
     db.execute(`INSERT INTO series(title) VALUE (?);`, ["The Folk of the Air"])
 
     //books
-    db.execute(`INSERT INTO books(title, description, number, unreleased, fk_series) VALUE (?, ?, ?, ?, ?);`, ["The Fellowship of the Ring", "noget", 1, false, 1])
-    db.execute(`INSERT INTO books(title, description, number, unreleased, fk_series) VALUE (?, ?, ?, ?, ?);`, ["The Two Towers", "noget", 2, false, 1])
-    db.execute(`INSERT INTO books(title, description, number, unreleased, fk_series) VALUE (?, ?, ?, ?, ?);`, ["The Return of the King", "noget", 3, false, 1])
+    db.execute(`INSERT INTO books(title, description, number, unreleased, img, fk_series) VALUE (?, ?, ?, ?, ?, ?);`, ["The Fellowship of the Ring", "noget", 1, false, "", 1])
+    db.execute(`INSERT INTO books(title, description, number, unreleased, img, fk_series) VALUE (?, ?, ?, ?, ?, ?);`, ["The Two Towers", "noget", 2, false, "", 1])
+    db.execute(`INSERT INTO books(title, description, number, unreleased, img, fk_series) VALUE (?, ?, ?, ?, ?, ?);`, ["The Return of the King", "noget", 3, false, "", 1])
 
     //users_books
     // TO DO 
