@@ -6,15 +6,24 @@ import { encryptPassword } from "../util/encryption.js"
 const isInDeleteMode = true
 
 if (isInDeleteMode) {
-    db.execute('DROP TABLE IF EXISTS users;');
-    db.execute(`DROP TABLE IF EXISTS books;`);
+    db.execute(`DROP TABLE IF EXISTS reviews;`)
+    db.execute(`DROP TABLE IF EXISTS books_authors;`)
+    db.execute(`DROP TABLE IF EXISTS books_genres;`)
+    db.execute(`DROP TABLE IF EXISTS users_books`)
+    db.execute(`DROP TABLE IF EXISTS users;`)
+    db.execute(`DROP TABLE IF EXISTS books;`)
+    db.execute(`DROP TABLE IF EXISTS series;`)
+    db.execute(`DROP TABLE IF EXISTS authors;`)
+    db.execute(`DROP TABLE IF EXISTS genres;`)
 }
 
 db.execute(`CREATE TABLE IF NOT EXISTS users(
     email PRIMARY KEY,
     password VARCHAR(255),
-    role VARCHAR(50)
-);`)//add profilep picture selection storage + profilepage color
+    role VARCHAR(50),
+    picture_number INTEGER,
+    color VARCHAR(255)
+);`)
 
 db.execute(`CREATE TABLE IF NOT EXISTS series(
     id INTEGER PRIMARY KEY AUTO_INCREMENT,
@@ -37,9 +46,8 @@ db.execute(`CREATE TABLE IF NOT EXISTS users_books(
     CONSTRAINT fk_books FOREIGN KEY (id) REFERENCES books(id),
     want_to_read BOOLEAN,
     has_read BOOLEAN,
-    CONSTRAINT UC_users_books UNIQUE ()
+    CONSTRAINT unique_users_books UNIQUE (fk_users, fk_books)
 );`)
-//tjek: constraint on foreign keys
 
 db.execute(`CREATE TABLE IF NOT EXISTS reviews(
     id INTEGER PRIMARY KEY AUTO_INCREMENT,
@@ -56,7 +64,8 @@ db.execute(`CREATE TABLE IF NOT EXISTS authors(
 
 db.execute(`CREATE TABLE IF NOT EXISTS books_authors(
     CONSTRAINT fk_books FOREIGN KEY (id) REFERENCES books(id),
-    CONSTRAINT fk_authors FOREIGN KEY (id) REFERENCES authors(id)
+    CONSTRAINT fk_authors FOREIGN KEY (id) REFERENCES authors(id),
+    CONSTRAINT unique_books_authors UNIQUE (fk_books, fk_authors)
 );`)
 
 db.execute(`CREATE TABLE IF NOT EXISTS genres(
@@ -66,16 +75,17 @@ db.execute(`CREATE TABLE IF NOT EXISTS genres(
 
 db.execute(`CREATE TABLE IF NOT EXISTS books_genres(
     CONSTRAINT fk_books FOREIGN KEY (id) REFERENCES books(id),
-    CONSTRAINT fk_genres FOREIGN KEY (id) REFERENCES genres(id)
+    CONSTRAINT fk_genres FOREIGN KEY (id) REFERENCES genres(id),
+    CONSTRAINT unique_books_genres UNIQUE (fk_books, fk_genres)
 );`)
 
 
 if (isInDeleteMode) {
     //users
-    db.execute(`INSERT INTO users(email, user_name, password, admin) 
-    VALUES (?, ?, ?, ?);`, [process.env.ADMIN_EMAIL, "adminOne", encryptPassword(process.env.ADMIN_PASSWORD), true])
-    db.execute(`INSERT INTO users(email, user_name, password, admin) 
-    VALUES (?, ?, ?, ?);`, [process.env.USER_EMAIL, "mayFlower", encryptPassword(process.env.USER_PASSWORD), false])
+    db.execute(`INSERT INTO users(email, user_name, password, admin, picture_number, color) 
+    VALUES (?, ?, ?, ?, ?, ?);`, [process.env.ADMIN_EMAIL, "adminOne", encryptPassword(process.env.ADMIN_PASSWORD), true, 2, "#FF5733"])
+    db.execute(`INSERT INTO users(email, user_name, password, admin, picture_number, color) 
+    VALUES (?, ?, ?, ?, ?, ?);`, [process.env.USER_EMAIL, "mayFlower", encryptPassword(process.env.USER_PASSWORD), false, 6, "#30EBF3"])
 
     //series
     db.execute(`INSERT INTO series(title) VALUE (?);`, ["Lord of the Rings"])
@@ -89,9 +99,8 @@ if (isInDeleteMode) {
     db.execute(`INSERT INTO books(title, description, number, unreleased, img, fk_series) VALUE (?, ?, ?, ?, ?, ?);`, ["The Return of the King", "noget", 3, false, "https://upload.wikimedia.org/wikipedia/en/thumb/1/11/The_Return_of_the_King_cover.gif/220px-The_Return_of_the_King_cover.gif", 1])
 
     //users_books
-    // TO DO 
-    db.execute(`INSERT INTO users_books(fk_users, fk_books, want_to_read, has_read, x) VALUE (?, ?, ?, ?, ?);`, [process.env.USER_EMAIL, 1, false, true, x])
-    db.execute(`INSERT INTO users_books(fk_users, fk_books, want_to_read, has_read, x) VALUE (?, ?, ?, ?, ?);`, [process.env.USER_EMAIL, 2, true, false, x])
+    db.execute(`INSERT INTO users_books(fk_users, fk_books, want_to_read, has_read) VALUE (?, ?, ?, ?);`, [process.env.USER_EMAIL, 1, false, true])
+    db.execute(`INSERT INTO users_books(fk_users, fk_books, want_to_read, has_read) VALUE (?, ?, ?, ?);`, [process.env.USER_EMAIL, 2, true, false])
     
     //reviews
     db.execute(`INSERT INTO reviews(subject, text, rating, fk_users) VALUE (?, ?, ?, ?);`, ["LOVED IT", "LOVED ITTT", 4, process.env.USER_EMAIL])
