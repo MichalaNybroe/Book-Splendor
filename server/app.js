@@ -31,8 +31,11 @@ app.use(express.json())
 //Routers
 import loginRouter from "./routers/loginRouter.js"
 import bookRouter from "./routers/bookRouter.js"
+import contactFormRouter from "./routers/contactFormRouter.js"
 app.use(loginRouter)
 app.use(bookRouter)
+app.use(contactFormRouter)
+
 
 const PORT = Number(process.env.PORT) || 8080
 app.listen(PORT, console.log("Server is running on port ", PORT))

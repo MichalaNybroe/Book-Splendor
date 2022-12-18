@@ -1,59 +1,36 @@
 <script>
     import { BASE_URL } from "../../store/globals.js"
     import '../../../node_modules/toastr/build/toastr.css'
-    import { onMount } from "svelte";
-
-    
-    
-/*
-    const handleSubmit = async data => {
-        const name = document.getElementById("name")
-        const email = document.getElementById("email")
-        const subject = document.getElementById("subject")
-        const message = document.getElementById("message")
-        const contactForm = document.getElementById("contact_form")
-
-        contactForm.addEventListener("submit", (event) => {
-            event.preventDefault()
-            
-            const body = {
-              name: name.value,
-              email: email.value,
-              subject: subject.value,
-              message: message.value
-            }
-            
-            return fetch(`${$BASE_URL}/contact`, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(body),
-            })
-          })
-    }
-*/
 
     /*
-  const handleSubmit = async data => {
+    const handleSubmit = async data => {
     const formData = new FormData(data.currentTarget)
+
+    console.log(formData.get('name'))
+    console.log(formData.get('email'))
+    console.log(formData.get('subject'))
+    console.log(formData.get('message'))
 
     const res = await fetch(`${$BASE_URL}/contact`, {
       method: 'POST',
-      body: formData,
+      body: JSON.stringify(formData),
     })
 
     const { message } = await res.json()
 
     console.log(message)
-  }
-  
 
-  async function handleSubmit() {
+    }
+    */
+
+
+    async function handleSubmit() {
 		const mail = {
 			// @ts-ignore
 			name: document.getElementById("name").value,
 			email: document.getElementById("email").value,
 			subject: document.getElementById("subject").value,
-			message: document.getElementById("message").value,
+			message: document.getElementById("message").value
 		};
 		await fetch(`${$BASE_URL}/contact`, {
 			method: "POST",
@@ -62,10 +39,11 @@
 			},
 			body: JSON.stringify(mail),
 		}).then((response) => {
-                response.json().then((x) => Toastr.success("You've signed up! :)")) 
+                response.json().then((x) => console.log("Mail sent - in contact.svelte :)")) 
         })
     };
-    */
+
+
 
     //indsæt en alert eller notif (toastr?) når man har sendt en besked? eller videresend til anden side? 
 
@@ -73,7 +51,7 @@
 
 <div id="container">
     <h1>&bull; Send Us a Letter &bull;</h1>
-    <form id="contact_form"> <!--on:submit|preventDefault="{handleSubmit}"-->
+    <form on:submit|preventDefault={handleSubmit} id="contact_form">
       <div class="name">
         <label for="name"></label>
         <input type="text" placeholder="Name" name="name" id="name" required>

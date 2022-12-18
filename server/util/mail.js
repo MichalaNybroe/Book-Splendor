@@ -1,9 +1,6 @@
 import nodemailer from "nodemailer"
 
-//lav den så den importerer fra contact form? 
-//name, to, subject, text, 
-
-export async function sendMail(name, to, subject, text) {
+export async function sendMail() {
 
     let testAccount = await nodemailer.createTestAccount();
 
@@ -19,10 +16,22 @@ export async function sendMail(name, to, subject, text) {
 
     let info = await transporter.sendMail({
         from: `"Book Splendor" <customerService@bookSplendor.dk>`,
-        to: `${name} <${to}>`,
+        to: `<${to}>`,
         subject: `<${subject}>`,
         text: `<${text}>`
     })
+
+    /* bliver nødt til at oprette to sendMail functions? ved ikke hvad den her var tænkt til, 
+    men den mail vi skal sende fra kontaktform ser sådan her ud: 
+
+    let info = await transporter.sendMail({
+        from: `"Book Splendor" <customerService@bookSplendor.dk>`,
+        to: `"Book Splendor" <customerService@bookSplendor.dk>`,
+        subject: `<${subject}>`,
+        text: `<${text}>`
+        usermail: `<${mail}>`
+
+    */
 
     console.log("Message send: %s", info.messageId);
 
