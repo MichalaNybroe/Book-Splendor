@@ -13,7 +13,8 @@
   import ManageBooks from "./pages/admin/books/Books.svelte"
   import ManageUsers from "./pages/admin/users/Users.svelte"
   import ManageReviews from "./pages/admin/reviews/Reviews.svelte"
-
+  import ManageCreateBooks from "./pages/admin/books/CreateBooks.svelte"
+  import Profile from "./pages/profile/Profile.svelte"
 </script>
 
 <main class="margin-left">
@@ -30,6 +31,8 @@
         <Route path="/admin/books"><ManageBooks /></Route>
         <Route path="/admin/users"><ManageUsers /></Route>
         <Route path="/admin/reviews"><ManageReviews /></Route>
+        <Route path="/profile"><Profile /></Route>
+        <Route path="/admin/books/create"><ManageCreateBooks /></Route>
       </div>
 
     <Footer></Footer>
