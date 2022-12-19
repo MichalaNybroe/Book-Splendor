@@ -46,8 +46,8 @@ db.execute(`CREATE TABLE IF NOT EXISTS books(
 db.execute(`CREATE TABLE IF NOT EXISTS users_books(
     users_id VARCHAR(500),
     books_id INTEGER,
-    CONSTRAINT fk_users FOREIGN KEY (users_id) REFERENCES users(email),
-    CONSTRAINT fk_books FOREIGN KEY (books_id) REFERENCES books(id),
+    CONSTRAINT fk_users_books_id FOREIGN KEY (users_id) REFERENCES users(email),
+    CONSTRAINT fk_books_users_id FOREIGN KEY (books_id) REFERENCES books(id),
     want_to_read BOOLEAN,
     has_read BOOLEAN,
     CONSTRAINT unique_users_books UNIQUE (users_id, books_id)
@@ -59,7 +59,7 @@ db.execute(`CREATE TABLE IF NOT EXISTS reviews(
     text VARCHAR(1000),
     rating SMALLINT(5),
     users_id VARCHAR(500),
-    CONSTRAINT fk_users FOREIGN KEY (users_id) REFERENCES users(email)
+    CONSTRAINT fk_users_reviews FOREIGN KEY (users_id) REFERENCES users(email)
 );`)
 
 db.execute(`CREATE TABLE IF NOT EXISTS authors(
@@ -70,8 +70,8 @@ db.execute(`CREATE TABLE IF NOT EXISTS authors(
 db.execute(`CREATE TABLE IF NOT EXISTS books_authors(
     books_id INTEGER,
     authors_id INTEGER,
-    CONSTRAINT fk_books FOREIGN KEY (books_id) REFERENCES books(id),
-    CONSTRAINT fk_authors FOREIGN KEY (authors_id) REFERENCES authors(id),
+    CONSTRAINT fk_books_authors FOREIGN KEY (books_id) REFERENCES books(id),
+    CONSTRAINT fk_authors_books FOREIGN KEY (authors_id) REFERENCES authors(id),
     CONSTRAINT unique_books_authors UNIQUE (books_id, authors_id)
 );`)
 
@@ -83,8 +83,8 @@ db.execute(`CREATE TABLE IF NOT EXISTS genres(
 db.execute(`CREATE TABLE IF NOT EXISTS books_genres(
     books_id INTEGER,
     genres_id INTEGER,
-    CONSTRAINT fk_books FOREIGN KEY (books_id) REFERENCES books(id),
-    CONSTRAINT fk_genres FOREIGN KEY (genres_id) REFERENCES genres(id),
+    CONSTRAINT fk_books_genres FOREIGN KEY (books_id) REFERENCES books(id),
+    CONSTRAINT fk_genres_books FOREIGN KEY (genres_id) REFERENCES genres(id),
     CONSTRAINT unique_books_genres UNIQUE (books_id, genres_id)
 );`)
 
@@ -108,11 +108,11 @@ if (isInDeleteMode) {
     db.execute(`INSERT INTO books(title, description, number, unreleased, img, fk_series) VALUE (?, ?, ?, ?, ?, ?);`, ["The Return of the King", "noget", 3, false, "https://upload.wikimedia.org/wikipedia/en/thumb/1/11/The_Return_of_the_King_cover.gif/220px-The_Return_of_the_King_cover.gif", 1])
 
     //users_books
-    db.execute(`INSERT INTO users_books(fk_users, fk_books, want_to_read, has_read) VALUE (?, ?, ?, ?);`, [process.env.USER_EMAIL, 1, false, true])
-    db.execute(`INSERT INTO users_books(fk_users, fk_books, want_to_read, has_read) VALUE (?, ?, ?, ?);`, [process.env.USER_EMAIL, 2, true, false])
+    db.execute(`INSERT INTO users_books(users_id, books_id, want_to_read, has_read) VALUE (?, ?, ?, ?);`, [process.env.USER_EMAIL, 1, false, true])
+    db.execute(`INSERT INTO users_books(users_id, books_id, want_to_read, has_read) VALUE (?, ?, ?, ?);`, [process.env.USER_EMAIL, 2, true, false])
     
     //reviews
-    db.execute(`INSERT INTO reviews(subject, text, rating, fk_users) VALUE (?, ?, ?, ?);`, ["LOVED IT", "LOVED ITTT", 4, process.env.USER_EMAIL])
+    db.execute(`INSERT INTO reviews(subject, text, rating, users_id) VALUE (?, ?, ?, ?);`, ["LOVED IT", "LOVED ITTT", 4, process.env.USER_EMAIL])
 
     //authors
     db.execute(`INSERT INTO authors(name) VALUE (?);`, ["J.R.R. Tolkien"])
@@ -121,9 +121,9 @@ if (isInDeleteMode) {
     db.execute(`INSERT INTO authors(name) VALUE (?);`, ["Holly Black"])
 
     //books_authors
-    db.execute(`INSERT INTO books_authors(fk_books, fk_authors) VALUE (?, ?);`, [1, 1])
-    db.execute(`INSERT INTO books_authors(fk_books, fk_authors) VALUE (?, ?);`, [2, 1])
-    db.execute(`INSERT INTO books_authors(fk_books, fk_authors) VALUE (?, ?);`, [3, 1])
+    db.execute(`INSERT INTO books_authors(books_id, authors_id) VALUE (?, ?);`, [1, 1])
+    db.execute(`INSERT INTO books_authors(books_id, authors_id) VALUE (?, ?);`, [2, 1])
+    db.execute(`INSERT INTO books_authors(books_id, authors_id) VALUE (?, ?);`, [3, 1])
 
     //genres
     db.execute(`INSERT INTO genres(name) VALUE (?);`, ["High Fantasy"])
@@ -133,10 +133,10 @@ if (isInDeleteMode) {
     db.execute(`INSERT INTO genres(name) VALUE (?);`, ["Sci-fi"])
 
     //books_genres
-    db.execute(`INSERT INTO books_genres(fk_books, fk_genres) VALUE (?, ?);`, [1, 1])
-    db.execute(`INSERT INTO books_genres(fk_books, fk_genres) VALUE (?, ?);`, [1, 2])
-    db.execute(`INSERT INTO books_genres(fk_books, fk_genres) VALUE (?, ?);`, [2, 1])
-    db.execute(`INSERT INTO books_genres(fk_books, fk_genres) VALUE (?, ?);`, [2, 2])
-    db.execute(`INSERT INTO books_genres(fk_books, fk_genres) VALUE (?, ?);`, [3, 1])
-    db.execute(`INSERT INTO books_genres(fk_books, fk_genres) VALUE (?, ?);`, [3, 2])
+    db.execute(`INSERT INTO books_genres(books_id, genres_id) VALUE (?, ?);`, [1, 1])
+    db.execute(`INSERT INTO books_genres(books_id, genres_id) VALUE (?, ?);`, [1, 2])
+    db.execute(`INSERT INTO books_genres(books_id, genres_id) VALUE (?, ?);`, [2, 1])
+    db.execute(`INSERT INTO books_genres(books_id, genres_id) VALUE (?, ?);`, [2, 2])
+    db.execute(`INSERT INTO books_genres(books_id, genres_id) VALUE (?, ?);`, [3, 1])
+    db.execute(`INSERT INTO books_genres(books_id, genres_id) VALUE (?, ?);`, [3, 2])
 }
