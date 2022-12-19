@@ -5,8 +5,6 @@
     import { user } from "../../../store/auth"
     import * as Toastr from "toastr"
     import '../../../../node_modules/toastr/build/toastr.css'
-    //import '../../../node_modules/toastr/build/toastr.css'
-    //har vi node modules liggende forskellige steder? could become a problem. this path doesnt work for me
 
     if($user.admin !== true) {
         const navigate = useNavigate()
