@@ -33,9 +33,9 @@ router.post("/login", async (req, res) => {
         return res.status(401).send({ message: "Login failed." })
     }
 
+    //do we want this?
     req.session.isLoggedIn = true
-    req.session.email = email
-    req.session.admin = user.admin
+    req.session.user = { email: user.email, user_name: user.user_name, admin: user.admin, picture_number: user.picture_number, color: user.color }
     res.status(200).send({ message: "Login successful" })
 })
 
