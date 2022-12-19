@@ -53,10 +53,6 @@
     margin-left: 5px
 }
 
-a {
-    color: #588157;
-}
-
 button {
     color: #588157;
 }
