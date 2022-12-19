@@ -29,15 +29,15 @@
             <Link to="/">Home</Link>
             <Link to="/books">Books</Link>
             <Link to="/contact">Contact</Link>
+        {:else if $user.admin !== true}
+            <Link to="/">Home</Link>
+            <Link to="/books">Books</Link>
+            <Link to="/contact">Contact</Link>
+            <Link to="/profile">Profile</Link>
         {:else if $user.admin === true}
             <Link to="/admin/books">Books</Link>
             <Link to="/admin/users">Users</Link>
             <Link to="/admin/reviews">Reviews</Link>
-        {:else if $user.admin !== true}
-        <Link to="/">Home</Link>
-            <Link to="/books">Books</Link>
-            <Link to="/contact">Contact</Link>
-            <Link to="/profile">Profile</Link>
         {/if}
 
         {#if $user !== null}

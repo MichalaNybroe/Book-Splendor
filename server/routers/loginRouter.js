@@ -27,16 +27,17 @@ function checkPasswordSecurity(req, res, next) {
 router.post("/login", async (req, res) => {
     const { email, password } = req.body
 
-    const user = await db.query("SELECT * FROM users WHERE email=?;", [email])
+    const [rows, fields] = await db.query("SELECT * FROM users WHERE email=?;", [email])
+    const user = rows[0]
 
     if (!user || await !comparePassword(password, user.password)) {
         return res.status(401).send({ message: "Login failed." })
+    } else {
+        //do we want this?
+        req.session.isLoggedIn = true
+        req.session.admin = !!user.admin //cast twice for bool
+        res.status(200).send({ data: {email: user.email, user_name: user.user_name, admin: !!user.admin, picture_number: user.picture_number, color: user.color}, message: "Login successful" })
     }
-
-    //do we want this?
-    req.session.isLoggedIn = true
-    req.session.user = { email: user.email, user_name: user.user_name, admin: user.admin, picture_number: user.picture_number, color: user.color }
-    res.status(200).send({ message: "Login successful" })
 })
 
 
