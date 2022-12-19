@@ -19,8 +19,9 @@ if (isInDeleteMode) {
 
 db.execute(`CREATE TABLE IF NOT EXISTS users(
     email PRIMARY KEY,
+    user_name VARCHAR(255),
     password VARCHAR(255),
-    role VARCHAR(50),
+    admin BOOLEAN,
     picture_number INTEGER,
     color VARCHAR(255)
 );`)
