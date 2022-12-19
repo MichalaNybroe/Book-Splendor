@@ -27,8 +27,10 @@
                 body: JSON.stringify(body)
             }).then((response) => {
                     if (response.ok) {
-                        user.set(true)
-                        navigate("/profile")
+                        response.json().then((data) => {
+                            user.set(data.data)
+                            navigate("/profile")
+                        })
                     } else {
                         response.json().then((m) => Toastr.warning(m.message))
                     }
