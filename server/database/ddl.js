@@ -18,7 +18,7 @@ if (isInDeleteMode) {
 }
 
 db.execute(`CREATE TABLE IF NOT EXISTS users(
-    email PRIMARY KEY,
+    email VARCHAR(500) UNIQUE PRIMARY KEY,
     user_name VARCHAR(255),
     password VARCHAR(255),
     admin BOOLEAN,
@@ -38,16 +38,19 @@ db.execute(`CREATE TABLE IF NOT EXISTS books(
     number INTEGER,
     unreleased BOOLEAN,
     img VARCHAR(2000),
-    created_date TIMESTAMP NOT NULL DEFAULT NOW()
-    CONSTRAINT fk_series FOREIGN KEY (id) REFERENCES series(id)
+    created_date TIMESTAMP NOT NULL DEFAULT NOW(),
+    series_id INTEGER,
+    CONSTRAINT fk_series FOREIGN KEY (series_id) REFERENCES series(id)
 );`)
 
 db.execute(`CREATE TABLE IF NOT EXISTS users_books(
-    CONSTRAINT fk_users FOREIGN KEY (email) REFERENCES users(email),
-    CONSTRAINT fk_books FOREIGN KEY (id) REFERENCES books(id),
+    users_id VARCHAR(500),
+    books_id INTEGER,
+    CONSTRAINT fk_users FOREIGN KEY (users_id) REFERENCES users(email),
+    CONSTRAINT fk_books FOREIGN KEY (books_id) REFERENCES books(id),
     want_to_read BOOLEAN,
     has_read BOOLEAN,
-    CONSTRAINT unique_users_books UNIQUE (fk_users, fk_books)
+    CONSTRAINT unique_users_books UNIQUE (users_id, books_id)
 );`)
 
 db.execute(`CREATE TABLE IF NOT EXISTS reviews(
@@ -55,7 +58,8 @@ db.execute(`CREATE TABLE IF NOT EXISTS reviews(
     subject VARCHAR(50),
     text VARCHAR(1000),
     rating SMALLINT(5),
-    CONSTRAINT fk_users FOREIGN KEY (email) REFERENCES users(email)
+    users_id VARCHAR(500),
+    CONSTRAINT fk_users FOREIGN KEY (users_id) REFERENCES users(email)
 );`)
 
 db.execute(`CREATE TABLE IF NOT EXISTS authors(
@@ -64,9 +68,11 @@ db.execute(`CREATE TABLE IF NOT EXISTS authors(
 );`)
 
 db.execute(`CREATE TABLE IF NOT EXISTS books_authors(
-    CONSTRAINT fk_books FOREIGN KEY (id) REFERENCES books(id),
-    CONSTRAINT fk_authors FOREIGN KEY (id) REFERENCES authors(id),
-    CONSTRAINT unique_books_authors UNIQUE (fk_books, fk_authors)
+    books_id INTEGER,
+    authors_id INTEGER,
+    CONSTRAINT fk_books FOREIGN KEY (books_id) REFERENCES books(id),
+    CONSTRAINT fk_authors FOREIGN KEY (authors_id) REFERENCES authors(id),
+    CONSTRAINT unique_books_authors UNIQUE (books_id, authors_id)
 );`)
 
 db.execute(`CREATE TABLE IF NOT EXISTS genres(
@@ -75,9 +81,11 @@ db.execute(`CREATE TABLE IF NOT EXISTS genres(
 );`)
 
 db.execute(`CREATE TABLE IF NOT EXISTS books_genres(
-    CONSTRAINT fk_books FOREIGN KEY (id) REFERENCES books(id),
-    CONSTRAINT fk_genres FOREIGN KEY (id) REFERENCES genres(id),
-    CONSTRAINT unique_books_genres UNIQUE (fk_books, fk_genres)
+    books_id INTEGER,
+    genres_id INTEGER,
+    CONSTRAINT fk_books FOREIGN KEY (books_id) REFERENCES books(id),
+    CONSTRAINT fk_genres FOREIGN KEY (genres_id) REFERENCES genres(id),
+    CONSTRAINT unique_books_genres UNIQUE (books_id, genres_id)
 );`)
 
 
