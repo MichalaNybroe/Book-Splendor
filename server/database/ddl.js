@@ -92,9 +92,9 @@ db.execute(`CREATE TABLE IF NOT EXISTS books_genres(
 if (isInDeleteMode) {
     //users
     db.execute(`INSERT INTO users(email, user_name, password, admin, picture_number, color) 
-    VALUES (?, ?, ?, ?, ?, ?);`, [process.env.ADMIN_EMAIL, "adminOne", encryptPassword(process.env.ADMIN_PASSWORD), true, 2, "#FF5733"])
+    VALUES (?, ?, ?, ?, ?, ?);`, [process.env.ADMIN_EMAIL, "adminOne", await encryptPassword(process.env.ADMIN_PASSWORD), true, 2, "#FF5733"])
     db.execute(`INSERT INTO users(email, user_name, password, admin, picture_number, color) 
-    VALUES (?, ?, ?, ?, ?, ?);`, [process.env.USER_EMAIL, "mayFlower", encryptPassword(process.env.USER_PASSWORD), false, 6, "#30EBF3"])
+    VALUES (?, ?, ?, ?, ?, ?);`, [process.env.USER_EMAIL, "mayFlower", await encryptPassword(process.env.USER_PASSWORD), false, 6, "#30EBF3"])
 
     //series
     db.execute(`INSERT INTO series(title) VALUE (?);`, ["Lord of the Rings"])
@@ -103,9 +103,9 @@ if (isInDeleteMode) {
     db.execute(`INSERT INTO series(title) VALUE (?);`, ["The Folk of the Air"])
 
     //books
-    db.execute(`INSERT INTO books(title, description, number, unreleased, img, fk_series) VALUE (?, ?, ?, ?, ?, ?);`, ["The Fellowship of the Ring", "noget", 1, false, "https://upload.wikimedia.org/wikipedia/en/8/8e/The_Fellowship_of_the_Ring_cover.gif", 1])
-    db.execute(`INSERT INTO books(title, description, number, unreleased, img, fk_series) VALUE (?, ?, ?, ?, ?, ?);`, ["The Two Towers", "noget", 2, false, "https://upload.wikimedia.org/wikipedia/en/thumb/a/a1/The_Two_Towers_cover.gif/220px-The_Two_Towers_cover.gif", 1])
-    db.execute(`INSERT INTO books(title, description, number, unreleased, img, fk_series) VALUE (?, ?, ?, ?, ?, ?);`, ["The Return of the King", "noget", 3, false, "https://upload.wikimedia.org/wikipedia/en/thumb/1/11/The_Return_of_the_King_cover.gif/220px-The_Return_of_the_King_cover.gif", 1])
+    db.execute(`INSERT INTO books(title, description, number, unreleased, img, series_id) VALUE (?, ?, ?, ?, ?, ?);`, ["The Fellowship of the Ring", "noget", 1, false, "https://upload.wikimedia.org/wikipedia/en/8/8e/The_Fellowship_of_the_Ring_cover.gif", 1])
+    db.execute(`INSERT INTO books(title, description, number, unreleased, img, series_id) VALUE (?, ?, ?, ?, ?, ?);`, ["The Two Towers", "noget", 2, false, "https://upload.wikimedia.org/wikipedia/en/thumb/a/a1/The_Two_Towers_cover.gif/220px-The_Two_Towers_cover.gif", 1])
+    db.execute(`INSERT INTO books(title, description, number, unreleased, img, series_id) VALUE (?, ?, ?, ?, ?, ?);`, ["The Return of the King", "noget", 3, false, "https://upload.wikimedia.org/wikipedia/en/thumb/1/11/The_Return_of_the_King_cover.gif/220px-The_Return_of_the_King_cover.gif", 1])
 
     //users_books
     db.execute(`INSERT INTO users_books(users_id, books_id, want_to_read, has_read) VALUE (?, ?, ?, ?);`, [process.env.USER_EMAIL, 1, false, true])
