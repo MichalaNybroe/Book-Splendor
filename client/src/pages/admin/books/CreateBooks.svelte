@@ -11,9 +11,19 @@
         navigate("/")
     }
 
+    let value = 'foo'
+	let options = {}
+
+    function loadOptions() {
+        options = {
+            '': 'Please choose...',
+            
+        }
+    }
+
     async function handleSubmit() {
     const body = {
-      name: document.getElementById("title").value,
+      title: document.getElementById("title").value,
       description: document.getElementById("description").value,
       number: document.getElementById("number").value,
       series: document.getElementById("series").value,
@@ -23,7 +33,7 @@
       subject: document.getElementById("genres").value
     };
 
-    await fetch(`${$BASE_URL}/books`, {
+    await fetch(`${$BASE_URL}/api/books`, {
       method: "POST",
       credentials: "include",
       headers: {
@@ -67,8 +77,15 @@ action="/createbook">
 <div class="series">
     <label for="series" />
     <select placeholder="Series" name="series" id="series" required>
-    <option>Opret en getter til at få fat i serier her?</option>
+    <option value="">Select series</option>
     <option>Hardcoded option 2</option>
+    <select {value}>
+        {#each Object.entries(options) as [key, value] (key)}
+            <option value={key}>
+                {value}
+            </option>
+        {/each}
+    </select>
     </select>
 </div>
 <div class="Release status">
