@@ -38,6 +38,14 @@ router.post("/login", async (req, res) => {
         req.session.id = user.id
         res.status(200).send({ data: {email: user.email, user_name: user.user_name, admin: !!user.admin, picture_number: user.picture_number, color: user.color}, message: "Login successful" })
     }
+<<<<<<< HEAD
+
+    req.session.isLoggedIn = true
+    req.session.email = email
+    req.session.admin = user.admin
+    res.status(200).send({ message: "Login successful" })
+=======
+>>>>>>> 587458c4d35611536f819239ff6824eccc726cdc
 })
 
 
