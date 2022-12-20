@@ -37,7 +37,7 @@ router.get("/api/books/:id", async (req, res) => {
 //create book
 
 //for dropdown options
-router.get(/api/books), adminGuard, async (req, res) => {
+router.get("/api/books"), adminGuard, async (req, res) => {
     const authorlist = await db.query("SELECT * FROM authors ORDER BY name ASC;")
     const serieslist = await db.query("SELECT * FROM series ORDER BY name ASC;")
     const genreslist = await db.query("SELECT * FROM genreslist ORDER BY name ASC;")
