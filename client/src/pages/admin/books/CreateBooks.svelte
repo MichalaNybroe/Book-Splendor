@@ -72,12 +72,8 @@ action="/createbook">
     </select>
 </div>
 <div class="Release status">
-    <label for="unreleased" />
-    <select placeholder="Release status" name="unreleased" id="unreleased" required>
-    <option>Released</option>
-    <option>Unreleased</option>
-    <!--checkbox: checked = unreleased = 0 -->
-    </select>
+    <input type="checkbox" name="unreleased" id="unreleased" required>
+    <label for="unreleased">Unreleased</label>>
 </div>
 <div class="book_img">
     <label for="book_img" />
