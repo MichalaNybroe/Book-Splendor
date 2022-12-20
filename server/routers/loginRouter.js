@@ -33,19 +33,11 @@ router.post("/login", async (req, res) => {
     if (!user || await !comparePassword(password, user.password)) {
         return res.status(401).send({ message: "Login failed." })
     } else {
-        //do we want this?
         req.session.isLoggedIn = true
         req.session.admin = !!user.admin //cast twice for bool
+        req.session.id = user.id
         res.status(200).send({ data: {email: user.email, user_name: user.user_name, admin: !!user.admin, picture_number: user.picture_number, color: user.color}, message: "Login successful" })
     }
-<<<<<<< HEAD
-
-    req.session.isLoggedIn = true
-    req.session.email = email
-    req.session.admin = user.admin
-    res.status(200).send({ message: "Login successful" })
-=======
->>>>>>> 587458c4d35611536f819239ff6824eccc726cdc
 })
 
 
@@ -75,11 +67,14 @@ router.post("/updatePassword",checkPasswordSecurity, (req, res) => {
 router.post("/signUp", checkPasswordSecurity, (req, res) => {
     const { username, email, password } = req.body
 
-    db.query("INSERT INTO users(user_name, email, password, admin) VALUES(?,?,?,?);", [username, email, encryptPassword(password), false])
-    req.session.isLoggedIn = true
-    req.session.email = email
-    req.session.role = "user"
-    res.status(200).send({ message: "Successfull signup." })
+    const success = db.query(`INSERT INTO users(user_name, email, password, admin, picture_number, color)
+    VALUES(?,?,?,?,?,?);`, [username, email, encryptPassword(password), false, 1, "#A3B18A"])
+
+    if (!success) {
+        res.status(400).send({ message: "Unsucessfull signup." })
+    } else {
+        res.status(200).send({ message: "Successfull signup." })
+    }
 })
 
 export default router
