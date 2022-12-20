@@ -10,7 +10,7 @@
 
         navigate("/")
     }
-
+/*
     let value = 'foo'
 	let options = {}
 
@@ -20,6 +20,7 @@
             
         }
     }
+*/
 
     async function handleSubmit() {
     const body = {
@@ -32,6 +33,8 @@
       message: document.getElementById("authors").value,
       subject: document.getElementById("genres").value
     };
+
+   
 
     await fetch(`${$BASE_URL}/api/books`, {
       method: "POST",
@@ -72,13 +75,13 @@ action="/createbook">
 <div class="number">
     <label for="number" />
     <input type="number" placeholder=1 name="number" id="number" min=1>
-    //validation på at det er mindst 1, ellers toaster fejlbesked 
 </div>
 <div class="series">
     <label for="series" />
-    <select placeholder="Series" name="series" id="series" required>
+    <select placeholder="Series" name="series" id="series">
     <option value="">Select series</option>
-    <option>Hardcoded option 2</option>
+    <option>Lord of the Rings</option>
+    <!--
     <select {value}>
         {#each Object.entries(options) as [key, value] (key)}
             <option value={key}>
@@ -86,11 +89,12 @@ action="/createbook">
             </option>
         {/each}
     </select>
+    -->
     </select>
 </div>
 <div class="Release status">
-    <input type="checkbox" name="unreleased" id="unreleased" required>
-    <label for="unreleased">Unreleased</label>>
+    <input type="checkbox" name="unreleased" id="unreleased">
+    <label for="unreleased">Unreleased</label>
 </div>
 <div class="book_img">
     <label for="book_img" />
@@ -99,15 +103,23 @@ action="/createbook">
 <div class="authors">
     <label for="authors" />
     <select placeholder="Author" name="authors" id="authors" multiple required>
-    <option>Opret en getter til at få fat i author her?</option>
-    <option>Hardcoded option 2</option>
+    <option>Holly Black</option>
+    <option>J.R.R. Tolkien</option>
+    <option>Sarah J. Maas</option>
+    <option>Suzanne Collins</option>
     </select>
 </div>
 <div class="genres">
     <label for="genres" />
     <select placeholder="Genre" name="genres" id="genres" multiple required>
-    <option>Opret en getter til at få fat i genre her?</option>
-    <option>Hardcoded option 2. Et kald til database der henter genre og forfattere</option>
+    <option>Adventure</option>
+    <option>High Fantasy</option>
+    <option>Romance</option>
+    <option>Thriller</option>
+    <option>Sci-fi</option>
     </select>
+</div>
+<div class="submit">
+    <input type="submit" value="Create book" id="submit_button" />
 </div>
 </form>

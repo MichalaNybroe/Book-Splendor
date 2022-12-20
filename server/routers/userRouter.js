@@ -15,7 +15,7 @@ function adminGuard(req, res, next) {
 function userGuard(req, res, next) {
     checkLoggedInStatus()
 
-    if (req.session.id !== req.params.id) {
+    if (req.session.userid !== req.params.id) {
         return res.status(401).send({ message: "Not authorized." })
     }
 
@@ -40,16 +40,16 @@ router.get("/api/users", adminGuard, async (req, res) => {
 
 router.patch("/api/users/:id"), userGuard, async (req, res) => {
     if (req.body.user_name) {
-        db.query("UPDATE users SET user_name = ? WHERE id=?", req.body.user_name, req.session.id)
+        db.query("UPDATE users SET user_name = ? WHERE id=?", req.body.user_name, req.session.userid)
     } else if (req.body.color) {
-        db.query("UPDATE users SET color = ? WHERE id=?", req.body.color, req.session.id)
+        db.query("UPDATE users SET color = ? WHERE id=?", req.body.color, req.session.userid)
     } else if (req.body.picture_number) {
-        db.query("UPDATE users SET picture_number = ? WHERE id=?", req.body.picture_number, req.session.id)
+        db.query("UPDATE users SET picture_number = ? WHERE id=?", req.body.picture_number, req.session.userid)
     }
 }
 
 router.delete("/api/users/:id", checkLoggedInStatus, async (req, res) => {
-    if (req.session.id === req.params.id) {
+    if (req.session.userid === req.params.id) {
         const result = await db.query("DELETE FROM users WHERE users.id=?;", [req.params.id])
         
         if (result === undefined) {

@@ -25,7 +25,6 @@ const superLimiter = rateLimit({
 });
 app.use(superLimiter);
 
-
 app.use(express.json())
 
 //Routers

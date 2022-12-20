@@ -4,6 +4,7 @@ const router = Router()
 import db from "../database/connection.js"
 
 function adminGuard(req, res, next) {
+    console.log(req.session)
     if (req.session.IsLoggedIn !== true) {
         return res.status(401).send({ message: "Not logged in."})
     }

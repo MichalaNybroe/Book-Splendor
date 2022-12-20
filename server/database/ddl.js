@@ -109,11 +109,11 @@ if (isInDeleteMode) {
     db.execute(`INSERT INTO books(title, description, number, unreleased, img, series_id) VALUE (?, ?, ?, ?, ?, ?);`, ["The Return of the King", "noget", 3, false, "https://upload.wikimedia.org/wikipedia/en/thumb/1/11/The_Return_of_the_King_cover.gif/220px-The_Return_of_the_King_cover.gif", 1])
 
     //users_books
-    db.execute(`INSERT INTO users_books(books_id, want_to_read, has_read) VALUE (?, ?, ?, ?);`, [1, false, true])
-    db.execute(`INSERT INTO users_books(books_id, want_to_read, has_read) VALUE (?, ?, ?, ?);`, [2, true, false])
+    db.execute(`INSERT INTO users_books(users_id, books_id, want_to_read, has_read) VALUE (?, ?, ?, ?);`, [2, 1, false, true])
+    db.execute(`INSERT INTO users_books(users_id, books_id, want_to_read, has_read) VALUE (?, ?, ?, ?);`, [2, 2, true, false])
     
     //reviews
-    db.execute(`INSERT INTO reviews(subject, text, rating) VALUE (?, ?, ?, ?);`, ["LOVED IT", "LOVED ITTT", 4])
+    db.execute(`INSERT INTO reviews(users_id, subject, text, rating) VALUE (?, ?, ?, ?);`, [2, "LOVED IT", "LOVED ITTT", 4])
 
     //authors
     db.execute(`INSERT INTO authors(name) VALUE (?);`, ["J.R.R. Tolkien"])
