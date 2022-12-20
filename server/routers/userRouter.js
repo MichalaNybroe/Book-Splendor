@@ -14,6 +14,7 @@ router.get("/api/users", adminGuard, async (req, res) => {
 })
 
 router.patch("/api/users/:id"), userGuard, async (req, res) => {
+    // Tilføj response for hver hvis det virker og for hver hvis det mislykkes
     if (req.body.user_name) {
         db.query("UPDATE users SET user_name = ? WHERE id=?", req.body.user_name, req.session.userid)
     } else if (req.body.color) {

@@ -2,6 +2,7 @@ import { Router } from "express"
 const router = Router()
 import { userGuard, loggedinGuard } from "../util/guard.js"
 
+// vil mene det skal være i userRouter
 //socket io 
 import { Server } from "socket.io"
 const server = http.createServer(app)

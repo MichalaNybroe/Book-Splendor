@@ -33,6 +33,7 @@ router.get("/api/books/:id", async (req, res) => {
     const genreslist = await db.query("SELECT * FROM genreslist ORDER BY name ASC;")
 
     res.send({ data: authorlist, serieslist, genreslist })
+    
 }*/
 
 router.post("/api/books", adminGuard, async (req, res) => {
