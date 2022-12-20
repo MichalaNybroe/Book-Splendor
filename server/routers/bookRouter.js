@@ -1,19 +1,8 @@
 import { Router } from "express"
 const router = Router()
+import { adminGuard } from "../util/guard.js"
 
 import db from "../database/connection.js"
-
-function adminGuard(req, res, next) {
-    console.log(req.session)
-    if (req.session.IsLoggedIn !== true) {
-        return res.status(401).send({ message: "Not logged in."})
-    }
-
-    if (req.session.admin !== true) {
-        return res.status(401).send({ message: "Not authorized."})
-    }
-    next()
-}
 
 // save book of the week id
 
@@ -37,21 +26,23 @@ router.get("/api/books/:id", async (req, res) => {
 
 //create book
 
-//for dropdown options
-router.get("/api/books"), adminGuard, async (req, res) => {
+//for dropdown options // har lavet routers til hver
+/*router.get("/api/books"), adminGuard, async (req, res) => {
     const authorlist = await db.query("SELECT * FROM authors ORDER BY name ASC;")
     const serieslist = await db.query("SELECT * FROM series ORDER BY name ASC;")
     const genreslist = await db.query("SELECT * FROM genreslist ORDER BY name ASC;")
 
     res.send({ data: authorlist, serieslist, genreslist })
-
-}
+}*/
 
 router.post("/api/books", adminGuard, async (req, res) => {
     const { title, description, number, series_id, unreleased, img, authors, genres} = req.body
     checkBookInput(title, description, number, series_id, unreleased, img, authors, genres)
 
     const [bookRes, _] = await db.query("INSERT INTO books(title, description, number, unreleased, img, series_id) VALUE(?, ?, ?, ?, ?, ?);", [title, description, number, unreleased, img, series_id])
+    if (bookRes == undefined) {
+        return res.status(404).send("Unable to create book")
+    }
     authors.forEach(author => {
         db.query("INSERT INTO books_authors(books_id, authors_id) VALUE (?, ?);", [bookRes.id, author])
     })
@@ -60,7 +51,7 @@ router.post("/api/books", adminGuard, async (req, res) => {
         db.query("INSERT INTO books_genres(books_id, genres_id) VALUE (?, ?);", [bookRes.id, genre])
     })
 
-    res.send({ affectedRows: bookRes.affectedRows })
+    res.send({ affectedRows: bookRes.affectedRows, message: "Book created." })
 })
 
 router.put("/api/books/:id", adminGuard, async (req, res) => {

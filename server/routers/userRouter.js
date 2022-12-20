@@ -1,33 +1,8 @@
 import { Router } from "express"
 const router = Router()
+import { adminGuard, userGuard, loggedinGuard } from "../util/guard.js"
 
 import db from "../database/connection.js"
-
-function adminGuard(req, res, next) {
-    checkLoggedInStatus()
-
-    if (req.session.admin !== true) {
-        return res.status(401).send({ message: "Not authorized." })
-    }
-    next()
-}
-
-function userGuard(req, res, next) {
-    checkLoggedInStatus()
-
-    if (req.session.userid !== req.params.id) {
-        return res.status(401).send({ message: "Not authorized." })
-    }
-
-    next()
-}
-
-function checkLoggedInStatus(req, res, next) {
-    if (req.session.IsLoggedIn !==true) {
-        return res.status(401).send({ message: "Not signed in. " })
-    }
-    next()
-}
 
 router.get("/api/users", adminGuard, async (req, res) => {
     const users = await db.query("SELECT * FROM users;")
@@ -48,7 +23,7 @@ router.patch("/api/users/:id"), userGuard, async (req, res) => {
     }
 }
 
-router.delete("/api/users/:id", checkLoggedInStatus, async (req, res) => {
+router.delete("/api/users/:id", loggedinGuard, async (req, res) => {
     if (req.session.userid === req.params.id) {
         const result = await db.query("DELETE FROM users WHERE users.id=?;", [req.params.id])
         
