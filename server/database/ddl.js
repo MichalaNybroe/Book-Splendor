@@ -18,7 +18,8 @@ if (isInDeleteMode) {
 }
 
 db.execute(`CREATE TABLE IF NOT EXISTS users(
-    email VARCHAR(500) UNIQUE PRIMARY KEY,
+    id INTEGER PRIMARY KEY AUTO_INCREMENT,
+    email VARCHAR(500) UNIQUE,
     user_name VARCHAR(255),
     password VARCHAR(255),
     admin BOOLEAN,
@@ -46,7 +47,7 @@ db.execute(`CREATE TABLE IF NOT EXISTS books(
 db.execute(`CREATE TABLE IF NOT EXISTS users_books(
     users_id VARCHAR(500),
     books_id INTEGER,
-    CONSTRAINT fk_users_books_id FOREIGN KEY (users_id) REFERENCES users(email),
+    CONSTRAINT fk_users_books_id FOREIGN KEY (users_id) REFERENCES users(id),
     CONSTRAINT fk_books_users_id FOREIGN KEY (books_id) REFERENCES books(id),
     want_to_read BOOLEAN,
     has_read BOOLEAN,
@@ -59,7 +60,7 @@ db.execute(`CREATE TABLE IF NOT EXISTS reviews(
     text VARCHAR(1000),
     rating SMALLINT(5),
     users_id VARCHAR(500),
-    CONSTRAINT fk_users_reviews FOREIGN KEY (users_id) REFERENCES users(email)
+    CONSTRAINT fk_users_reviews FOREIGN KEY (users_id) REFERENCES users(id)
 );`)
 
 db.execute(`CREATE TABLE IF NOT EXISTS authors(
@@ -108,11 +109,11 @@ if (isInDeleteMode) {
     db.execute(`INSERT INTO books(title, description, number, unreleased, img, series_id) VALUE (?, ?, ?, ?, ?, ?);`, ["The Return of the King", "noget", 3, false, "https://upload.wikimedia.org/wikipedia/en/thumb/1/11/The_Return_of_the_King_cover.gif/220px-The_Return_of_the_King_cover.gif", 1])
 
     //users_books
-    db.execute(`INSERT INTO users_books(users_id, books_id, want_to_read, has_read) VALUE (?, ?, ?, ?);`, [process.env.USER_EMAIL, 1, false, true])
-    db.execute(`INSERT INTO users_books(users_id, books_id, want_to_read, has_read) VALUE (?, ?, ?, ?);`, [process.env.USER_EMAIL, 2, true, false])
+    db.execute(`INSERT INTO users_books(books_id, want_to_read, has_read) VALUE (?, ?, ?, ?);`, [1, false, true])
+    db.execute(`INSERT INTO users_books(books_id, want_to_read, has_read) VALUE (?, ?, ?, ?);`, [2, true, false])
     
     //reviews
-    db.execute(`INSERT INTO reviews(subject, text, rating, users_id) VALUE (?, ?, ?, ?);`, ["LOVED IT", "LOVED ITTT", 4, process.env.USER_EMAIL])
+    db.execute(`INSERT INTO reviews(subject, text, rating) VALUE (?, ?, ?, ?);`, ["LOVED IT", "LOVED ITTT", 4])
 
     //authors
     db.execute(`INSERT INTO authors(name) VALUE (?);`, ["J.R.R. Tolkien"])
