@@ -2,12 +2,12 @@
     import { onMount } from "svelte"
     import { Router, Link, useNavigate } from "svelte-navigator"
     import { BASE_URL } from "../../../store/globals.js"
-    import { user_admin } from "../../../store/auth"
+    import { user } from "../../../store/auth"
     import * as Toastr from "toastr"
     import '../../../../node_modules/toastr/build/toastr.css'
 
 
-    if($user_admin === null) {
+    if($user?.admin !== true) { //nullable check
         const navigate = useNavigate()
 
         navigate("/")

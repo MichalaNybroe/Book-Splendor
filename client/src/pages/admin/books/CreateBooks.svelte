@@ -5,7 +5,7 @@
     import * as Toastr from "toastr";
 
     
-    if($user.admin !== true) {
+    if($user?.admin !== true) {
         const navigate = useNavigate()
 
         navigate("/")

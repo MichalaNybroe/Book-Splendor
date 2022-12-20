@@ -19,7 +19,7 @@
   import ManageCreateBooks from "./pages/admin/books/CreateBooks.svelte"
   import Profile from "./pages/profile/Profile.svelte"
 
-
+/*
   const socket = io();
     onMount(async () => {
         if ($ENVIRONMENT === "DEVELOPMENT") {
@@ -30,6 +30,7 @@
  
         const response = await fetch($BASE_URL + "/profile")
     });
+    */
 
 </script>
 

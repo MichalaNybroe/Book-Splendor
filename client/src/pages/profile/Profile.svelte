@@ -1,6 +1,6 @@
 <script>
     import { Router, Link, useNavigate } from "svelte-navigator"
-    import { user, user_admin } from "../../store/auth.js"
+    import { user } from "../../store/auth.js"
 
     //colorchange with socket:
     import { colorChangesList } from "../../store/colorChangesList";
@@ -21,7 +21,7 @@
     }
 
     
-    if($user_admin !== null || $user === null) {
+    if($user === null || $user.admin === true) {
         const navigate = useNavigate()
 
         navigate("/")
@@ -31,7 +31,7 @@
 <div id="profilebanner">
     <img id="profilePicture">
 
-    <h3 id="username">{user.user_name}</h3>
+    <h3 id="username">{$user?.user_name}</h3>
 </div>
 
 <div id="toReadList">

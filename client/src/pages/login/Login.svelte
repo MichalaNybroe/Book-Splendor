@@ -2,7 +2,7 @@
     import { onMount } from "svelte"
     import { Router, Link, useNavigate } from "svelte-navigator"
     import { BASE_URL } from "../../store/globals.js"
-    import { user, user_email, user_name, user_admin, user_picture, user_color } from "../../store/auth.js"
+    import { user } from "../../store/auth.js"
     import * as Toastr from "toastr"
     import '../../../node_modules/toastr/build/toastr.css'
 
@@ -28,27 +28,10 @@
             }).then((response) => {
                     if (response.ok) {
                         response.json().then((data) => {
-                            user.set(true)
-                            user_email.set(data.data.email)
-                            user_name.set(data.data.user_name)
-                            console.log(data.data.admin)
-                            if(data.data.admin === true) {
-                                console.log("vi er i if")
-                                user_admin.set(true)
-                            } else {
-                                user_admin.set(null)
-                            }
-                            user_picture.set(data.data.picture_number)
-                            user_color.set(data.data.color)
-                            
-                            let admin = null
-                            user_admin.subscribe((data) => {
-                                admin = data
-                            }) 
-                            if(user_admin !== null) {
+                            user.set(data.data)
+                            if($user.admin === true) {
                                 navigate("/admin/books")
-                            }
-                            if(user !== null && user_admin === null) {
+                            } else {
                                 navigate("/profile")
                             }
                         })
