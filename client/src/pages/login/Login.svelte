@@ -24,6 +24,7 @@
             return fetch(`${$BASE_URL}/login`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
+                credentials: "include",
                 body: JSON.stringify(body)
             }).then((response) => {
                     if (response.ok) {

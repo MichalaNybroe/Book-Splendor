@@ -1,6 +1,4 @@
 export function adminGuard(req, res, next) {
-    loggedinGuard()
-
     if (req.session.admin !== true) {
         return res.status(401).send({ message: "Not authorized." })
     }
@@ -8,9 +6,7 @@ export function adminGuard(req, res, next) {
 }
 
 export function userGuard(req, res, next) {
-    loggedinGuard()
-
-    if (req.session.userid !== req.params.id) {
+    if (req.session.userid !== Number(req.params.id)) {
         return res.status(401).send({ message: "Not authorized." })
     }
 
@@ -18,7 +14,7 @@ export function userGuard(req, res, next) {
 }
 
 export function loggedinGuard(req, res, next) {
-    if (req.session.IsLoggedIn !==true) {
+    if (req.session.isLoggedIn !==true) {
         return res.status(401).send({ message: "Not signed in. " })
     }
     next()

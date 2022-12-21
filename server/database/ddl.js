@@ -45,7 +45,7 @@ db.execute(`CREATE TABLE IF NOT EXISTS books(
 );`)
 
 db.execute(`CREATE TABLE IF NOT EXISTS users_books(
-    users_id VARCHAR(500),
+    users_id INTEGER,
     books_id INTEGER,
     CONSTRAINT fk_users_books_id FOREIGN KEY (users_id) REFERENCES users(id),
     CONSTRAINT fk_books_users_id FOREIGN KEY (books_id) REFERENCES books(id),
@@ -59,7 +59,7 @@ db.execute(`CREATE TABLE IF NOT EXISTS reviews(
     subject VARCHAR(50),
     text VARCHAR(1000),
     rating SMALLINT(5),
-    users_id VARCHAR(500),
+    users_id INTEGER,
     CONSTRAINT fk_users_reviews FOREIGN KEY (users_id) REFERENCES users(id)
 );`)
 
@@ -141,3 +141,5 @@ if (isInDeleteMode) {
     db.execute(`INSERT INTO books_genres(books_id, genres_id) VALUE (?, ?);`, [3, 1])
     db.execute(`INSERT INTO books_genres(books_id, genres_id) VALUE (?, ?);`, [3, 2])
 }
+
+db.end()

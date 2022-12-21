@@ -1,8 +1,9 @@
 import { Router } from "express"
-import { adminGuard } from "../util/guard.js"
+import { adminGuard, loggedinGuard } from "../util/guard.js"
 import db from "../database/connection.js"
 
 const router = Router()
+router.use(loggedinGuard)
 
 router.get("/api/series", adminGuard, async (req, res) => {
     const series = await db.query("SELECT * FROM series ORDER BY name ASC;")

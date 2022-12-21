@@ -1,6 +1,6 @@
 import { Router } from "express"
 const router = Router()
-import { adminGuard } from "../util/guard.js"
+import { adminGuard, loggedinGuard } from "../util/guard.js"
 
 import db from "../database/connection.js"
 
@@ -36,7 +36,7 @@ router.get("/api/books/:id", async (req, res) => {
     
 }*/
 
-router.post("/api/books", adminGuard, async (req, res) => {
+router.post("/api/books", loggedinGuard, adminGuard, async (req, res) => {
     const { title, description, number, series_id, unreleased, img, authors, genres} = req.body
     checkBookInput(title, description, number, series_id, unreleased, img, authors, genres)
 
@@ -55,7 +55,7 @@ router.post("/api/books", adminGuard, async (req, res) => {
     res.send({ affectedRows: bookRes.affectedRows, message: "Book created." })
 })
 
-router.put("/api/books/:id", adminGuard, async (req, res) => {
+router.put("/api/books/:id", loggedinGuard, adminGuard, async (req, res) => {
     const { title, description, number, series_id, unreleased, img, authors, genres} = req.body
     checkBookInput(title, description, number, series_id, unreleased, img, authors, genres)
 
@@ -77,7 +77,7 @@ router.put("/api/books/:id", adminGuard, async (req, res) => {
     res.send({ affectedRows: book.affectedRows})
 })
 
-router.delete("/api/books/:id", adminGuard, async (req, res) => {
+router.delete("/api/books/:id", loggedinGuard, adminGuard, async (req, res) => {
     const result = await db.query("DELETE FROM books WHERE books.id=?;", [req.params.id])
     if (result === undefined) {
       res.status(404).send({ data: undefined, message: `No book with ${req.params.id} id`})

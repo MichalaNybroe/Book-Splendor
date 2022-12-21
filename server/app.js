@@ -34,12 +34,14 @@ import contactFormRouter from "./routers/contactFormRouter.js"
 import authorsRouter from "./routers/authorsRouter.js"
 import genresRouter from "./routers/genresRouter.js"
 import seriesRouter from "./routers/seriesRouter.js"
+import userRouter from "./routers/userRouter.js"
 app.use(authRouter)
 app.use(bookRouter)
 app.use(contactFormRouter)
 app.use(authorsRouter)
 app.use(genresRouter)
 app.use(seriesRouter)
+app.use(userRouter)
 
 
 const PORT = Number(process.env.PORT) || 8080
