@@ -28,13 +28,13 @@ app.use(superLimiter)
 app.use(express.json())
 
 //Routers
-import loginRouter from "./routers/loginRouter.js"
+import authRouter from "./routers/authRouter.js"
 import bookRouter from "./routers/bookRouter.js"
 import contactFormRouter from "./routers/contactFormRouter.js"
 import authorsRouter from "./routers/authorsRouter.js"
 import genresRouter from "./routers/genresRouter.js"
 import seriesRouter from "./routers/seriesRouter.js"
-app.use(loginRouter)
+app.use(authRouter)
 app.use(bookRouter)
 app.use(contactFormRouter)
 app.use(authorsRouter)
