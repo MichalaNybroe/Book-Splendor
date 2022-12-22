@@ -1,8 +1,12 @@
 <script>
     import { user } from "../../../store/auth.js"
     import { useNavigate } from "svelte-navigator"
-    import { BASE_URL } from "../../../store/globals.js";
-    import * as Toastr from "toastr";
+    import { BASE_URL } from "../../../store/globals.js"
+    import * as Toastr from "toastr"
+    import CheckboxGenres from "../../../components/CheckboxGenres.svelte"
+    import CheckboxSeries from "../../../components/CheckboxSeries.svelte"
+    import CheckboxAuthors from "../../../components/CheckboxAuthors.svelte"
+    import { onMount } from "svelte";
 
     
     if($user?.admin !== true) {
@@ -10,51 +14,56 @@
 
         navigate("/")
     }
-/*
-    let value = 'foo'
-	let options = {}
 
-    function loadOptions() {
-        options = {
-            '': 'Please choose...',
-            
+    let genres = []
+    let series = []
+    let authors = []
+
+    async function get(endpoint) {
+        let array = []
+        const response = await fetch(`${$BASE_URL}/api/${endpoint}`, {
+            credentials: "include"
+        })
+        if (response.ok) {
+            const data = await response.json()
+            return array = data.data
+        } else {
+            Toastr.warning(`Unable to retrieve ${endpoint}.`)
         }
     }
-*/
-
-    async function handleSubmit() {
-    const body = {
-      title: document.getElementById("title").value,
-      description: document.getElementById("description").value,
-      number: document.getElementById("number").value,
-      series: document.getElementById("series").value,
-      unreleased: document.getElementById("unreleased").value,
-      image: document.getElementById("book_img").value,
-      message: document.getElementById("authors").value,
-      subject: document.getElementById("genres").value
-    };
-
    
+async function fetchInfo() {
+    series = await get("series")
+    genres = await get("genres")
+    authors = await get("authors")
+}
 
-    await fetch(`${$BASE_URL}/api/books`, {
-      method: "POST",
-      credentials: "include",
-      headers: {
-        "Content-Type": "application/json;charset=utf-8",
-      },
-      body: JSON.stringify(body),
-    })
-      .then((response) => {
-        if (response.ok) {
-          Toastr.success("The book has been created.");
-        } else {
-          response.json().then((m) => Toastr.warning(m.message));
-        }
-      })
-      .catch(() => {
-        Toastr.error("Unsuccessfull. Try again later.");
-      });
-  }
+
+onMount(fetchInfo)
+
+
+async function handleSubmit() {
+    const body = {
+      title: title,
+      description: description,
+      number: number,
+      series_id: series,
+      unreleased: unreleased,
+      img: book_img,
+      authors: authors,
+      genres: genres
+    }
+}
+
+let title = ""
+let description = ""
+let number = ""
+let series = ""
+let unreleased = ""
+let book_img = ""
+let authors = ""
+let genres = ""
+
 
 </script>
 
@@ -66,58 +75,38 @@ action="/createbook">
 
 <div class="title">
     <label for="title" />
-    <input type="text" placeholder="Title" name="title" id="title">
+    <input type="text" placeholder="Title" name="title" id="title" bind:value{title}>
 </div>
 <div class="description">
     <label for="description" />
-    <input type="text" placeholder="Description" name="description" id="description">
+    <input type="text" placeholder="Description" name="description" id="description" bind:value{description}>
 </div>
 <div class="number">
     <label for="number" />
-    <input type="number" placeholder=1 name="number" id="number" min=1>
+    <input type="number" placeholder=1 name="number" id="number" min=1 bind:value{number}>
 </div>
 <div class="series">
-    <label for="series" />
-    <select placeholder="Series" name="series" id="series">
-    <option value="">Select series</option>
-    <option>Lord of the Rings</option>
-    <!--
-    <select {value}>
-        {#each Object.entries(options) as [key, value] (key)}
-            <option value={key}>
-                {value}
-            </option>
-        {/each}
-    </select>
-    -->
-    </select>
+    {#each series as serie}
+        <CheckboxSeries serie={serie}></CheckboxSeries>
+    {/each}
 </div>
 <div class="Release status">
-    <input type="checkbox" name="unreleased" id="unreleased">
+    <input type="checkbox" name="unreleased" id="unreleased" bind:value{unreleased}>
     <label for="unreleased">Unreleased</label>
 </div>
 <div class="book_img">
     <label for="book_img" />
-    <input type="text" placeholder="Image" name="img" id="book_img">
+    <input type="text" placeholder="Image" name="img" id="book_img" bind:value{book_img}>
 </div>
 <div class="authors">
-    <label for="authors" />
-    <select placeholder="Author" name="authors" id="authors" multiple required>
-    <option>Holly Black</option>
-    <option>J.R.R. Tolkien</option>
-    <option>Sarah J. Maas</option>
-    <option>Suzanne Collins</option>
-    </select>
+    {#each authors as author}
+        <CheckboxAuthors author={author}></CheckboxAuthors>
+    {/each}
 </div>
 <div class="genres">
-    <label for="genres" />
-    <select placeholder="Genre" name="genres" id="genres" multiple required>
-    <option>Adventure</option>
-    <option>High Fantasy</option>
-    <option>Romance</option>
-    <option>Thriller</option>
-    <option>Sci-fi</option>
-    </select>
+    {#each genres as genre}
+        <CheckboxGenres genre={genre}></CheckboxGenres>
+    {/each}
 </div>
 <div class="submit">
     <input type="submit" value="Create book" id="submit_button" />

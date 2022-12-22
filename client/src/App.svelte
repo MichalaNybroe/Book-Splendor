@@ -22,7 +22,7 @@
   import AuthorBooks from "./pages/authors/Author.svelte"
   import GenreBooks from "./pages/genres/Genre.svelte"
   import SeriesBooks from "./pages/series/Series.svelte"
-    import Series from "./components/Series.svelte";
+  import Series from "./components/Series.svelte";
   
 /*
   const socket = io();
