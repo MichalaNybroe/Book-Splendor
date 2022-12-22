@@ -7,11 +7,16 @@ import db from "../database/connection.js"
 router.use(loggedinGuard)
 
 router.get("/api/users", adminGuard, async (req, res) => {
-    const users = await db.query("SELECT * FROM users;")
+    const [users,_] = await db.query("SELECT * FROM users;")
     if (users === undefined) {
         res.status(400).send({ data: undefined, message: `Unable to retrieve users`})
     } else {
-        res.send({ data: users})
+        const userList = []
+        users.forEach(() => {
+            userList.push({id: user.id, email: user.email, user_name: user.user_name})
+        })
+        console.log(userList)
+        res.send({ data: userList})
     }
 })
 
