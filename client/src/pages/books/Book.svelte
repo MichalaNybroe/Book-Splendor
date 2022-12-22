@@ -1,22 +1,32 @@
 <script>
+    export let book
+    export let authors
+    export let genres
+    export let series
 
-    import { set_attributes } from "svelte/internal";
-
+    import { Link } from "svelte-navigator"
+    import Author from "../../components/Author.svelte"
+    import Genres from "../../components/Genres.svelte"
+    import Series from "../../components/Series.svelte"
 </script>
 
 
 
-<img id="bookCover">
-<h3>{Title}</h3>
-<p>{series.title} {number} clicakble to see books in series</p>
-<p>{author} clicakble to see books by author</p>
-<p>{unreleased}</p>
-<p>{rating}</p>
-<p>{amount of ratings} {amount of reviews} Gør clickable så man kan se 5 af gangen evt graf</p>
-<p>{description}</p>
+<img id="bookCover" src="{book.img}">
+<h3>{book.title}</h3>
+<Link to="/series/books"><p>{series.title} {book.number}</p></Link>
+{#each authors as author}
+    <Link to="/authors/books"><Author author={author}/></Link>
+{/each}
+{#each genres as genre}
+    <Link to="/genres/books"><Genres genre={genre}/></Link>
+{/each}
+<p>{book.unreleased}</p>
+<!--<p>{book.rating}</p>
+<p>{book.ratings} {reviews} Gør clickable så man kan se 5 af gangen evt graf</p>-->
+<p>{book.description}</p>
 
 
 <p>anbefal</p>
-
 
 <p>Create review/rating</p>

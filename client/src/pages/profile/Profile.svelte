@@ -19,7 +19,6 @@
 
     function saveColor() {
         const colorInp = document.getElementById("colorInp")
-        console.log(colorInp.value)
         const body = { color:  colorInp.value }
 
         fetch(`${$BASE_URL}/api/users/${$user.id}`, {
