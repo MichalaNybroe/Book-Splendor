@@ -27,16 +27,17 @@ function checkPasswordSecurity(req, res, next) {
 router.post("/login", async (req, res) => {
     const { email, password } = req.body
 
-    const user = await db.query("SELECT * FROM users WHERE email=?;", [email])
+    const [rows, fields] = await db.query("SELECT * FROM users WHERE email=?;", [email])
+    const user = rows[0]
 
     if (!user || await !comparePassword(password, user.password)) {
         return res.status(401).send({ message: "Login failed." })
+    } else {
+        req.session.isLoggedIn = true
+        req.session.admin = !!user.admin //cast twice for bool
+        req.session.userid = user.id
+        res.status(200).send({ data: {id: user.id, email: user.email, user_name: user.user_name, admin: !!user.admin, picture_number: user.picture_number, color: user.color}, message: "Login successful" })
     }
-
-    req.session.isLoggedIn = true
-    req.session.email = email
-    req.session.role = user.role
-    res.status(200).send({ message: "Login successful" })
 })
 
 
@@ -66,11 +67,14 @@ router.post("/updatePassword",checkPasswordSecurity, (req, res) => {
 router.post("/signUp", checkPasswordSecurity, (req, res) => {
     const { username, email, password } = req.body
 
-    db.query("INSERT INTO users(user_name, email, password, admin) VALUES(?,?,?,?);", [username, email, encryptPassword(password), false])
-    req.session.isLoggedIn = true
-    req.session.email = email
-    req.session.role = "user"
-    res.status(200).send({ message: "Successfull signup." })
+    const success = db.query(`INSERT INTO users(user_name, email, password, admin, picture_number, color)
+    VALUES(?,?,?,?,?,?);`, [username, email, encryptPassword(password), false, 1, "#A3B18A"])
+
+    if (!success) {
+        res.status(400).send({ message: "Unsucessfull signup." })
+    } else {
+        res.status(200).send({ message: "Successfull signup." })
+    }
 })
 
 export default router

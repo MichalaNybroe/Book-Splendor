@@ -24,11 +24,18 @@
             return fetch(`${$BASE_URL}/login`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
+                credentials: "include",
                 body: JSON.stringify(body)
             }).then((response) => {
                     if (response.ok) {
-                        user.set(true)
-                        navigate("/profile")
+                        response.json().then((data) => {
+                            user.set(data.data)
+                            if($user.admin === true) {
+                                navigate("/admin/books")
+                            } else {
+                                navigate("/profile")
+                            }
+                        })
                     } else {
                         response.json().then((m) => Toastr.warning(m.message))
                     }

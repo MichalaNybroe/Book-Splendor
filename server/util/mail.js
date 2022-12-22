@@ -1,9 +1,6 @@
 import nodemailer from "nodemailer"
 
-//lav den så den importerer fra contact form? 
-//name, to, subject, text, 
-
-export async function sendMail(name, to, subject, text) {
+export async function sendMail(name, email, subject, message) {
 
     let testAccount = await nodemailer.createTestAccount();
 
@@ -19,10 +16,11 @@ export async function sendMail(name, to, subject, text) {
 
     let info = await transporter.sendMail({
         from: `"Book Splendor" <customerService@bookSplendor.dk>`,
-        to: `<${to}>`,
-        subject: subject,
-        text: text
+        to: `${name} <${email}>`,
+        subject: `<${subject}>`,
+        text: `<${message}>`
     })
+
 
     console.log("Message send: %s", info.messageId);
 
