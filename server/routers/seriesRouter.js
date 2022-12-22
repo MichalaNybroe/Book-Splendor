@@ -6,7 +6,7 @@ const router = Router()
 router.use(loggedinGuard)
 
 router.get("/api/series", adminGuard, async (req, res) => {
-    const series = await db.query("SELECT * FROM series ORDER BY name ASC;")
+    const [series,_] = await db.query("SELECT * FROM series ORDER BY title ASC;")
     if (series === undefined) {
         res.status(400).send({ data: undefined, message: "Unable to retrieve series."})
     } else {
