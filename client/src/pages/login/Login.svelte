@@ -8,7 +8,7 @@
 
     const navigate = useNavigate()
 
-    onMount(async () => {
+    onMount(() => {
         const emailInp = document.getElementById("email")
         const passwordInp = document.getElementById("password")
         const loginForm = document.getElementById("loginForm")
