@@ -7,7 +7,7 @@ import db from "../database/connection.js"
 // save book of the week id
 
 router.get("/api/books", async (req, res) => {
-    const books = await db.query("SELECT * FROM books;")
+    const [books,_] = await db.query("SELECT * FROM books;")
     if (books === undefined) {
         res.status(400).send({ data: undefined, message: `No books`})
     } else {

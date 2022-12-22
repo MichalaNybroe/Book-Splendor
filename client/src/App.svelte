@@ -18,7 +18,12 @@
   import ManageReviews from "./pages/admin/reviews/Reviews.svelte"
   import ManageCreateBooks from "./pages/admin/books/CreateBooks.svelte"
   import Profile from "./pages/profile/Profile.svelte"
-
+  import Book from "./pages/books/Book.svelte"
+  import AuthorBooks from "./pages/authors/Author.svelte"
+  import GenreBooks from "./pages/genres/Genre.svelte"
+  import SeriesBooks from "./pages/series/Series.svelte"
+    import Series from "./components/Series.svelte";
+  
 /*
   const socket = io();
     onMount(async () => {
@@ -50,6 +55,11 @@
         <Route path="/admin/reviews"><ManageReviews /></Route>
         <Route path="/profile"><Profile /></Route>
         <Route path="/admin/books/create"><ManageCreateBooks /></Route>
+        <Route path="/book"><Book /></Route>
+        <Route path="/authors/books"><AuthorBooks /></Route>
+        <Route path="/genres/books"><GenreBooks /></Route>
+        <Route path="/series/books"><SeriesBooks /></Route>
+        
       </div>
 
     <Footer></Footer>
