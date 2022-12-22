@@ -107,6 +107,7 @@ if (isInDeleteMode) {
     db.execute(`INSERT INTO books(title, description, number, unreleased, img, series_id) VALUE (?, ?, ?, ?, ?, ?);`, ["The Fellowship of the Ring", "noget", 1, false, "https://upload.wikimedia.org/wikipedia/en/8/8e/The_Fellowship_of_the_Ring_cover.gif", 1])
     db.execute(`INSERT INTO books(title, description, number, unreleased, img, series_id) VALUE (?, ?, ?, ?, ?, ?);`, ["The Two Towers", "noget", 2, false, "https://upload.wikimedia.org/wikipedia/en/thumb/a/a1/The_Two_Towers_cover.gif/220px-The_Two_Towers_cover.gif", 1])
     db.execute(`INSERT INTO books(title, description, number, unreleased, img, series_id) VALUE (?, ?, ?, ?, ?, ?);`, ["The Return of the King", "noget", 3, false, "https://upload.wikimedia.org/wikipedia/en/thumb/1/11/The_Return_of_the_King_cover.gif/220px-The_Return_of_the_King_cover.gif", 1])
+    db.execute(`INSERT INTO books(title, description, number, unreleased, img, series_id) VALUE (?, ?, ?, ?, ?, ?);`, ["Good Omens", "noget", 1, false, "http://prodimage.images-bn.com/pimages/9780060853976_p0_v9_s1200x630.jpg", null])
 
     //users_books
     db.execute(`INSERT INTO users_books(users_id, books_id, want_to_read, has_read) VALUE (?, ?, ?, ?);`, [2, 1, false, true])
@@ -120,11 +121,15 @@ if (isInDeleteMode) {
     db.execute(`INSERT INTO authors(name) VALUE (?);`, ["Suzanne Collins"])
     db.execute(`INSERT INTO authors(name) VALUE (?);`, ["Sarah J. Maas"])
     db.execute(`INSERT INTO authors(name) VALUE (?);`, ["Holly Black"])
+    db.execute(`INSERT INTO authors(name) VALUE (?);`, ["Terry Pratchett"])
+    db.execute(`INSERT INTO authors(name) VALUE (?);`, ["Neil Gaiman"])
 
     //books_authors
     db.execute(`INSERT INTO books_authors(books_id, authors_id) VALUE (?, ?);`, [1, 1])
     db.execute(`INSERT INTO books_authors(books_id, authors_id) VALUE (?, ?);`, [2, 1])
     db.execute(`INSERT INTO books_authors(books_id, authors_id) VALUE (?, ?);`, [3, 1])
+    db.execute(`INSERT INTO books_authors(books_id, authors_id) VALUE (?, ?);`, [4, 5])
+    db.execute(`INSERT INTO books_authors(books_id, authors_id) VALUE (?, ?);`, [4, 6])
 
     //genres
     db.execute(`INSERT INTO genres(name) VALUE (?);`, ["High Fantasy"])
@@ -140,6 +145,7 @@ if (isInDeleteMode) {
     db.execute(`INSERT INTO books_genres(books_id, genres_id) VALUE (?, ?);`, [2, 2])
     db.execute(`INSERT INTO books_genres(books_id, genres_id) VALUE (?, ?);`, [3, 1])
     db.execute(`INSERT INTO books_genres(books_id, genres_id) VALUE (?, ?);`, [3, 2])
+    db.execute(`INSERT INTO books_genres(books_id, genres_id) VALUE (?, ?);`, [4, 5])
 }
 
 db.end()

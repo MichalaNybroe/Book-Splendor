@@ -7,11 +7,24 @@ import db from "../database/connection.js"
 // save book of the week id
 
 router.get("/api/books", async (req, res) => {
-    const [books,_] = await db.query("SELECT * FROM books;")
+    const [books,_] = await db.query("SELECT books.*, authors_id, authors.name AS author_name FROM books JOIN books_authors ON books.id = books_authors.books_id JOIN authors ON books_authors.authors_id = authors.id;")
+    const booksAuthors = {}
+    
+    books.forEach((book) => {
+        if(!(book.id in booksAuthors)) {
+            booksAuthors[book.id] = book
+            booksAuthors[book.id]["authors"] = []
+        }
+        booksAuthors[book.id]["authors"].push({
+            name: book.author_name,
+            id: book.authors_id
+        })
+    })
+
     if (books === undefined) {
         res.status(400).send({ data: undefined, message: `No books`})
     } else {
-        res.send({ data: books })
+        res.send({ data: Object.values(booksAuthors) }) //cast object to array
     }
 })
 
