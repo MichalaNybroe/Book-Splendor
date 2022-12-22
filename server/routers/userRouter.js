@@ -12,10 +12,9 @@ router.get("/api/users", adminGuard, async (req, res) => {
         res.status(400).send({ data: undefined, message: `Unable to retrieve users`})
     } else {
         const userList = []
-        users.forEach(() => {
+        users.forEach((user) => {
             userList.push({id: user.id, email: user.email, user_name: user.user_name})
         })
-        console.log(userList)
         res.send({ data: userList})
     }
 })

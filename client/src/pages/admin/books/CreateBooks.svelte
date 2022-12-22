@@ -58,16 +58,12 @@ async function handleSubmit() {
 let title = ""
 let description = ""
 let number = ""
-let series = ""
 let unreleased = ""
 let book_img = ""
-let authors = ""
-let genres = ""
-
 
 </script>
 
-
+<!--
 <form on:submit|preventDefault={handleSubmit}
 id="create_book_form"
 method="POST"
@@ -112,3 +108,4 @@ action="/createbook">
     <input type="submit" value="Create book" id="submit_button" />
 </div>
 </form>
+-->
