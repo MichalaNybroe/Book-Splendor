@@ -37,42 +37,29 @@ router.get("/api/books/:id", async (req, res) => {
     }
 })
 
-//create book
+router.post("/api/books", loggedinGuard, adminGuard, checkBookInput, async (req, res) => {
+    const { title, description, number, series, unreleased, img, authors, genres} = req.body
 
-//for dropdown options // har lavet routers til hver
-/*router.get("/api/books"), adminGuard, async (req, res) => {
-    const authorlist = await db.query("SELECT * FROM authors ORDER BY name ASC;")
-    const serieslist = await db.query("SELECT * FROM series ORDER BY name ASC;")
-    const genreslist = await db.query("SELECT * FROM genreslist ORDER BY name ASC;")
-
-    res.send({ data: authorlist, serieslist, genreslist })
-    
-}*/
-
-router.post("/api/books", loggedinGuard, adminGuard, async (req, res) => {
-    const { title, description, number, series_id, unreleased, img, authors, genres} = req.body
-    checkBookInput(title, description, number, series_id, unreleased, img, authors, genres)
-
-    const [bookRes, _] = await db.query("INSERT INTO books(title, description, number, unreleased, img, series_id) VALUE(?, ?, ?, ?, ?, ?);", [title, description, number, unreleased, img, series_id])
+    const [bookRes, _] = await db.query("INSERT INTO books(title, description, number, unreleased, img, series_id) VALUE(?, ?, ?, ?, ?, ?);", [title, description, number, unreleased, img, series?.id])
+ 
     if (bookRes == undefined) {
-        return res.status(404).send("Unable to create book")
+        return res.status(404).send("Unable to create book.")
     }
     authors.forEach(author => {
-        db.query("INSERT INTO books_authors(books_id, authors_id) VALUE (?, ?);", [bookRes.id, author])
+        db.query("INSERT INTO books_authors(books_id, authors_id) VALUE (?, ?);", [bookRes.insertId, author.id])
     })
 
     genres.forEach(genre => {
-        db.query("INSERT INTO books_genres(books_id, genres_id) VALUE (?, ?);", [bookRes.id, genre])
+        db.query("INSERT INTO books_genres(books_id, genres_id) VALUE (?, ?);", [bookRes.insertId, genre.id])
     })
 
     res.send({ affectedRows: bookRes.affectedRows, message: "Book created." })
 })
 
-router.put("/api/books/:id", loggedinGuard, adminGuard, async (req, res) => {
-    const { title, description, number, series_id, unreleased, img, authors, genres} = req.body
-    checkBookInput(title, description, number, series_id, unreleased, img, authors, genres)
+router.put("/api/books/:id", loggedinGuard, adminGuard, checkBookInput, async (req, res) => {
+    const { title, description, number, series, unreleased, img, authors, genres} = req.body
 
-    const [book, _] = await db.query("UPDATE books SET (title = ?, description = ?, number = ?, series_id = ?, unreleased = ?, img = ?) WHERE id=?;", [title, description, number, series_id, unreleased, img, req.params.id])
+    const [book, _] = await db.query("UPDATE books SET (title = ?, description = ?, number = ?, series_id = ?, unreleased = ?, img = ?) WHERE id=?;", [title, description, number, series.id, unreleased, img, req.params.id])
     if(!book) {
         return res.status(400).send({ message: "No book with this is." })
     }
@@ -101,17 +88,17 @@ router.delete("/api/books/:id", loggedinGuard, adminGuard, async (req, res) => {
 
 
 
-function checkBookInput(title, description, number, series_id, unreleased, img, authors, genres) {
+function checkBookInput(req, res, next) {
+    if (!req.body.title) return res.status(400).send({ message: "Book title is undefined." })
+    if (!req.body.description) return res.status(400).send({ message: "Description is undefined." })
+    if (!req.body.number) return res.status(400).send({ message: "Number is undefined." })
+    if (!req.body.series?.id && req.body.series !== null) return res.status(400).send({ message: "Series is undefined." })
+    if (!("unreleased" in req.body)) return res.status(400).send({ message: "Unreleased is undefined." })
+    if (!req.body.img) return res.status(400).send({ message: "Image of Book is undefined." })
+    if (!req.body.authors) return res.status(400).send({ message: "Authors is undefined." })
+    if (!req.body.genres) return res.status(400).send({ message: "Genres is undefined." })
 
-    if (!title) return res.status(400).send({ message: "Book title is undefined." })
-    if (!description) return res.status(400).send({ message: "Description is undefined." })
-    if (!number) return res.status(400).send({ message: "Number is undefined." })
-    if (!series_id) return res.status(400).send({ message: "Series is undefined." })
-    if (!unreleased) return res.status(400).send({ message: "Unreleased is undefined." })
-    if (!img) return res.status(400).send({ message: "Image of Book is undefined." })
-    if (!authors) return res.status(400).send({ message: "Authors is undefined." })
-    if (!genres) return res.status(400).send({ message: "Genres is undefined." })
-
+    next()
 }
 
 export default router

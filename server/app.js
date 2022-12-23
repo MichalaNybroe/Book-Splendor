@@ -19,11 +19,11 @@ app.use(session({
 }))
 
 import rateLimit from "express-rate-limit"
-const superLimiter = rateLimit({
+/*const superLimiter = rateLimit({
     windowMs: 10 * 60 * 1000,
     max: 100
 })
-app.use(superLimiter)
+app.use(superLimiter)*/
 
 app.use(express.json())
 

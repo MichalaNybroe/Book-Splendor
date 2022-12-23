@@ -21,11 +21,10 @@
 
         if(response.ok) {
             const data = await response.json()
-            users = JSON.stringify(data.data)
+            users = data.data.map((user) => Object.values(user))
         } else {
             Toastr.warning("Unable to retrieve users.")
         }
-        console.log(users)
     }
 
 
@@ -50,7 +49,7 @@
 	{#each users as row}
 		<tr>
 			{#each row as cell}
-			<td contenteditable="true" bind:innerHTML={cell} />
+			<td contenteditable="true" bind:textContent={cell} />
 			{/each}
 			<button on:click={() => deleteRow(user)}>
 				X

@@ -6,11 +6,11 @@ import { comparePassword, encryptPassword } from "../util/encryption.js"
 import { sendMail } from "../util/mail.js"
 
 import rateLimit from "express-rate-limit"
-const limiter = rateLimit({
+/*const limiter = rateLimit({
     windowMs: 15 * 60 * 1000,
     max: 6
 })
-router.use(limiter)
+router.use(limiter)*/
 
 function checkPasswordSecurity(req, res, next) {
     const { password, passwordRepeat } = req.body

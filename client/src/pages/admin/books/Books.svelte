@@ -13,43 +13,46 @@
         navigate("/")
     }
 
-    onMount(() => {
+    let sortBooks = ""
+    let searchId = ""
+    let searchAuthor = ""
+    let searchTitle = ""
+    let books = []
+    let columns = ["Id" ,"Title", "Description", "Number", "Image", "Series", "Authors", "Genres"]
+    let sortBooksDropDown = ["date", "series", "unreleased"]
+    let selected = ""
 
-        //pick what to send / make check on what is filled out
-        const form = document.getElementById("searchBooksForm")
-        const sortBooks = document.getElementById("sortBooksDropDown")
-        const searchId = document.getElementById("search_books_id")
-        const searchAuthor = document.getElementById("search_books_author")
-        const searchTitle = document.getElementById("search_books_title")
-        
+    
+    async function retrieveBooks() {
+        const body = {
+            sortBooks: sortBooks.value,
+            searchId: searchId.value,
+            searchAuthor: searchAuthor.value,
+            searchTitle: searchTitle.value
+        }
 
-        form.addEventListener("submit", (event) => {
-            event.preventDefault()
-
-            const body = {
-                sortBooks: sortBooks.value,
-                searchId: searchId.value,
-                searchAuthor: searchAuthor.value,
-                searchTitle: searchTitle.value
-            }
-
-            return fetch(`${$BASE_URL}/api/books`, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(body)
-            }).then((response) => {
-                    if (response.ok) {
-                        Toastr.success("Message is received. Thank you for sending it!")
-                    } else {
-                        response.json().then((m) => Toastr.error(m.message))
-                    }
-                })
-                .catch((message) => Toastr.error("Error. Try again later."))
+        const response = await fetch(`${$BASE_URL}/api/books`, {
+            method: "POST",
+            credentials: "include",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(body)
         })
-    })
 
-    // fetch => fill list of books + notifcations if unable
-      
+        if (response.ok) {
+            const data = await response.json()
+            books = data.data.map((book) => Object.values(book))
+        } else {
+            Toastr.error("Unable to retrieve books.")
+        }
+    }
+	
+	function deleteBook(rowToBeDeleted) {
+		books = books.filter(row => row != rowToBeDeleted)
+	}
+
+    function updateBook(rowToBeUpdated) {
+        books = books.filter(row => row != rowToBeUpdated)
+    }
 
 </script>
 
@@ -57,12 +60,12 @@
     <Link to="/admin/books/create">Create Book</Link>
 </Router>
 
-<form id="searchBooksForm">
+<form id="searchBooksForm" on:submit|preventDefault={retrieveBooks}>
     <label for="sortBooksDropDown">Sort by</label>
-    <select name="sortBooksDropDown" id="sortBooksDropDown">
-        <option value="date">Newest</option>
-        <option value="series">Series</option>
-        <option value="unreleased">Unreleased</option>
+    <select name="sortBooksDropDown" bind:value={selected}>
+        {#each sortBooksDropDown as value}
+            <option {value}>{value}</option>
+        {/each}
     </select>
 
     <label for="search_books_id">Id</label>
@@ -77,7 +80,27 @@
     <input type="submit" value="Search">
 </form>
 
-<div id="listBooksAdmin">
+<table>
+	<tr>
+		{#each columns as column}
+			<th>{column}</th>
+		{/each}
+	</tr>
+	
+	{#each books as row}
+		<tr>
+			{#each row as cell}
+			<td contenteditable="true" bind:textContent={cell} />
+			{/each}
+            <button on:click={() => updateBook(row)}>
+                Update
+            </button>
+			<button on:click={() => deleteBook(row)}>
+				X
+			</button>
+		</tr>
+	{/each}
+</table>
 
-</div>
-
+<style>
+</style>
