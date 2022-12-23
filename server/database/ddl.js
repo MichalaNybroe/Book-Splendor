@@ -19,9 +19,9 @@ if (isInDeleteMode) {
 
 db.execute(`CREATE TABLE IF NOT EXISTS users(
     id INTEGER PRIMARY KEY AUTO_INCREMENT,
-    email VARCHAR(500) UNIQUE,
-    user_name VARCHAR(255),
-    password VARCHAR(255),
+    email VARCHAR(500) UNIQUE NOT NULL,
+    user_name VARCHAR(255) NOT NULL,
+    password VARCHAR(255) NOT NULL,
     admin BOOLEAN,
     picture_number INTEGER,
     color VARCHAR(255)

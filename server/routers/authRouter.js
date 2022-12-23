@@ -13,8 +13,8 @@ import rateLimit from "express-rate-limit"
 router.use(limiter)*/
 
 function checkPasswordSecurity(req, res, next) {
-    const { password, passwordRepeat } = req.body
-    if (password !== passwordRepeat) {
+    const { password, passwordTwo } = req.body
+    if (password !== passwordTwo) {
         res.status(400).send({ message: "Passwords do not match."})
     }
 
@@ -64,16 +64,21 @@ router.post("/updatePassword",checkPasswordSecurity, (req, res) => {
 })
 
 
-router.post("/signUp", checkPasswordSecurity, (req, res) => {
+router.post("/signUp", checkPasswordSecurity, async (req, res) => {
     const { username, email, password } = req.body
 
-    const success = db.query(`INSERT INTO users(user_name, email, password, admin, picture_number, color)
-    VALUES(?,?,?,?,?,?);`, [username, email, encryptPassword(password), false, 1, "#A3B18A"])
-
-    if (!success) {
-        res.status(400).send({ message: "Unsucessfull signup." })
-    } else {
-        res.status(200).send({ message: "Successfull signup." })
+    try {
+        const [success,_] = await db.query(`INSERT INTO users(user_name, email, password, admin, picture_number, color)
+        VALUES(?,?,?,?,?,?);`, [username, email, await encryptPassword(password), false, 1, "#A3B18A"])
+        
+        if (!success.affectedRows) {
+            res.status(400).send({ message: "Unsucessfull signup." })
+        } else {
+            res.status(200).send({ message: "Successfull signup." })
+        }
+    } catch (error){
+        console.log(error)
+        return res.status(400).send({ message: "Invalid data."})
     }
 })
 
