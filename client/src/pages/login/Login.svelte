@@ -1,5 +1,4 @@
 <script>
-    import { onMount } from "svelte"
     import { Router, Link, useNavigate } from "svelte-navigator"
     import { BASE_URL } from "../../store/globals.js"
     import { user } from "../../store/auth.js"
@@ -8,51 +7,46 @@
 
     const navigate = useNavigate()
 
-    onMount(() => {
-        const emailInp = document.getElementById("email")
-        const passwordInp = document.getElementById("password")
-        const loginForm = document.getElementById("loginForm")
+    let emailInp = ""
+    let passwordInp = ""
 
-        loginForm.addEventListener("submit", (event) => {
-            event.preventDefault()
+    async function login() {
+        const body = {
+            email: emailInp,
+            password: passwordInp,
+        }
 
-            const body = {
-                email: emailInp.value,
-                password: passwordInp.value,
-            }
-
-            return fetch(`${$BASE_URL}/login`, {
+        try {
+            const response = await fetch(`${$BASE_URL}/login`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 credentials: "include",
                 body: JSON.stringify(body)
-            }).then((response) => {
-                    if (response.ok) {
-                        response.json().then((data) => {
-                            user.set(data.data)
-                            if($user.admin === true) {
-                                navigate("/admin/books")
-                            } else {
-                                navigate("/profile")
-                            }
-                        })
-                    } else {
-                        response.json().then((m) => Toastr.warning(m.message))
-                    }
-            }).catch(() => {
-
-                Toastr.error("Not possible to login. Try again later.")
             })
 
-        })
-    })
+            if (!response.ok) {
+                const json = await response.json()
+                Toastr.warning(json.message)
+            return
+            }
+            const data = await response.json()
+            user.set(data.data)
+            if($user.admin === true) {
+                navigate("/admin/books")
+            } else {
+                navigate("/profile")
+            }
 
+        } catch {
+            Toastr.error("Unable to login. Try again later.")
+        }
+    }
 </script>
 
 
 <Router primary={false}>
     <div id="loginBox">
-        <form action="/login" method="POST" id="loginForm">
+        <form action="/login" method="POST" id="loginForm" on:submit|preventDefault={login}>
             <h4>Sign In!</h4>
             <br />
             <label for="email">Email:</label>
@@ -61,13 +55,15 @@
                 name="email"
                 placeholder="great@mail.dk"
                 id="email"
-            /><br />
+                bind:value={emailInp}/>
+            <br />
             <label for="password">Password:</label>
             <input
                 type="password"
                 name="password"
                 placeholder="*********"
                 id="password"
+                bind:value={passwordInp}
             />
             <br />
             <input type="submit" id="logButton" value="Login" />
