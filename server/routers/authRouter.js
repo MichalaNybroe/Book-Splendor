@@ -46,16 +46,19 @@ router.post("/logout", (req, res) => {
     res.send({ message: "Logged out." })
 })
 
-router.post("/forgotPassword",  (req, res) => {
+router.post("/forgotPassword",  async (req, res) => {
     const email = req.body.email
     const link = "www.ja/updatePassword.ja" // hvad skal dette link være // hash værdi
 
-    sendMail(email, "Password reset", `Please follow link to reset password. ${link}`)
-    .then(() => res.send( { message: "An email has been sent to reset password." }))
-    .catch(() => res.status(400).send( { data: undefined, message: "Unsuccessful." } ));
+    try {
+        await sendMail(email, email, "Password reset", `Please follow link to reset password. ${link}`)
+        res.status(200).send({ message: "An email has been sent to reset password." })
+    } catch {
+        res.status(400).send( { data: undefined, message: "Unsuccessful." } )
+    }
 })
 
-router.post("/updatePassword",checkPasswordSecurity, (req, res) => {
+router.post("/updatePassword", checkPasswordSecurity, (req, res) => {
     // how do we check link security?
     const { email, password } = req.body
 
@@ -77,7 +80,6 @@ router.post("/signUp", checkPasswordSecurity, async (req, res) => {
             res.status(200).send({ message: "Successfull signup." })
         }
     } catch (error){
-        console.log(error)
         return res.status(400).send({ message: "Invalid data."})
     }
 })

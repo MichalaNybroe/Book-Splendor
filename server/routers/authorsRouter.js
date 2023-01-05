@@ -7,7 +7,7 @@ router.use(loggedinGuard)
 
 router.get("/api/authors", adminGuard, async (req, res) => {
     const [authors,_] = await db.query("SELECT * FROM authors ORDER BY name ASC;")
-    if (authors === undefined) {
+    if (!authors) {
         res.status(400).send({ data: undefined, message: "Unable to retrieve authors."})
     } else {
         res.send({ data: authors})

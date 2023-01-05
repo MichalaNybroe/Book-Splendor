@@ -1,5 +1,4 @@
 <script>
-    import { onMount } from 'svelte'
     import { Router, Link } from 'svelte-navigator'
     import { BASE_URL } from '../../store/globals.js'
     import * as Toastr from 'toastr'
@@ -10,21 +9,21 @@
 
     async function forgotPassword() {
         try {
-            const response = fetch(`${$BASE_URL}/forgotPassword`, {
+            const response = await fetch(`${$BASE_URL}/forgotPassword`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ email: emailInp.value }),
+                body: JSON.stringify({ email: emailInp }),
             })
 
-            if(!response.ok) {
-                const json = await response.json()
-                Toastr.warning(json.message)
+            const data = await response.json()
+
+            if (!response.ok) {
+                Toastr.warning(data.message)
                 return
             }
 
-            const json = await response.json()
-            Toastr.success(json.message)
-        } catch {
+            Toastr.success(data.message)
+        } catch(error) {
             Toastr.error('Unable to handle request. Please try again later.')
         }
     }
