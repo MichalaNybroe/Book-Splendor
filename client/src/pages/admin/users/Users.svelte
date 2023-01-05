@@ -34,7 +34,7 @@
 	
 	async function deleteRow(rowToBeDeleted) {
         try {
-            //confirm message before try 'Are you sure you wish to delete' TOASTR
+            //confirm message before try 'Are you sure you wish to delete' in TOASTR
             const response = await fetch(`${$BASE_URL}/api/users/${rowToBeDeleted[0]}`, {
                 method: 'DELETE',
                 credentials: 'include',

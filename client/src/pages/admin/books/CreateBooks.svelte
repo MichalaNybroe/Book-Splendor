@@ -21,15 +21,20 @@
 
     async function get(endpoint) {
         let array = []
-        const response = await fetch(`${$BASE_URL}/api/${endpoint}`, {
-            credentials: 'include'
-        })
-        if (response.ok) {
-            const data = await response.json()
-            return array = data.data
-        } else {
-            Toastr.warning(`Unable to retrieve ${endpoint}.`)
+        try {
+            const response = await fetch(`${$BASE_URL}/api/${endpoint}`, {
+                credentials: 'include'
+            })
+            if (response.ok) {
+                const data = await response.json()
+                return array = data.data
+            } else {
+                Toastr.warning(`Unable to retrieve ${endpoint}.`)
+            }
+        } catch {
+            Toastr.error('Unable to retrieve data. Please try again later.')
         }
+        
     }
    
     async function fetchInfo() {
@@ -69,14 +74,14 @@
         }
 
         const body = {
-        title: title,
-        description: description,
-        number: number,
-        series: seriesBody,
-        unreleased: unreleased,
-        img: book_img,
-        authors: selectedAuthors,
-        genres: selectedGenres
+            title: title,
+            description: description,
+            number: number,
+            series: seriesBody,
+            unreleased: unreleased,
+            img: book_img,
+            authors: selectedAuthors,
+            genres: selectedGenres
         }
 
         try {
