@@ -1,33 +1,41 @@
 <script>
-    import { BASE_URL } from "../../store/globals.js";
-    import * as Toastr from "toastr";
-    import "../../../node_modules/toastr/build/toastr.css";
+    import { BASE_URL } from '../../store/globals.js'
+    import * as Toastr from 'toastr'
+    import '../../../node_modules/toastr/build/toastr.css'
   
+    let name = ''
+    let email = ''
+    let message = ''
+
     async function handleSubmit() {
       const body = {
-        name: document.getElementById("name").value,
-        email: document.getElementById("email").value,
-        subject: document.getElementById("subject").value,
-        message: document.getElementById("message").value,
-      };
-      await fetch(`${$BASE_URL}/contact`, {
-        method: "POST",
-        credentials: "include",
-        headers: {
-          "Content-Type": "application/json;charset=utf-8",
-        },
-        body: JSON.stringify(body),
-      })
-        .then((response) => {
-          if (response.ok) {
-            Toastr.success("We have received your message.");
-          } else {
-            response.json().then((m) => Toastr.warning(m.message));
-          }
+        name: name,
+        email: email,
+        subject: /*øhm det her kan jeg ikke finde*/'Invite to Book Splendor',
+        message: message
+      }
+
+      try {
+        const response = await fetch(`${$BASE_URL}/contact`, {
+          method: 'POST',
+          credentials: 'include',
+          headers: {
+            'Content-Type': 'application/json;charset=utf-8',
+          },
+          body: JSON.stringify(body),
         })
-        .catch(() => {
-          Toastr.error("Unsuccessfull. Try again later.");
-        });
+
+        if(!response) {
+          const data = await response.json()
+          Toastr.warning(data.message)
+          return
+        }
+
+        const data = await response.json()
+        Toastr.success(data.message)
+      } catch {
+        Toastr.error('Unsucessfull. Please try again later.')
+      }
     }
   </script>
   
@@ -41,7 +49,7 @@
     >
       <div class="name">
         <label for="name" />
-        <input type="text" placeholder="Your friend's name" name="name" id="name" required />
+        <input type="text" placeholder="Your friend's name" name="name" id="name" required bind:value={name}/>
       </div>
       <div class="email">
         <label for="email" />
@@ -51,6 +59,7 @@
           name="email"
           id="email"
           required
+          bind:value={email}
         />
       </div>
       <div class="message">
@@ -62,6 +71,7 @@
           cols="30"
           rows="5"
           required
+          bind:value={message}
         />
       </div>
       <div class="submit">

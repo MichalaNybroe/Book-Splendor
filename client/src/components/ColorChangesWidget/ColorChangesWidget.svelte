@@ -1,5 +1,5 @@
 <script>
-    import { colorChangesList } from "../../store/colorChangesList";
+    import { colorChangesList } from '../../store/colorChangesList'
     
 </script>
 

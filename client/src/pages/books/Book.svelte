@@ -4,10 +4,10 @@
     export let genres
     export let series
 
-    import { Link } from "svelte-navigator"
-    import Author from "../../components/Author.svelte"
-    import Genres from "../../components/Genres.svelte"
-    import Series from "../../components/Series.svelte"
+    import { Link } from 'svelte-navigator'
+    import Author from '../../components/Author.svelte'
+    import Genres from '../../components/Genres.svelte'
+    import Series from '../../components/Series.svelte'
 </script>
 
 

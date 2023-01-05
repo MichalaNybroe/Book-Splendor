@@ -2,8 +2,8 @@
     export let authors
     export let book
 
-    import { Link } from "svelte-navigator"
-    import Author from "./Author.svelte"
+    import { Link } from 'svelte-navigator'
+    import Author from './Author.svelte'
 </script>
 
 

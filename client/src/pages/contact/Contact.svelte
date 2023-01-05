@@ -1,7 +1,7 @@
 <script>
-  import { BASE_URL } from "../../store/globals.js";
-  import * as Toastr from "toastr";
-  import "../../../node_modules/toastr/build/toastr.css";
+  import { BASE_URL } from '../../store/globals.js'
+  import * as Toastr from 'toastr'
+  import '../../../node_modules/toastr/build/toastr.css'
 
   async function handleSubmit() {
     const body = {
@@ -9,25 +9,29 @@
       email: document.getElementById("email").value,
       subject: document.getElementById("subject").value,
       message: document.getElementById("message").value,
-    };
-    await fetch(`${$BASE_URL}/contact`, {
-      method: "POST",
-      credentials: "include",
-      headers: {
-        "Content-Type": "application/json;charset=utf-8",
-      },
-      body: JSON.stringify(body),
-    })
-      .then((response) => {
-        if (response.ok) {
-          Toastr.success("We have received your message.");
-        } else {
-          response.json().then((m) => Toastr.warning(m.message));
-        }
+    }
+
+    try {
+      const response = await fetch(`${$BASE_URL}/contact`, {
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json;charset=utf-8',
+        },
+        body: JSON.stringify(body),
       })
-      .catch(() => {
-        Toastr.error("Unsuccessfull. Try again later.");
-      });
+
+      if (!response.ok) {
+        const json = await response.json()
+        Toastr.warning(json.message)
+        return
+      }
+
+      const json = await response.json()
+      Toastr.success('We have received your message.')
+    } catch {
+      Toastr.error('Unable to deliver message. Try again later.')
+    }
   }
 </script>
 

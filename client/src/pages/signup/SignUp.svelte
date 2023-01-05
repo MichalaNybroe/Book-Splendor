@@ -1,21 +1,21 @@
 <script>
-    import { Router, Link } from "svelte-navigator"
-    import { BASE_URL } from "../../store/globals.js"
-    import * as Toastr from "toastr"
+    import { Router, Link } from 'svelte-navigator'
+    import { BASE_URL } from '../../store/globals.js'
+    import * as Toastr from 'toastr'
     import '../../../node_modules/toastr/build/toastr.css'
 
-    let nameInp = ""
-    let emailInp = ""
-    let passwordInp = ""
-    let passwordInpTwo = ""
+    let nameInp = ''
+    let emailInp = ''
+    let passwordInp = ''
+    let passwordInpTwo = ''
 
     async function signUp() {
         if (passwordInp !== passwordInpTwo) {
-            return Toastr.warning("The two passwords are not the same.")
+            return Toastr.warning('The two passwords are not the same.')
         }
         
         if (passwordInp.length <9) {
-            return Toastr.warning("The length of the password needs to be longer than 8.")
+            return Toastr.warning('The length of the password needs to be longer than 8.')
         }
 
         const body = {
@@ -28,7 +28,7 @@
         try {
             const response = await fetch(`${$BASE_URL}/signUp`, {
                 method: 'POST',
-                credentials: "include",
+                credentials: 'include',
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify(body)
         })
@@ -42,11 +42,9 @@
         const json = await response.json()
         Toastr.success(json.message)
         } catch {
-            Toastr.error("Unable to sign up. Try again later.")
+            Toastr.error('Unable to sign up. Try again later.')
         }
     }
-        
-
 </script>
 
 

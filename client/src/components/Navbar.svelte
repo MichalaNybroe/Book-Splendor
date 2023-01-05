@@ -1,30 +1,34 @@
 <script>
-    import { Router, Link, useNavigate } from "svelte-navigator"
-    import { user } from "../store/auth.js"
-    import { BASE_URL } from "../store/globals.js"
-    import * as Toastr from "toastr"
+    import { Router, Link, useNavigate } from 'svelte-navigator'
+    import { user } from '../store/auth.js'
+    import { BASE_URL } from '../store/globals.js'
+    import * as Toastr from 'toastr'
     import '../../node_modules/toastr/build/toastr.css'
 
     const navigate = useNavigate()
 
     async function logout()  {
-       
-        const response = await fetch(`${$BASE_URL}/logout`, {
-            method: "POST",
-            credentials: "include",
-            headers: {
-                "Content-Type": "application/json"
-            }
-        })
 
-        if(response.ok){
-            navigate("/")
-            user.set(null)
-        } else {
-            response.json().then((data) => Toastr.warning(data.message))
+        try {
+            const response = await fetch(`${$BASE_URL}/logout`, {
+                method: 'POST',
+                credentials: 'include',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+
+            if(response.ok){
+                navigate('/')
+                user.set(null)
+            } else {
+                const json = await response.json()
+                Toastr.warning(json.message)
+            }
+        } catch {
+            Toastr.error('Unable to logout. Please try again later.')
         }
     }
-
 </script>
 
 <Router primary={false}>
@@ -63,5 +67,4 @@
 button {
     color: #588157;
 }
-
 </style>

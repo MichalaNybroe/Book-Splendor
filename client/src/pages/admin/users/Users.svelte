@@ -1,42 +1,57 @@
 <script>
-    import { user } from "../../../store/auth.js"
-    import { useNavigate } from "svelte-navigator"
-    import { BASE_URL } from "../../../store/globals.js"
-    import * as Toastr from "toastr"
-    import { onMount } from "svelte"
+    import { user } from '../../../store/auth.js'
+    import { useNavigate } from 'svelte-navigator'
+    import { BASE_URL } from '../../../store/globals.js'
+    import * as Toastr from 'toastr'
+    import '../../../../node_modules/toastr/build/toastr.css'
 
     
     if($user?.admin !== true) {
         const navigate = useNavigate()
 
-        navigate("/")
+        navigate('/')
     }
 
     let users = []
 
     async function fetchUsers() {
         const response = await fetch(`${$BASE_URL}/api/users`, {
-            credentials: "include"
+            credentials: 'include'
         })
 
         if(response.ok) {
             const data = await response.json()
             users = data.data.map((user) => Object.values(user))
         } else {
-            Toastr.warning("Unable to retrieve users.")
+            Toastr.warning('Unable to retrieve users.')
         }
     }
 
 
-    onMount(fetchUsers)
+    fetchUsers()
 
-    let columns = ["Id", "Email", "Username"]
+    let columns = ['Id', 'Email', 'Username']
 	
-	function deleteRow(rowToBeDeleted) {
-		users = users.filter(row => row != rowToBeDeleted)
-	}
+	async function deleteRow(rowToBeDeleted) {
+        try {
+            //confirm message before try 'Are you sure you wish to delete' TOASTR
+            const response = await fetch(`${$BASE_URL}/api/users/${rowToBeDeleted[0]}`, {
+                method: 'DELETE',
+                credentials: 'include',
+                headers: { 'Content-Type': 'application/json' }
+            })
 
+            if (!response.ok) {
+                const json = await response.json()
+                Toastr.warning(json.message)
+                return
+            }
 
+            users = users.filter(row => row != rowToBeDeleted)
+        } catch {
+            Toastr.error('Unable to delete user. Try again later.')
+	    }
+    }
 </script>
 
 <table>
@@ -49,9 +64,9 @@
 	{#each users as row}
 		<tr>
 			{#each row as cell}
-			<td contenteditable="true" bind:textContent={cell} />
+			<td>{cell}</td>
 			{/each}
-			<button on:click={() => deleteRow(user)}>
+			<button on:click={() => deleteRow(row)}>
 				X
 			</button>
 		</tr>

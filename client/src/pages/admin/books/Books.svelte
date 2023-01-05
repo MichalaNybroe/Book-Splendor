@@ -1,59 +1,69 @@
 <script>
-    import { onMount } from "svelte"
-    import { Router, Link, useNavigate } from "svelte-navigator"
-    import { BASE_URL } from "../../../store/globals.js"
-    import { user } from "../../../store/auth"
-    import * as Toastr from "toastr"
+    import { Router, Link, useNavigate } from 'svelte-navigator'
+    import { BASE_URL } from '../../../store/globals.js'
+    import { user } from '../../../store/auth'
+    import * as Toastr from 'toastr'
     import '../../../../node_modules/toastr/build/toastr.css'
 
 
-    if($user?.admin !== true) { //nullable check
+    if($user?.admin !== true) {
         const navigate = useNavigate()
 
-        navigate("/")
+        navigate('/')
     }
 
-    let sortBooks = ""
-    let searchId = ""
-    let searchAuthor = ""
-    let searchTitle = ""
+    let sortBooks = ''
+    let searchId = ''
+    let searchAuthor = ''
+    let searchTitle = ''
     let books = []
-    let columns = ["Id" ,"Title", "Description", "Number", "Image", "Series", "Authors", "Genres"]
-    let sortBooksDropDown = ["date", "series", "unreleased"]
-    let selected = ""
+    let columns = ['Id' , 'Title', 'Number', 'Series', 'Authors', 'Genres']
+    let sortBooksDropDown = ['date', 'series', 'unreleased']
+    let selected = ''
 
     
     async function retrieveBooks() {
-        const body = {
-            sortBooks: sortBooks.value,
-            searchId: searchId.value,
-            searchAuthor: searchAuthor.value,
-            searchTitle: searchTitle.value
-        }
+       // søg med paramtre
+        try {
+            const response = await fetch(`${$BASE_URL}/api/books`, {
+                credentials: 'include',
+                headers: { 'Content-Type': 'application/json' }
+            })
 
-        const response = await fetch(`${$BASE_URL}/api/books`, {
-            method: "POST",
-            credentials: "include",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(body)
-        })
-
-        if (response.ok) {
-            const data = await response.json()
-            books = data.data.map((book) => Object.values(book))
-        } else {
-            Toastr.error("Unable to retrieve books.")
+            if (response.ok) {
+                const data = await response.json()
+                books = data.data
+            } else {
+                Toastr.warning("Unable to retrieve books.")
+            }
+        } catch {
+            Toastr.error('Unable to retrieve books. Try again later.')
         }
+        
     }
 	
-	function deleteBook(rowToBeDeleted) {
-		books = books.filter(row => row != rowToBeDeleted)
-	}
+	async function deleteBook(book) {
+        try {
+            //confirm message before try 'Are you sure you wish to delete' TOASTR
+            const response = await fetch(`${$BASE_URL}/api/users/${book.id}`, {
+                method: 'DELETE',
+                credentials: 'include',
+                headers: { 'Content-Type': 'application/json' }
+            })
 
-    function updateBook(rowToBeUpdated) {
-        books = books.filter(row => row != rowToBeUpdated)
+            if (!response.ok) {
+                const json = await response.json()
+                Toastr.warning(json.message)
+                return
+            }
+
+            books = books.filter(row => row != book)
+        } catch {
+            Toastr.error('Unable to delete user. Try again later.')
+	    }
     }
 
+    retrieveBooks()
 </script>
 
 <Router primary={false}>
@@ -87,15 +97,16 @@
 		{/each}
 	</tr>
 	
-	{#each books as row}
+	{#each books as book}
 		<tr>
-			{#each row as cell}
-			<td contenteditable="true" bind:textContent={cell} />
-			{/each}
-            <button on:click={() => updateBook(row)}>
-                Update
-            </button>
-			<button on:click={() => deleteBook(row)}>
+			<td>{book.id}</td>
+			<td>{book.title}</td>
+			<td>{book.number}</td>
+			<td>{book.series_id ?? ''}</td>
+			<td>{book.authors.map((author) => author.name).join(', ')}</td>
+            <!--<td>{book.genres.map((genre) => genre.name).join(', ')}</td>-->
+            <Link to="/admin/books/{book.id}/edit" style="color:black">Update</Link>
+			<button on:click={() => deleteBook(book)}>
 				X
 			</button>
 		</tr>

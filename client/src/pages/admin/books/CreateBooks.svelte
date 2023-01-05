@@ -1,14 +1,15 @@
 <script>
-    import { user } from "../../../store/auth.js"
-    import { useNavigate } from "svelte-navigator"
-    import { BASE_URL } from "../../../store/globals.js"
-    import * as Toastr from "toastr"
+    import { user } from '../../../store/auth.js'
+    import { useNavigate } from 'svelte-navigator'
+    import { BASE_URL } from '../../../store/globals.js'
+    import * as Toastr from 'toastr'
+    import '../../../../node_modules/toastr/build/toastr.css'
     import MultiSelect from 'svelte-multiselect'
     
     if($user?.admin !== true) {
         const navigate = useNavigate()
 
-        navigate("/")
+        navigate('/')
     }
     
     let selectedAuthors = []
@@ -21,7 +22,7 @@
     async function get(endpoint) {
         let array = []
         const response = await fetch(`${$BASE_URL}/api/${endpoint}`, {
-            credentials: "include"
+            credentials: 'include'
         })
         if (response.ok) {
             const data = await response.json()
@@ -32,17 +33,17 @@
     }
    
     async function fetchInfo() {
-        series = await get("series")
+        series = await get('series')
         series = series.map((series) => ({
                 label: series.title,
                 id: series.id
         }))
-        genres = await get("genres")
+        genres = await get('genres')
         genres = genres.map((genre) => ({
                 label: genre.name,
                 id: genre.id
         }))
-        authors = await get("authors")
+        authors = await get('authors')
         authors = authors.map((author) => ({
                 label: author.name,
                 id: author.id
@@ -52,14 +53,14 @@
 
     fetchInfo()
 
-    let title = ""
-    let description = ""
-    let number = ""
+    let title = ''
+    let description = ''
+    let number = ''
     let unreleased = false
-    let book_img = ""
+    let book_img = ''
 
     async function handleSubmit() {
-        let seriesBody = ""
+        let seriesBody = ''
 
         if(selectedSeries.length === 0) {
             seriesBody = null
@@ -80,9 +81,9 @@
 
         try {
             const response = await fetch(`${$BASE_URL}/api/books`, {
-            method: "POST",
-            credentials: "include",
-            headers: {"Content-Type": "application/json"},
+            method: 'POST',
+            credentials: 'include',
+            headers: {'Content-Type': 'application/json'},
             body: JSON.stringify(body)
         })
 
@@ -91,9 +92,9 @@
             Toastr.warning(json.message)
             return
         }
-            Toastr.success("Book created.")
+            Toastr.success('Book created.')
         } catch {
-            Toastr.error("Unable to create book. Try again later.")
+            Toastr.error('Unable to create book. Try again later.')
             return
         }
     }

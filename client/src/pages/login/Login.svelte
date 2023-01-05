@@ -1,14 +1,14 @@
 <script>
-    import { Router, Link, useNavigate } from "svelte-navigator"
-    import { BASE_URL } from "../../store/globals.js"
-    import { user } from "../../store/auth.js"
-    import * as Toastr from "toastr"
+    import { Router, Link, useNavigate } from 'svelte-navigator'
+    import { BASE_URL } from '../../store/globals.js'
+    import { user } from '../../store/auth.js'
+    import * as Toastr from 'toastr'
     import '../../../node_modules/toastr/build/toastr.css'
 
     const navigate = useNavigate()
 
-    let emailInp = ""
-    let passwordInp = ""
+    let emailInp = ''
+    let passwordInp = ''
 
     async function login() {
         const body = {
@@ -18,27 +18,27 @@
 
         try {
             const response = await fetch(`${$BASE_URL}/login`, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                credentials: "include",
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                credentials: 'include',
                 body: JSON.stringify(body)
             })
 
             if (!response.ok) {
                 const json = await response.json()
                 Toastr.warning(json.message)
-            return
+                return
             }
             const data = await response.json()
             user.set(data.data)
-            if($user.admin === true) {
-                navigate("/admin/books")
-            } else {
-                navigate("/profile")
-            }
 
+            if($user.admin === true) {
+                navigate('/admin/books')
+            } else {
+                navigate('/profile')
+            }
         } catch {
-            Toastr.error("Unable to login. Try again later.")
+            Toastr.error('Unable to login. Try again later.')
         }
     }
 </script>

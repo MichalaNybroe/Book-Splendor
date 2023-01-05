@@ -32,21 +32,23 @@ router.patch("/api/users/:id", userGuard, async (req, res) => {
     }
 })
 
-router.delete("/api/users/:id", loggedinGuard, async (req, res) => {
+router.delete("/api/users/:id", loggedinGuard, async (req, res, next) => {
     if (req.session.userid === req.params.id) {
         const result = await db.query("DELETE FROM users WHERE users.id=?;", [req.params.id])
         
         if (result === undefined) {
-          res.status(404).send({ data: undefined, message: `No user with this id`})
+            res.status(404).send({ data: undefined, message: `No user with this id`})
         } else {
             res.send({ data: result })
         }
     } else {
-        adminGuard()
+        if (req.session.admin !== true) {
+            return res.status(401).send({ message: "Not authorized." })
+        }
         const result = await db.query("DELETE FROM users WHERE users.id=?;", [req.params.id])
         
         if (result === undefined) {
-          res.status(404).send({ data: undefined, message: `No user with ${req.params.id} id`})
+            res.status(404).send({ data: undefined, message: `No user with ${req.params.id} id`})
         } else {
             res.send({ data: result })
         }
