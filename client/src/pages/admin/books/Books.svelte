@@ -4,6 +4,7 @@
     import { user } from '../../../store/auth'
     import * as Toastr from 'toastr'
     import '../../../../node_modules/toastr/build/toastr.css'
+    import Button from '../../../components/Button.svelte'
 
 
     if($user?.admin !== true) {
@@ -17,7 +18,7 @@
     let searchAuthor = ''
     let searchTitle = ''
     let books = []
-    let columns = ['Id' , 'Title', 'Number', 'Series', 'Authors', 'Genres']
+    let columns = ['Id', 'Title', 'Number', 'Series', 'Authors', 'Genres', 'Update', 'Delete']
     let sortBooksDropDown = ['date', 'series', 'unreleased']
     let selected = ''
 
@@ -35,7 +36,7 @@
                 books = data.data
                 console.log(books)
             } else {
-                Toastr.warning("Unable to retrieve books.")
+                Toastr.warning('Unable to retrieve books.')
             }
         } catch {
             Toastr.error('Unable to retrieve books. Try again later.')
@@ -60,16 +61,18 @@
 
             books = books.filter(row => row != book)
         } catch {
-            Toastr.error('Unable to delete user. Try again later.')
+            Toastr.error('Unable to delete book. Try again later.')
 	    }
     }
 
     retrieveBooks()
 </script>
 
+<p>
 <Router primary={false}>
     <Link to="/admin/books/create">Create Book</Link>
 </Router>
+</p>
 
 <form id="searchBooksForm" on:submit|preventDefault={retrieveBooks}>
     <label for="sortBooksDropDown">Sort by</label>
@@ -106,13 +109,59 @@
 			<td>{book.series_title ?? ''}</td>
 			<td>{book.authors.map((author) => author.name).join(', ')}</td>
             <td>{book.genres.map((genre) => genre.name).join(', ')}</td>
-            <Link to="/admin/books/{book.id}/edit" style="color:black">Update</Link>
-			<button on:click={() => deleteBook(book)}>
-				X
-			</button>
+            <td><Link to="/admin/books/{book.id}/edit" style="color:black">Update</Link></td>
+            <td>
+                <Button class="danger" on:click={()=> deleteBook(book)}>
+                    <i class="w3-margin-left fa fa-trash"></i>
+                </Button>
+            </td>
 		</tr>
 	{/each}
 </table>
 
 <style>
+    :global(body) {
+        font-family: Georgia, 'Times New Roman', Times, serif;
+    }
+
+    p {
+        margin-left: 37.5px
+    }
+
+    input,
+    select {
+        color: #5a5a5a;
+        font: inherit;
+        margin: 0;
+    }
+
+    input {
+        line-height: normal;
+    }
+
+    form,
+    table {
+        padding: 37.5px;
+    }
+
+    table {
+        width: 90%;
+    }
+
+    tr {
+        text-align: left;
+    }
+
+
+    input,
+    select {
+        background: none;
+        border: none;
+        border-bottom: solid 2px #474544;
+        color: #474544;
+        font-size: 1em;
+        font-weight: 400;
+        letter-spacing: 1px;
+    }
+
 </style>

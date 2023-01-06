@@ -20,7 +20,7 @@
           method: 'POST',
           credentials: 'include',
           headers: {
-            'Content-Type': 'application/json;charset=utf-8',
+            'Content-Type': 'application/json',
           },
           body: JSON.stringify(body),
         })

@@ -4,6 +4,7 @@
     import { BASE_URL } from '../store/globals.js'
     import * as Toastr from 'toastr'
     import '../../node_modules/toastr/build/toastr.css'
+    import Button from '../components/Button.svelte'
 
     const navigate = useNavigate()
 
@@ -51,7 +52,7 @@
         {/if}
 
         {#if $user !== null}
-            <button on:click={logout}>Logout</button>
+            <Button class="logout" on:click={logout}>Logout</Button>
         {:else}
             <Link to="/login">Login</Link>
         {/if}
@@ -61,10 +62,6 @@
 
 <style>
 .margin-left {
-    margin-left: 5px
-}
-
-button {
-    color: #588157;
+    margin-left: 29px
 }
 </style>
