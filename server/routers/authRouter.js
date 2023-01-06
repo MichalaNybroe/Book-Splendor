@@ -29,19 +29,18 @@ router.post("/login", async (req, res) => {
 
     try {
         const [rows, fields] = await db.query("SELECT * FROM users WHERE email=?;", [email])
+        const user = rows[0]
+
+        if (!user || await !comparePassword(password, user.password)) {
+            return res.status(401).send({ message: "Login failed." })
+        } else {
+            req.session.isLoggedIn = true
+            req.session.admin = !!user.admin //cast twice for bool
+            req.session.userid = user.id
+            res.status(200).send({ data: {id: user.id, email: user.email, user_name: user.user_name, admin: !!user.admin, picture_number: user.picture_number, color: user.color}, message: "Login successful" })
+        }
     } catch {
         res.status(500).send({message: 'Server error.'})
-    }
-   
-    const user = rows[0]
-
-    if (!user || await !comparePassword(password, user.password)) {
-        return res.status(401).send({ message: "Login failed." })
-    } else {
-        req.session.isLoggedIn = true
-        req.session.admin = !!user.admin //cast twice for bool
-        req.session.userid = user.id
-        res.status(200).send({ data: {id: user.id, email: user.email, user_name: user.user_name, admin: !!user.admin, picture_number: user.picture_number, color: user.color}, message: "Login successful" })
     }
 })
 
