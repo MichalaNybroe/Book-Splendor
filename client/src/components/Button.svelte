@@ -69,30 +69,6 @@
         color: black;
     }
 
-    /*
-    h1, h2, h3, h4, h5 {
-  font-family: 'Habibi';
-}
-
-h1 {
-  font-size: 48px;  
-}
-
-a {
-    font-family: 'Habibi';
-    text-decoration: none;
-    color: #A3B18A;
-}
-
-a:hover {
-    color: #344E41;
-}
-
-p {
-  font-family: 'Habibi';
-}
-    */
-
 	.danger {
 		color:black;   
 	}
