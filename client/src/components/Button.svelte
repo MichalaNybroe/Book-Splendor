@@ -20,16 +20,16 @@
 
 <style>
     button {
-    background: none;
-    border: none;
-    color: #474544;
-    cursor: pointer;
-    display: inline-block;
-    font-family: "Helvetica", Arial, sans-serif;
-    font-size: 0.875em;
-    font-weight: bold;
-    outline: none;
-    padding: 5px 15px;
+        background: none;
+        border: none;
+        color: #474544;
+        cursor: pointer;
+        display: inline-block;
+        font-family: "Helvetica", Arial, sans-serif;
+        font-size: 0.875em;
+        font-weight: bold;
+        outline: none;
+        padding: 5px 15px;
     }
 
     button:hover {
@@ -42,7 +42,7 @@
 
     .login{
         background: none;
-        border: solid 2px #474544;
+        border: solid 1px #474544;
         color: #474544;
         cursor: pointer;
         display: inline-block;
@@ -58,6 +58,41 @@
         color: #f2f3eb;
     }
 
+    .logout{
+        color: #A3B18A;
+        cursor: pointer;
+        font-family: 'Habibi';
+        font-size: 48px;
+    }
+
+    .logout:hover {
+        color: black;
+    }
+
+    /*
+    h1, h2, h3, h4, h5 {
+  font-family: 'Habibi';
+}
+
+h1 {
+  font-size: 48px;  
+}
+
+a {
+    font-family: 'Habibi';
+    text-decoration: none;
+    color: #A3B18A;
+}
+
+a:hover {
+    color: #344E41;
+}
+
+p {
+  font-family: 'Habibi';
+}
+    */
+
 	.danger {
 		color:black;   
 	}
@@ -72,5 +107,3 @@
 		font-size:2em
 	}
 </style>
-
-<!--OBS: husk at importe button, like this: import Button from "./Button.svelte" -->
