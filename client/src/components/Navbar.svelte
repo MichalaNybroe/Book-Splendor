@@ -61,7 +61,7 @@
 
 
 <style>
-.margin-left {
-    margin-left: 29px
-}
+    .margin-left {
+        margin-left: 29px
+    }
 </style>

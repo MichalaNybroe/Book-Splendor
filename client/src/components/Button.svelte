@@ -36,10 +36,6 @@
         color: wheat;
     }
 
-	.primary {
-		color:green;
-	}
-
     .login{
         background: none;
         border: solid 1px #474544;
@@ -72,14 +68,26 @@
 	.danger {
 		color:black;   
 	}
+
     .danger:hover {
         background-color: red;
     }
-	.sm {
-		font-size:1em;
-		padding:0.1em;
-	}
-	.lg {
-		font-size:2em
-	}
+
+    .create {
+        background: none;
+        border: solid 1px #474544;
+        color: #474544;
+        cursor: pointer;
+        display: inline-block;
+        font-family: "Helvetica", Arial, sans-serif;
+        font-size: 0.875em;
+        font-weight: bold;
+        outline: none;
+        padding: 5px 15px;
+    }
+
+    .create:hover {
+        background: #474544;
+        color: #f2f3eb;
+    }
 </style>

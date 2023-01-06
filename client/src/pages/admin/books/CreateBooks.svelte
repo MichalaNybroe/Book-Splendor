@@ -5,6 +5,7 @@
     import * as Toastr from 'toastr'
     import '../../../../node_modules/toastr/build/toastr.css'
     import MultiSelect from 'svelte-multiselect'
+    import Button from '../../../components/Button.svelte'
     
     if($user?.admin !== true) {
         const navigate = useNavigate()
@@ -113,40 +114,105 @@ action="/createbook">
 
     <div class="title">
         <label for="title">Title</label>
+        <br>
         <input type="text" placeholder="Title" name="title" id="title" bind:value={title} required>
     </div>
-
+    <br>
     <div class="number">
         <label for="number">Number</label>
+        <br>
         <input type="number" placeholder=1 name="number" id="number" min=1 bind:value={number} required>
     </div>
-
-    <label for="series">Series</label>
-    <MultiSelect bind:selected={selectedSeries} options={series} loading={series.length===0} maxSelect={1} name="series"/>
-
-    <label for="authors">Authors</label>
-    <MultiSelect bind:selected={selectedAuthors} options={authors} loading={authors.length===0} minSelect={1} name="authors" required/>
-    
-
+    <br>
+    <div class="multiselect">
+        <label for="series">Series</label>
+        <MultiSelect bind:selected={selectedSeries} options={series} loading={series.length===0} maxSelect={1} name="series" id="series"/>
+    </div>
+    <br>
+    <div class="multiselect">
+        <label for="authors">Authors</label>
+        <MultiSelect bind:selected={selectedAuthors} options={authors} loading={authors.length===0} minSelect={1} name="authors" required/>
+    </div>
+    <br>
+    <!-- Tør ikke fjerne den her, før jeg har testet om den nye virker - men create books har slet ikke virket i dag, så det må vi gøre sammen :D
     <div class="description">
         <label for="description">Description</label>
+        <br>
         <input type="text" placeholder="Description" name="description" id="description" bind:value={description} required>
     </div>
-
+-->
+    <div class="description">
+        <label for="description">Description</label>
+        <br>
+        <textarea name="description" placeholder="Description" id="description" cols="30" rows="5" bind:value={description} required/>
+      </div>
+    <br>
     <div class="book_img">
         <label for="book_img">Image</label>
+        <br>
         <input type="text" placeholder="Image" name="img" id="book_img" bind:value={book_img} required>
     </div>
-
-    <label for="genres">Genres</label>
-    <MultiSelect bind:selected={selectedGenres} options={genres} loading={genres.length===0} minSelect={1} name="genres" required/>
-
-    <div class="Release status">
-        <input bind:checked={unreleased} type="checkbox" name="unreleased" id="unreleased" >
-        <label for="unreleased">Unreleased</label>
+    <br>
+    <div class="multiselect">
+        <label for="genres">Genres</label>
+        <MultiSelect bind:selected={selectedGenres} options={genres} loading={genres.length===0} minSelect={1} name="genres" required/>
     </div>
-
+    <br>
+    <div class="releaseStatus">
+        <label for="unreleased">Unreleased</label>
+        <input bind:checked={unreleased} type="checkbox" name="unreleased" id="unreleased">        
+    </div>
+    <br>
     <div class="submit">
+        <Button class="create" on:click={handleSubmit}>Create Book</Button>
+        <!-- Tør ikke slette den her endnu heller. Skal lige testes først. 
         <input type="submit" value="Create book" id="submit_button" />
+        -->
     </div>
 </form>
+
+
+<style>
+    form {
+        margin-left: 29px;
+    }
+
+    input {
+        width: 50%;
+        font-family: Georgia, 'Times New Roman', Times, serif;
+    }
+
+    textarea {
+        overflow: auto;
+        width: 50%;
+        height: 150px;
+        resize: none;
+        font-family: Georgia, 'Times New Roman', Times, serif;
+    }
+
+    .multiselect {
+        width: 51%
+    }
+
+    #number {
+        height: 23px
+    }
+
+    
+    #book_img {
+        height: 23px
+    }
+    
+    #title {
+        height: 23px
+    }
+
+    .releaseStatus {
+        width: 20%;
+    }
+
+    #submit_button {
+        width: 90px
+    }
+
+</style>
