@@ -67,9 +67,11 @@
     retrieveBooks()
 </script>
 
+<p>
 <Router primary={false}>
     <Link to="/admin/books/create">Create Book</Link>
 </Router>
+</p>
 
 <form id="searchBooksForm" on:submit|preventDefault={retrieveBooks}>
     <label for="sortBooksDropDown">Sort by</label>
@@ -118,6 +120,10 @@
 <style>
     :global(body) {
         font-family: Georgia, 'Times New Roman', Times, serif;
+    }
+
+    p {
+        margin-left: 37.5px
     }
 
     input,
