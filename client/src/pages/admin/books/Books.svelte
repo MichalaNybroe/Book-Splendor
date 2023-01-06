@@ -60,7 +60,7 @@
 
             books = books.filter(row => row != book)
         } catch {
-            Toastr.error('Unable to delete user. Try again later.')
+            Toastr.error('Unable to delete book. Try again later.')
 	    }
     }
 
@@ -94,7 +94,7 @@
 </form>
 
 <table>
-	<tr class="tr">
+	<tr class="tr"> <!-- test om jeg kan udkommentere klassen her, pretty sure i can now -->
 		{#each columns as column}
 			<th>{column}</th>
 		{/each}
@@ -128,22 +128,22 @@
 
     input,
     select {
-    color: #5a5a5a;
-    font: inherit;
-    margin: 0;
+        color: #5a5a5a;
+        font: inherit;
+        margin: 0;
     }
 
     input {
-    line-height: normal;
+        line-height: normal;
     }
 
     form,
     table {
-    padding: 37.5px;
+        padding: 37.5px;
     }
 
     table {
-      width: 90%;
+        width: 90%;
     }
 
     tr {
@@ -153,13 +153,13 @@
 
     input,
     select {
-    background: none;
-    border: none;
-    border-bottom: solid 2px #474544;
-    color: #474544;
-    font-size: 1em;
-    font-weight: 400;
-    letter-spacing: 1px;
+        background: none;
+        border: none;
+        border-bottom: solid 2px #474544;
+        color: #474544;
+        font-size: 1em;
+        font-weight: 400;
+        letter-spacing: 1px;
     }
 
 </style>
