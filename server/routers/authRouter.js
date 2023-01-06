@@ -27,7 +27,12 @@ function checkPasswordSecurity(req, res, next) {
 router.post("/login", async (req, res) => {
     const { email, password } = req.body
 
-    const [rows, fields] = await db.query("SELECT * FROM users WHERE email=?;", [email])
+    try {
+        const [rows, fields] = await db.query("SELECT * FROM users WHERE email=?;", [email])
+    } catch {
+        res.status(500).send({message: 'Server error.'})
+    }
+   
     const user = rows[0]
 
     if (!user || await !comparePassword(password, user.password)) {
@@ -54,7 +59,7 @@ router.post("/forgotPassword",  async (req, res) => {
         await sendMail(email, email, "Password reset", `Please follow link to reset password. ${link}`)
         res.status(200).send({ message: "An email has been sent to reset password." })
     } catch {
-        res.status(400).send( { data: undefined, message: "Unsuccessful." } )
+        res.status(400).send({ data: undefined, message: "Unsuccessful." })
     }
 })
 
