@@ -81,10 +81,6 @@
 
 </div>
 
-<!-- <td><Button class="danger" on:click={()=> deleteBook(book)}>
-                <i class="w3-margin-left fa fa-trash"></i>
-            </Button></td>
-        -->
 
 <style>
       :global(body) {
