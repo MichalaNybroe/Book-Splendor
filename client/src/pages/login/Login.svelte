@@ -4,6 +4,7 @@
     import { user } from '../../store/auth.js'
     import * as Toastr from 'toastr'
     import '../../../node_modules/toastr/build/toastr.css'
+    import Button from '../../components/Button.svelte'
 
     const navigate = useNavigate()
 
@@ -43,21 +44,25 @@
     }
 </script>
 
+<div id="container">
 
 <Router primary={false}>
     <div id="loginBox">
         <form action="/login" method="POST" id="loginForm" on:submit|preventDefault={login}>
-            <h4>Sign In!</h4>
+            <h1>Sign In!</h1>
             <br />
             <label for="email">Email:</label>
+            <br>
             <input
                 type="email"
                 name="email"
-                placeholder="great@mail.dk"
+                placeholder="your@mail.dk"
                 id="email"
                 bind:value={emailInp}/>
             <br />
+            <br>
             <label for="password">Password:</label>
+            <br>
             <input
                 type="password"
                 name="password"
@@ -66,9 +71,44 @@
                 bind:value={passwordInp}
             />
             <br />
-            <input type="submit" id="logButton" value="Login" />
+            <br>
+            <Button class="login" on:click={()=> login()}>Login </Button>
             <Link to="/forgotPassword"><p  id="forgotPW">Forgot your password?</p></Link>
             <Link to="/signUp"><p id="signUp">Sign Up</p></Link>
         </form>
     </div>
 </Router>
+
+</div>
+
+<!-- <td><Button class="danger" on:click={()=> deleteBook(book)}>
+                <i class="w3-margin-left fa fa-trash"></i>
+            </Button></td>
+        -->
+
+<style>
+      :global(body) {
+        font-family: Georgia, 'Times New Roman', Times, serif;
+    }
+
+    form {
+        text-align: center;
+    }
+
+    h1 {
+        color: #474544;
+        font-size: 32px;
+        font-weight: 700;
+        letter-spacing: 7px;
+        text-align: center;
+        text-transform: uppercase;
+  }
+
+    #container {
+        border: solid 3px #474544;
+        max-width: 768px;
+        margin: 60px auto;
+        position: relative;
+  }
+
+</style>

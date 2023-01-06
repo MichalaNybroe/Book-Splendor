@@ -94,7 +94,7 @@
 </form>
 
 <table>
-	<tr class="tr"> <!-- test om jeg kan udkommentere klassen her, pretty sure i can now -->
+	<tr>
 		{#each columns as column}
 			<th>{column}</th>
 		{/each}

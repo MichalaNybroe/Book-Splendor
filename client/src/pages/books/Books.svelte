@@ -23,22 +23,19 @@
             }
         } catch {
             Toastr.error('Unable to retrieve books. Try again later.')
-        }
-        
+        } 
     }
 
     fetchBooks()
 </script>
 
 
-<table>
-    
+<table> 
     <tr>
         {#each books as book}
             <td><h5><Book book={book} authors={book.authors}></Book></h5></td>
         {/each}
     </tr>
-
 </table>
 
 

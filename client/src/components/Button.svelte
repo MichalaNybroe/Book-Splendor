@@ -36,9 +36,28 @@
         color: wheat;
     }
 
-	.primary{
+	.primary {
 		color:green;
 	}
+
+    .login{
+        background: none;
+        border: solid 2px #474544;
+        color: #474544;
+        cursor: pointer;
+        display: inline-block;
+        font-family: "Helvetica", Arial, sans-serif;
+        font-size: 0.875em;
+        font-weight: bold;
+        outline: none;
+        padding: 5px 15px;
+    }
+
+    .login:hover {
+        background: #474544;
+        color: #f2f3eb;
+    }
+
 	.danger {
 		color:black;   
 	}
