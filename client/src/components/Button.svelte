@@ -30,7 +30,6 @@
     font-weight: bold;
     outline: none;
     padding: 5px 15px;
-    text-transform: uppercase;
     }
 
     button:hover {

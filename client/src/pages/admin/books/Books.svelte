@@ -18,7 +18,7 @@
     let searchAuthor = ''
     let searchTitle = ''
     let books = []
-    let columns = ['Id' , 'Title', 'Number', 'Series', 'Authors', 'Genres']
+    let columns = ['Id', 'Title', 'Number', 'Series', 'Authors', 'Genres', 'Update', 'Delete']
     let sortBooksDropDown = ['date', 'series', 'unreleased']
     let selected = ''
 
@@ -92,7 +92,7 @@
 </form>
 
 <table>
-	<tr>
+	<tr class="tr">
 		{#each columns as column}
 			<th>{column}</th>
 		{/each}
@@ -105,66 +105,55 @@
 			<td>{book.number}</td>
 			<td>{book.series_id ?? ''}</td>
 			<td>{book.authors.map((author) => author.name).join(', ')}</td>
+			<td>{book.genres_id ?? ''}</td>
             <!--<td>{book.genres.map((genre) => genre.name).join(', ')}</td>-->
-            <Link to="/admin/books/{book.id}/edit" style="color:black">Update</Link>
-            <Button class="danger" on:click={()=> deleteBook(book)}>
+            <td><Link to="/admin/books/{book.id}/edit" style="color:black">Update</Link></td>
+            <td><Button class="danger" on:click={()=> deleteBook(book)}>
                 <i class="w3-margin-left fa fa-trash"></i>
-            </Button>
+            </Button></td>
 		</tr>
 	{/each}
 </table>
 
 <style>
-     @import url(https://fonts.googleapis.com/css?family=Montserrat:400,700);
+    :global(body) {
+        font-family: Georgia, 'Times New Roman', Times, serif;
+    }
 
-input,
-select,
-textarea {
-  color: #5a5a5a;
-  font: inherit;
-  margin: 0;
-}
+    input,
+    select {
+    color: #5a5a5a;
+    font: inherit;
+    margin: 0;
+    }
 
-input {
-  line-height: normal;
-}
+    input {
+    line-height: normal;
+    }
 
-textarea {
-  overflow: auto;
-}
+    form,
+    table {
+    padding: 37.5px;
+    }
 
-#container {
-  border: solid 3px #474544;
-  max-width: 768px;
-  margin: 60px auto;
-  position: relative;
-}
+    table {
+      width: 90%;
+    }
 
-form {
-  padding: 37.5px;
-}
-
-h1 {
-  color: #474544;
-  font-size: 32px;
-  font-weight: 700;
-  letter-spacing: 7px;
-  text-align: center;
-}
+    tr {
+        text-align: left;
+    }
 
 
-
-input,
-select,
-textarea {
-  background: none;
-  border: none;
-  border-bottom: solid 2px #474544;
-  color: #474544;
-  font-size: 1em;
-  font-weight: 400;
-  letter-spacing: 1px;
-  margin: 0em 0 1.875em 0;
-}
+    input,
+    select {
+    background: none;
+    border: none;
+    border-bottom: solid 2px #474544;
+    color: #474544;
+    font-size: 1em;
+    font-weight: 400;
+    letter-spacing: 1px;
+    }
 
 </style>
