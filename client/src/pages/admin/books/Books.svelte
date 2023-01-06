@@ -4,6 +4,7 @@
     import { user } from '../../../store/auth'
     import * as Toastr from 'toastr'
     import '../../../../node_modules/toastr/build/toastr.css'
+    import Button from '../../../components/Button.svelte'
 
 
     if($user?.admin !== true) {
@@ -34,7 +35,7 @@
                 const data = await response.json()
                 books = data.data
             } else {
-                Toastr.warning("Unable to retrieve books.")
+                Toastr.warning('Unable to retrieve books.')
             }
         } catch {
             Toastr.error('Unable to retrieve books. Try again later.')
@@ -106,9 +107,9 @@
 			<td>{book.authors.map((author) => author.name).join(', ')}</td>
             <!--<td>{book.genres.map((genre) => genre.name).join(', ')}</td>-->
             <Link to="/admin/books/{book.id}/edit" style="color:black">Update</Link>
-			<button on:click={() => deleteBook(book)}>
-				X
-			</button>
+            <Button class="danger" on:click={()=> deleteBook(book)}>
+                <i class="w3-margin-left fa fa-trash"></i>
+            </Button>
 		</tr>
 	{/each}
 </table>
