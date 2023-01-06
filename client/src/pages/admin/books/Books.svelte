@@ -34,6 +34,7 @@
             if (response.ok) {
                 const data = await response.json()
                 books = data.data
+                console.log(books)
             } else {
                 Toastr.warning('Unable to retrieve books.')
             }
@@ -46,7 +47,7 @@
 	async function deleteBook(book) {
         try {
             //confirm message before try 'Are you sure you wish to delete' TOASTR
-            const response = await fetch(`${$BASE_URL}/api/users/${book.id}`, {
+            const response = await fetch(`${$BASE_URL}/api/books/${book.id}`, {
                 method: 'DELETE',
                 credentials: 'include',
                 headers: { 'Content-Type': 'application/json' }
@@ -105,14 +106,15 @@
 			<td>{book.id}</td>
 			<td>{book.title}</td>
 			<td>{book.number}</td>
-			<td>{book.series_id ?? ''}</td>
+			<td>{book.series_title ?? ''}</td>
 			<td>{book.authors.map((author) => author.name).join(', ')}</td>
-			<td>{book.genres_id ?? ''}</td>
-            <!--<td>{book.genres.map((genre) => genre.name).join(', ')}</td>-->
+            <td>{book.genres.map((genre) => genre.name).join(', ')}</td>
             <td><Link to="/admin/books/{book.id}/edit" style="color:black">Update</Link></td>
-            <td><Button class="danger" on:click={()=> deleteBook(book)}>
-                <i class="w3-margin-left fa fa-trash"></i>
-            </Button></td>
+            <td>
+                <Button class="danger" on:click={()=> deleteBook(book)}>
+                    <i class="w3-margin-left fa fa-trash"></i>
+                </Button>
+            </td>
 		</tr>
 	{/each}
 </table>

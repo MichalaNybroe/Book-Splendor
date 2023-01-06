@@ -41,14 +41,14 @@ db.execute(`CREATE TABLE IF NOT EXISTS books(
     img VARCHAR(2000),
     created_date TIMESTAMP NOT NULL DEFAULT NOW(),
     series_id INTEGER,
-    CONSTRAINT fk_series FOREIGN KEY (series_id) REFERENCES series(id)
+    CONSTRAINT fk_series FOREIGN KEY (series_id) REFERENCES series(id) ON DELETE CASCADE
 );`)
 
 db.execute(`CREATE TABLE IF NOT EXISTS users_books(
     users_id INTEGER,
     books_id INTEGER,
-    CONSTRAINT fk_users_books_id FOREIGN KEY (users_id) REFERENCES users(id),
-    CONSTRAINT fk_books_users_id FOREIGN KEY (books_id) REFERENCES books(id),
+    CONSTRAINT fk_users_books_id FOREIGN KEY (users_id) REFERENCES users(id) ON DELETE CASCADE,
+    CONSTRAINT fk_books_users_id FOREIGN KEY (books_id) REFERENCES books(id) ON DELETE CASCADE,
     want_to_read BOOLEAN,
     has_read BOOLEAN,
     CONSTRAINT unique_users_books UNIQUE (users_id, books_id)
@@ -60,7 +60,7 @@ db.execute(`CREATE TABLE IF NOT EXISTS reviews(
     text VARCHAR(1000),
     rating SMALLINT(5),
     users_id INTEGER,
-    CONSTRAINT fk_users_reviews FOREIGN KEY (users_id) REFERENCES users(id)
+    CONSTRAINT fk_users_reviews FOREIGN KEY (users_id) REFERENCES users(id) ON DELETE CASCADE
 );`)
 
 db.execute(`CREATE TABLE IF NOT EXISTS authors(
@@ -71,8 +71,8 @@ db.execute(`CREATE TABLE IF NOT EXISTS authors(
 db.execute(`CREATE TABLE IF NOT EXISTS books_authors(
     books_id INTEGER,
     authors_id INTEGER,
-    CONSTRAINT fk_books_authors FOREIGN KEY (books_id) REFERENCES books(id),
-    CONSTRAINT fk_authors_books FOREIGN KEY (authors_id) REFERENCES authors(id),
+    CONSTRAINT fk_books_authors FOREIGN KEY (books_id) REFERENCES books(id) ON DELETE CASCADE,
+    CONSTRAINT fk_authors_books FOREIGN KEY (authors_id) REFERENCES authors(id) ON DELETE CASCADE,
     CONSTRAINT unique_books_authors UNIQUE (books_id, authors_id)
 );`)
 
@@ -84,8 +84,8 @@ db.execute(`CREATE TABLE IF NOT EXISTS genres(
 db.execute(`CREATE TABLE IF NOT EXISTS books_genres(
     books_id INTEGER,
     genres_id INTEGER,
-    CONSTRAINT fk_books_genres FOREIGN KEY (books_id) REFERENCES books(id),
-    CONSTRAINT fk_genres_books FOREIGN KEY (genres_id) REFERENCES genres(id),
+    CONSTRAINT fk_books_genres FOREIGN KEY (books_id) REFERENCES books(id) ON DELETE CASCADE,
+    CONSTRAINT fk_genres_books FOREIGN KEY (genres_id) REFERENCES genres(id) ON DELETE CASCADE,
     CONSTRAINT unique_books_genres UNIQUE (books_id, genres_id)
 );`)
 
