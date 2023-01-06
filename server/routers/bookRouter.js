@@ -8,24 +8,55 @@ import db from "../database/connection.js"
 // save book of the week id
 
 router.get("/api/books", async (req, res) => {
-    const [books,_] = await db.query("SELECT books.*, authors_id, authors.name AS author_name FROM books JOIN books_authors ON books.id = books_authors.books_id JOIN authors ON books_authors.authors_id = authors.id;")
-    const booksAuthors = {}
+    const [books,_] = await db.query(
+        `SELECT 
+            books.*, 
+            authors_id, 
+            authors.name AS author_name,
+            genres_id,
+            genres.name AS genre_name,
+            series_id,
+            series.title AS series_title
+        FROM books
+            JOIN books_authors ON books.id = books_authors.books_id 
+            JOIN authors ON books_authors.authors_id = authors.id
+            JOIN books_genres ON books.id = books_genres.books_id
+            JOIN genres ON books_genres.genres_id = genres.id
+            JOIN series ON series.id = books.series_id;`
+    )
+    let booksAuthorsGenres = {}
     
     books.forEach((book) => {
-        if(!(book.id in booksAuthors)) {
-            booksAuthors[book.id] = book
-            booksAuthors[book.id]["authors"] = []
+        if(!(book.id in booksAuthorsGenres)) {
+            booksAuthorsGenres[book.id] = book
+            booksAuthorsGenres[book.id]["authors"] = {}
+            booksAuthorsGenres[book.id]["genres"] = {}
         }
-        booksAuthors[book.id]["authors"].push({
+        booksAuthorsGenres[book.id]["authors"][book.authors_id] = {
             name: book.author_name,
             id: book.authors_id
-        })
+        }
+        booksAuthorsGenres[book.id]["genres"][book.genres_id] = {
+            name: book.genre_name,
+            id: book.genres_id
+        }
+    })
+
+    booksAuthorsGenres = Object.values(booksAuthorsGenres).map((book) => {
+        book.authors = Object.values(book.authors)
+        book.genres = Object.values(book.genres)
+        delete book.genre_name
+        delete book.author_name
+        delete book.authors_id
+        delete book.genres_id
+        book.unreleased = !!book.unreleased
+        return book
     })
 
     if (books === undefined) {
         res.status(400).send({ data: undefined, message: `No books`})
     } else {
-        res.send({ data: Object.values(booksAuthors) }) //cast object to array
+        res.send({ data: booksAuthorsGenres }) //cast object to array
     }
 })
 
