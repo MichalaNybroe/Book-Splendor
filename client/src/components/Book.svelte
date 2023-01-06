@@ -12,3 +12,10 @@
 {#each authors as author}
     <Link to="/authors/books"><Author author={author}/></Link>
 {/each}
+
+<style>
+    img {
+        height: 200px;
+    }
+
+</style>
