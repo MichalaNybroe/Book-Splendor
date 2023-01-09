@@ -108,7 +108,9 @@
 			<td>{book.series_title ?? ''}</td>
 			<td>{book.authors.map((author) => author.name).join(', ')}</td>
             <td>{book.genres.map((genre) => genre.name).join(', ')}</td>
-            <td><Link to="/admin/books/{book.id}/edit" style="color:black">Update</Link></td>
+            <Router primary={false}>
+                <td><Link to="/admin/books/{book.id}/edit" style="color:black">Update</Link></td>
+            </Router>
             <td>
                 <Button class="danger" on:click={()=> deleteBook(book)}>
                     <i class="w3-margin-left fa fa-trash"></i>
