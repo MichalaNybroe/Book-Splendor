@@ -30,50 +30,34 @@
     fetchBooks()
 </script>
 
-
 <!--
 <table>
-    
-  
-        <tr>
-           
-            
-            
-            {/each}
-        </tr>
-   
-        
-</table>
-
-<thead>
-    <tr>
-      <th>
-        {#each books as book}
-        <Link to="/book"><img src="{book.img}"></Link>    
-        {/each}
-      </th>
-    </tr>
-  </thead>
-  <tbody>
     {#each books as book}
-    <tr>
+
+        <div class="flex-container">
+
+            <div class="flex-child magenta">
+        <td><Link to="/book"><img src="{book.img}" alt="book cover"></Link></td>
+    
         <td>{book.title}</td>
-    </tr>
-    <tr>
         <td>{book.authors.map((author) => author.name).join(', ')}</td>
-            
-    </tr>
-  </tbody>
+    </div>
+    </div>
+    
+    {/each}
+
+</table>
 -->
 
 
 <table> 
     <tr>
         {#each books as book}
-            <td><h5><Book book={book} authors={book.authors}></Book></h5></td>
+            <td><h5><Book book={book}></Book></h5></td>
         {/each}
     </tr>
 </table>
+
 
 <style>
     table {
@@ -82,10 +66,8 @@
     }
     
     td {
-        width: 20px;
+        width: 20%;
     }
 
-    img {
-        height: 200px;
-    }
+
 </style>
