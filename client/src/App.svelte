@@ -1,11 +1,11 @@
 <script>
-  import Navbar from "./components/Navbar.svelte"
-  import Footer from "./components/Footer.svelte"
+  import Navbar from './components/Navbar.svelte'
+  import Footer from './components/Footer.svelte'
 
-  import { Route, Router } from "svelte-navigator"
-  import io from "socket.io-client"
-  import { BASE_URL, ENVIRONMENT } from "./store/globals";
-  import { onMount } from "svelte";
+  import { Route, Router } from 'svelte-navigator'
+  import io from 'socket.io-client'
+  import { BASE_URL, ENVIRONMENT } from './store/globals'
+  import { onMount } from 'svelte'
 
   import Home from "./pages/home/Home.svelte"
   import Login from "./pages/login/Login.svelte"

@@ -36,7 +36,6 @@
             if (response.ok) {
                 const data = await response.json()
                 books = data.data
-                console.log(books)
             } else {
                 Toastr.warning('Unable to retrieve books.')
             }

@@ -18,7 +18,7 @@ function checkPasswordSecurity(req, res, next) {
         res.status(400).send({ message: "Passwords do not match."})
     }
 
-    if (password.length < 9) {
+    if (password.length < 8) {
         res.status(400).send({ message: "Password needs to be 8 or more characters long." })
     }
     next()

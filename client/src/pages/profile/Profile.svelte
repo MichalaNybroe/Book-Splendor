@@ -36,7 +36,7 @@
 </script>
 
 <div id="profilebanner" style="background-color: {$user.color};color:white">
-    <img id="profilePicture">
+    <img id="profilePicture" alt="User image.">
 
     <h3 id="username">{$user?.user_name}</h3>
     <input type="color" bind:value={$user.color} style="height: 50px;" on:change|preventDefault={saveColor} id="colorInp">

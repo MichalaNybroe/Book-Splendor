@@ -2,7 +2,6 @@
 import { Router } from "express"
 const router = Router()
 import { adminGuard, loggedinGuard } from "../util/guard.js"
-
 import db from "../database/connection.js"
 
 // save book of the week id
@@ -24,48 +23,41 @@ router.get("/api/books", async (req, res) => {
             JOIN genres ON books_genres.genres_id = genres.id
             JOIN series ON series.id = books.series_id;`
     )
-    let booksAuthorsGenres = {}
     
-    books.forEach((book) => {
-        if(!(book.id in booksAuthorsGenres)) {
-            booksAuthorsGenres[book.id] = book
-            booksAuthorsGenres[book.id]["authors"] = {}
-            booksAuthorsGenres[book.id]["genres"] = {}
-        }
-        booksAuthorsGenres[book.id]["authors"][book.authors_id] = {
-            name: book.author_name,
-            id: book.authors_id
-        }
-        booksAuthorsGenres[book.id]["genres"][book.genres_id] = {
-            name: book.genre_name,
-            id: book.genres_id
-        }
-    })
-
-    booksAuthorsGenres = Object.values(booksAuthorsGenres).map((book) => {
-        book.authors = Object.values(book.authors)
-        book.genres = Object.values(book.genres)
-        delete book.genre_name
-        delete book.author_name
-        delete book.authors_id
-        delete book.genres_id
-        book.unreleased = !!book.unreleased
-        return book
-    })
+    const cleanedBooks = setBooks(books)
 
     if (books === undefined) {
         res.status(400).send({ data: undefined, message: `No books`})
     } else {
-        res.send({ data: booksAuthorsGenres }) //cast object to array
+        res.send({ data: cleanedBooks })
     }
 })
 
 router.get("/api/books/:id", async (req, res) => {
-    const book = await db.query("SELECT * FROM books WHERE books.id=?;", [req.params.id])
-    if (book === undefined) {
+    const [books,_] = await db.query(
+        `SELECT 
+            books.*, 
+            authors_id, 
+            authors.name AS author_name,
+            genres_id,
+            genres.name AS genre_name,
+            series_id,
+            series.title AS series_title
+        FROM books
+            JOIN books_authors ON books.id = books_authors.books_id 
+            JOIN authors ON books_authors.authors_id = authors.id
+            JOIN books_genres ON books.id = books_genres.books_id
+            JOIN genres ON books_genres.genres_id = genres.id
+            JOIN series ON series.id = books.series_id
+        WHERE books.id=?;`, [req.params.id]
+    )
+        
+    const cleanedbooks= setBooks(books)
+    
+    if (!books) {
         res.status(400).send({ data: undefined, message: `No book by ${req.params.id} id`})
     } else {
-        res.send({ data: book })
+        res.send({ data: cleanedbooks[0] })
     }
 })
 
@@ -131,6 +123,39 @@ function checkBookInput(req, res, next) {
     if (!req.body.genres) return res.status(400).send({ message: "Genres is undefined." })
 
     next()
+}
+
+function setBooks(books) {
+    let booksAuthorsGenres = {}
+
+    books.forEach((book) => {
+        if(!(book.id in booksAuthorsGenres)) {
+            booksAuthorsGenres[book.id] = book
+            booksAuthorsGenres[book.id]["authors"] = {}
+            booksAuthorsGenres[book.id]["genres"] = {}
+        }
+        booksAuthorsGenres[book.id]["authors"][book.authors_id] = {
+            name: book.author_name,
+            id: book.authors_id
+        }
+        booksAuthorsGenres[book.id]["genres"][book.genres_id] = {
+            name: book.genre_name,
+            id: book.genres_id
+        }
+    })
+
+    booksAuthorsGenres = Object.values(booksAuthorsGenres).map((book) => {
+        book.authors = Object.values(book.authors)
+        book.genres = Object.values(book.genres)
+        delete book.genre_name
+        delete book.author_name
+        delete book.authors_id
+        delete book.genres_id
+        book.unreleased = !!book.unreleased
+        return book
+    })
+
+    return booksAuthorsGenres
 }
 
 export default router
