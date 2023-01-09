@@ -3,9 +3,7 @@
   import Footer from './components/Footer.svelte'
 
   import { Route, Router } from 'svelte-navigator'
-  import io from 'socket.io-client'
   import { BASE_URL, ENVIRONMENT } from './store/globals'
-  import { onMount } from 'svelte'
 
   import Home from "./pages/home/Home.svelte"
   import Login from "./pages/login/Login.svelte"
@@ -22,8 +20,8 @@
   import AuthorBooks from "./pages/authors/Author.svelte"
   import GenreBooks from "./pages/genres/Genre.svelte"
   import SeriesBooks from "./pages/series/Series.svelte"
-  import Series from "./components/Series.svelte";
-  import UpdateBooks from "./pages/admin/books/UpdateBooks.svelte";
+  import Series from "./components/Series.svelte"
+  import UpdateBooks from "./pages/admin/books/UpdateBooks.svelte"
   
 /*
   const socket = io();
@@ -54,14 +52,13 @@
         <Route path="/admin/books"><ManageBooks /></Route>
         <Route path="/admin/users"><ManageUsers /></Route>
         <Route path="/admin/reviews"><ManageReviews /></Route>
-        <Route path="/profile"><Profile /></Route>
+        <Route path="/profile"><Profile /></Route><!--kan evt tilføje /id så andre kan tilgå hinandens sider. men sikkerhedstjek at man kun kan redigere hvis man er brugeren selv-->
         <Route path="/admin/books/create"><ManageCreateBooks /></Route>
-        <Route path="/book"><Book /></Route>
-        <Route path="/authors/books"><AuthorBooks /></Route>
-        <Route path="/genres/books"><GenreBooks /></Route>
-        <Route path="/series/books"><SeriesBooks /></Route>
         <Route path="/admin/books/update"><UpdateBooks /></Route>
-        
+        <Route path="/book/:id" component='{Book}'/>
+        <Route path="/authors/:id/books" component='{AuthorBooks}'/>
+        <Route path="/genres/:id/books" component='{GenreBooks}'/>
+        <Route path="/series/:id/books" component='{SeriesBooks}'/>
       </div>
 
     <Footer></Footer>

@@ -3,7 +3,7 @@
     import { BASE_URL } from '../../store/globals'
     import * as Toastr from 'toastr'
     import '../../../node_modules/toastr/build/toastr.css'
-    import { Link } from 'svelte-navigator';
+    import { Link } from 'svelte-navigator'
 
 
     let books = []

@@ -1,5 +1,4 @@
 <script>
-    export let authors
     export let book
 
     import { Link, Router } from 'svelte-navigator'
@@ -17,17 +16,27 @@
 -->
 
 <Router primary={false}>
-<table>
-    <div class="flex-container">
-        <div class="flex-child">
-            <td><Link to="/book"><img src="{book.img}" alt="book cover"></Link></td>
-            <br>
-            <td>{book.title}</td>
-            <br>
-            <td>{book.authors.map((author) => author.name).join(', ')}</td>
+    <Link to="/book/{book.id}">
+        <table>
+        <div class="flex-container">
+            <div class="flex-child">
+                <td><img src="{book.img}" alt="book cover"></td>
+                <br>
+                <td>{book.title}</td>
+                <br>
+                <td>
+                    {#each book.authors as author, index}
+                        <Link to="/authors/{author.id}/books">{author.name}
+                            {#if index < (book.authors.length-1)}, 
+                            {/if}
+                        </Link>
+                    {/each}
+                </td>
+
+            </div>
         </div>
-    </div>
-</table>
+    </table>
+    </Link>
 </Router>
 
 <style>

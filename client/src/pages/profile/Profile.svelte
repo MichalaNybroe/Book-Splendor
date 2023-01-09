@@ -41,18 +41,31 @@
         patchUser(body, 'Banner color updated.', 'Banner color update was unsuccessfull.')
     }
 
-    async function updateUserName(event) {
-        event.preventDefault()
+    async function updateUserName() {
         const body = { user_name: $user.user_name }
 
         patchUser(body, 'Username sucessfully updated.', 'Unsucessfull attempt at updating username.')
     }
 
     async function updatePicture() {
-        console.log('Vi er i updatePicture funktionen')
-        const body = { user_picture: $user.picture_number}
+        const body = { picture_number: pictureSelect[0].id }
+        try {
+            const response = await fetch(`${$BASE_URL}/api/users/${$user.id}`, {
+                method: 'PATCH',
+                credentials: 'include',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(body)
+            })
 
-        patchUser(body, 'Profile picture sucessfully updated.', 'Unsucessfull attempt at updating profile picture.')
+            if(!response.ok) {
+                Toastr.warning('Unsucessfull attempt at updating profile picture.')
+                return
+            }
+            Toastr.success('Profile picture sucessfully updated.')
+            $user.picture_number = pictureSelect[0].id
+        } catch {
+            Toastr.error('Unable to update user. Try again later.')
+        }
     }
 
     function enterEditMode() {
@@ -63,14 +76,14 @@
         updateMode = false
     }
 
-    let pictureSelect = []
-    const pictures = [{label: 'Unicorn', id: 1}, {label: 'Mermaid', id: 2}, {label: 'Dragon', id: 3}, {label: 'Vampire', id: 4}, {label: 'Robot', id: 5}, {label: 'Skull', id: 6}]
+    let pictureSelect = Object.values($user.picture_number)
+    const pictures = [{id: 1, label: 'Unicorn'}, {id: 2, label: 'Mermaid'}, {id: 3, label: 'Dragon'}, {id: 4, label: 'Vampire'}, {id: 5, label: 'Robot'}, {id: 6, label: 'Skull'}]
 
 
 </script>
 
 <div id="profilebanner" style="background-color: {$user.color};color:white">
-    <img id="profilePicture" src="/profilPictures/{$user.picture_number}.png" alt="Profile.">
+    <img id="profilePicture" src="/profilPictures/{$user.picture_number}.png" alt="Profile." height="200">
 
     <h3 id="username">{$user?.user_name}</h3>
 </div>
