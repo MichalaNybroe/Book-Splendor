@@ -30,6 +30,8 @@
     fetchBooks()
 </script>
 
+
+<!--
 <table>
     
   
@@ -62,9 +64,9 @@
             
     </tr>
   </tbody>
+-->
 
 
-<!--
 <table> 
     <tr>
         {#each books as book}
@@ -72,7 +74,6 @@
         {/each}
     </tr>
 </table>
--->
 
 <style>
     table {
