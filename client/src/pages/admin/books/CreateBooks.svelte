@@ -12,6 +12,8 @@
 
         navigate('/')
     }
+
+    const navigate = useNavigate();
     
     let selectedAuthors = []
     let selectedGenres = []
@@ -158,15 +160,20 @@ action="/createbook">
     <br>
     <div class="submit">
         <Button class="create" on:click={handleSubmit}>Create Book</Button>
-        <!-- Tør ikke slette den her endnu heller. Skal lige testes først. 
-        <input type="submit" value="Create book" id="submit_button" />
-        -->
     </div>
 </form>
+<br>
 
+<p>
+<Button class="goback" on:click={() => navigate(-1)}>Go back</Button>
+</p>
 
 <style>
     form {
+        margin-left: 5%;
+    }
+
+    p {
         margin-left: 5%;
     }
 

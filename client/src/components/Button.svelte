@@ -3,6 +3,11 @@
 	let buttonProps = {
 	class:[$$restProps.class]
 	}
+
+    import { useNavigate } from "svelte-navigator";
+
+  
+
 </script>
 
 <svelte:head>
@@ -17,6 +22,7 @@
 		{...buttonProps}>
 			<slot/>
 	</button>
+
 
 <style>
     button {
@@ -84,10 +90,31 @@
         font-weight: bold;
         outline: none;
         padding: 5px 15px;
+        width: 115px; 
     }
 
     .create:hover {
         background: #474544;
         color: #f2f3eb;
     }
+
+    .goback {
+        background: none;
+        border: solid 1px #474544;
+        color: #474544;
+        cursor: pointer;
+        display: inline-block;
+        font-family: "Helvetica", Arial, sans-serif;
+        font-size: 0.875em;
+        font-weight: bold;
+        outline: none;
+        padding: 5px 15px;
+        width: 115px;    
+    }
+
+    .goback:hover {
+        background: #474544;
+        color: #f2f3eb;
+    }
+
 </style>
