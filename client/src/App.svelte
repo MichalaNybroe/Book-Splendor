@@ -23,6 +23,7 @@
   import GenreBooks from "./pages/genres/Genre.svelte"
   import SeriesBooks from "./pages/series/Series.svelte"
   import Series from "./components/Series.svelte";
+  import UpdateBooks from "./pages/admin/books/UpdateBooks.svelte";
   
 /*
   const socket = io();
@@ -59,6 +60,7 @@
         <Route path="/authors/books"><AuthorBooks /></Route>
         <Route path="/genres/books"><GenreBooks /></Route>
         <Route path="/series/books"><SeriesBooks /></Route>
+        <Route path="/admin/books/update"><UpdateBooks /></Route>
         
       </div>
 

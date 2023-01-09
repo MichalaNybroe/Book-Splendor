@@ -13,6 +13,8 @@
         navigate('/')
     }
 
+    const navigate = useNavigate();
+
     let sortBooks = ''
     let searchId = ''
     let searchAuthor = ''
@@ -109,7 +111,14 @@
 			<td>{book.series_title ?? ''}</td>
 			<td>{book.authors.map((author) => author.name).join(', ')}</td>
             <td>{book.genres.map((genre) => genre.name).join(', ')}</td>
-            <td><Link to="/admin/books/{book.id}/edit" style="color:black">Update</Link></td>
+            <td>
+                <Button class="update" on:click={()=> navigate("/admin/books/update")}>
+                    <i class="fa fa-pencil"></i>
+                </Button>
+                <!--
+                <Link to="/admin/books/{book.id}/edit" style="color:black">Update</Link>
+                -->
+            </td>
             <td>
                 <Button class="danger" on:click={()=> deleteBook(book)}>
                     <i class="w3-margin-left fa fa-trash"></i>

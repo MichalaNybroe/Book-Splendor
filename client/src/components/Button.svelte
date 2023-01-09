@@ -3,11 +3,6 @@
 	let buttonProps = {
 	class:[$$restProps.class]
 	}
-
-    import { useNavigate } from "svelte-navigator";
-
-  
-
 </script>
 
 <svelte:head>
@@ -76,7 +71,15 @@
 	}
 
     .danger:hover {
-        background-color: red;
+        color: red;
+    }
+
+    .update {
+        color: black;
+    }
+
+    .update:hover {
+        color: green;
     }
 
     .create {
