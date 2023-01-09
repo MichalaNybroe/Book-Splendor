@@ -159,7 +159,7 @@ action="/createbook">
     </div>
     <br>
     <div class="submit">
-        <Button class="create" on:click={handleSubmit}>Create Book</Button>
+        <Button class="create">Create Book</Button>
     </div>
 </form>
 <br>
