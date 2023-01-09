@@ -3,6 +3,7 @@
     import { BASE_URL } from '../../store/globals'
     import * as Toastr from 'toastr'
     import '../../../node_modules/toastr/build/toastr.css'
+    import { Link } from 'svelte-navigator';
 
 
     let books = []
@@ -29,7 +30,41 @@
     fetchBooks()
 </script>
 
+<table>
+    
+  
+        <tr>
+           
+            
+            
+            {/each}
+        </tr>
+   
+        
+</table>
 
+<thead>
+    <tr>
+      <th>
+        {#each books as book}
+        <Link to="/book"><img src="{book.img}"></Link>    
+        {/each}
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    {#each books as book}
+    <tr>
+        <td>{book.title}</td>
+    </tr>
+    <tr>
+        <td>{book.authors.map((author) => author.name).join(', ')}</td>
+            
+    </tr>
+  </tbody>
+
+
+<!--
 <table> 
     <tr>
         {#each books as book}
@@ -37,6 +72,7 @@
         {/each}
     </tr>
 </table>
+-->
 
 <style>
     table {
@@ -48,5 +84,7 @@
         width: 20px;
     }
 
-
+    img {
+        height: 200px;
+    }
 </style>

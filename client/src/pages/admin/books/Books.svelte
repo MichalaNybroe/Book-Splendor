@@ -116,9 +116,6 @@
                 <Button class="update" on:click={()=> navigate("/admin/books/update")}>
                     <i class="fa fa-pencil"></i>
                 </Button>
-                <!--
-                <Link to="/admin/books/{book.id}/edit" style="color:black">Update</Link>
-                -->
             </td>
             <td>
                 <Button class="danger" on:click={()=> deleteBook(book)}>
@@ -181,7 +178,6 @@
         text-align: left;
     }
 
-
     input,
     select {
         background: none;
@@ -192,5 +188,4 @@
         font-weight: 400;
         letter-spacing: 1px;
     }
-
 </style>
