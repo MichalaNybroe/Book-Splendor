@@ -93,7 +93,8 @@
     <label for="search_books_title">Title</label>
     <input type="text" name="search_books_title" id="search_books_title">
 
-    <input type="submit" value="Search">
+    <button type="submit">Search</button>
+    <!--<input type="submit" value="Search">-->
 </form>
 
 <table>
@@ -147,6 +148,24 @@
 
     input {
         line-height: normal;
+    }
+
+    button {
+        background: none;
+        border: none;
+        color: #474544;
+        cursor: pointer;
+        display: inline-block;
+        font-family: "Helvetica", Arial, sans-serif;
+        font-size: 0.875em;
+        font-weight: bold;
+        outline: none;
+        padding: 5px 15px;
+    }
+
+    button:hover {
+        background: #474544;
+        color: #f2f3eb;
     }
 
     form,
