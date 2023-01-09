@@ -1,28 +1,28 @@
 <script>
-  import Navbar from "./components/Navbar.svelte"
-  import Footer from "./components/Footer.svelte"
+  import Navbar from './components/Navbar.svelte'
+  import Footer from './components/Footer.svelte'
 
-  import { Route, Router } from "svelte-navigator"
-  import io from "socket.io-client"
-  import { BASE_URL, ENVIRONMENT } from "./store/globals";
-  import { onMount } from "svelte";
+  import { Route, Router } from 'svelte-navigator'
+  import io from 'socket.io-client'
+  import { BASE_URL, ENVIRONMENT } from './store/globals'
+  import { onMount } from 'svelte'
 
-  import Home from "./pages/home/Home.svelte"
-  import Login from "./pages/login/Login.svelte"
-  import Contact from "./pages/contact/Contact.svelte"
-  import Books from "./pages/books/Books.svelte"
-  import SignUp from "./pages/signup/SignUp.svelte"
-  import ForgotPassword from "./pages/forgotpassword/ForgotPassword.svelte"
-  import ManageBooks from "./pages/admin/books/Books.svelte"
-  import ManageUsers from "./pages/admin/users/Users.svelte"
-  import ManageReviews from "./pages/admin/reviews/Reviews.svelte"
-  import ManageCreateBooks from "./pages/admin/books/CreateBooks.svelte"
-  import Profile from "./pages/profile/Profile.svelte"
-  import Book from "./pages/books/Book.svelte"
-  import AuthorBooks from "./pages/authors/Author.svelte"
-  import GenreBooks from "./pages/genres/Genre.svelte"
-  import SeriesBooks from "./pages/series/Series.svelte"
-  import Series from "./components/Series.svelte";
+  import Home from './pages/home/Home.svelte'
+  import Login from './pages/login/Login.svelte'
+  import Contact from './pages/contact/Contact.svelte'
+  import Books from './pages/books/Books.svelte'
+  import SignUp from './pages/signup/SignUp.svelte'
+  import ForgotPassword from './pages/forgotpassword/ForgotPassword.svelte'
+  import ManageBooks from './pages/admin/books/Books.svelte'
+  import ManageUsers from './pages/admin/users/Users.svelte'
+  import ManageReviews from './pages/admin/reviews/Reviews.svelte'
+  import ManageCreateBooks from './pages/admin/books/CreateBooks.svelte'
+  import Profile from './pages/profile/Profile.svelte'
+  import AuthorBooks from './pages/authors/Author.svelte'
+  import GenreBooks from './pages/genres/Genre.svelte'
+  import SeriesBooks from './pages/series/Series.svelte'
+  import Series from './components/Series.svelte'
+  import Book from './pages/books/Book.svelte'
   
 /*
   const socket = io();

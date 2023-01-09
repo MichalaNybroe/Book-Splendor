@@ -14,7 +14,7 @@
             return Toastr.warning('The two passwords are not the same.')
         }
         
-        if (passwordInp.length <9) {
+        if (passwordInp.length <8) {
             return Toastr.warning('The length of the password needs to be longer than 8.')
         }
 

@@ -164,7 +164,7 @@ action="/createbook">
     </div>
     <br>
     <div class="submit">
-        <Button class="create" on:click={handleSubmit}>Create Book</Button>
+        <Button class="create">Create Book</Button>
         <!-- Tør ikke slette den her endnu heller. Skal lige testes først. 
         <input type="submit" value="Create book" id="submit_button" />
         -->
