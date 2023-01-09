@@ -134,13 +134,6 @@ action="/createbook">
         <MultiSelect bind:selected={selectedAuthors} options={authors} loading={authors.length===0} minSelect={1} name="authors" required/>
     </div>
     <br>
-    <!-- Tør ikke fjerne den her, før jeg har testet om den nye virker - men create books har slet ikke virket i dag, så det må vi gøre sammen :D
-    <div class="description">
-        <label for="description">Description</label>
-        <br>
-        <input type="text" placeholder="Description" name="description" id="description" bind:value={description} required>
-    </div>
--->
     <div class="description">
         <label for="description">Description</label>
         <br>
@@ -174,7 +167,7 @@ action="/createbook">
 
 <style>
     form {
-        margin-left: 29px;
+        margin-left: 5%;
     }
 
     input {
@@ -209,10 +202,6 @@ action="/createbook">
 
     .releaseStatus {
         width: 20%;
-    }
-
-    #submit_button {
-        width: 90px
     }
 
 </style>

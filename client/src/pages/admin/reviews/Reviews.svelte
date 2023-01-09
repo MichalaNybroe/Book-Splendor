@@ -9,3 +9,11 @@
         navigate('/')
     }
 </script>
+
+
+
+<style>
+    :global(body) {
+        margin-left: 5%;
+    }
+</style>

@@ -72,3 +72,10 @@
 		</tr>
 	{/each}
 </table>
+
+
+<style>
+     table {
+        margin-left: 5%;
+    }
+</style>

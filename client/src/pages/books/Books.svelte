@@ -38,20 +38,15 @@
     </tr>
 </table>
 
-
-
-<!-- Jeg er en bangebuks der ikke tør slette det her endnu. Give me 24 hours and I promise I will 
-{#each books as book}
-    <Book book={book} authors={book.authors}></Book>
-{/each}
--->
-
 <style>
     table {
         width: 90%;
+        margin-left: 5%;
     }
     
     td {
         width: 20px;
     }
+
+
 </style>

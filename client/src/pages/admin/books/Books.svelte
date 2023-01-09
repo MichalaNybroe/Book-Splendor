@@ -125,7 +125,7 @@
     }
 
     p {
-        margin-left: 37.5px
+        margin-left: 5%;
     }
 
     input,
