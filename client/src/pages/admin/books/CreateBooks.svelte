@@ -75,6 +75,7 @@
         } else {
             seriesBody = selectedSeries[0]
         }
+        console.log(selectedAuthors)
 
         const body = {
             title: title,

@@ -22,55 +22,55 @@ db.execute(`CREATE TABLE IF NOT EXISTS users(
     email VARCHAR(500) UNIQUE NOT NULL,
     user_name VARCHAR(255) NOT NULL,
     password VARCHAR(255) NOT NULL,
-    admin BOOLEAN,
+    admin BOOLEAN NOT NULL,
     picture_number INTEGER,
     color VARCHAR(255)
 );`)
 
 db.execute(`CREATE TABLE IF NOT EXISTS series(
     id INTEGER PRIMARY KEY AUTO_INCREMENT,
-    title VARCHAR(255)
+    title VARCHAR(255) NOT NULL
 );`)
 
 db.execute(`CREATE TABLE IF NOT EXISTS books(
     id INTEGER PRIMARY KEY AUTO_INCREMENT,
-    title VARCHAR(255),
-    description VARCHAR(1000),
+    title VARCHAR(255) NOT NULL,
+    description VARCHAR(1000) NOT NULL,
     number INTEGER,
-    unreleased BOOLEAN,
-    img VARCHAR(2000),
+    unreleased BOOLEAN NOT NULL,
+    img VARCHAR(2000) NOT NULL,
     created_date TIMESTAMP NOT NULL DEFAULT NOW(),
     series_id INTEGER,
     CONSTRAINT fk_series FOREIGN KEY (series_id) REFERENCES series(id) ON DELETE CASCADE
 );`)
 
 db.execute(`CREATE TABLE IF NOT EXISTS users_books(
-    users_id INTEGER,
-    books_id INTEGER,
+    users_id INTEGER NOT NULL,
+    books_id INTEGER NOT NULL,
     CONSTRAINT fk_users_books_id FOREIGN KEY (users_id) REFERENCES users(id) ON DELETE CASCADE,
     CONSTRAINT fk_books_users_id FOREIGN KEY (books_id) REFERENCES books(id) ON DELETE CASCADE,
-    want_to_read BOOLEAN,
-    has_read BOOLEAN,
+    want_to_read BOOLEAN NOT NULL DEFAULT 0,
+    has_read BOOLEAN NOT NULL DEFAULT 0,
     CONSTRAINT unique_users_books UNIQUE (users_id, books_id)
 );`)
 
 db.execute(`CREATE TABLE IF NOT EXISTS reviews(
     id INTEGER PRIMARY KEY AUTO_INCREMENT,
-    subject VARCHAR(50),
+    subject VARCHAR(50) NOT NULL,
     text VARCHAR(1000),
-    rating SMALLINT(5),
-    users_id INTEGER,
+    rating SMALLINT(5) NOT NULL,
+    users_id INTEGER NOT NULL,
     CONSTRAINT fk_users_reviews FOREIGN KEY (users_id) REFERENCES users(id) ON DELETE CASCADE
 );`)
 
 db.execute(`CREATE TABLE IF NOT EXISTS authors(
     id INTEGER PRIMARY KEY AUTO_INCREMENT,
-    name VARCHAR(255)
+    name VARCHAR(255) NOT NULL
 );`)
 
 db.execute(`CREATE TABLE IF NOT EXISTS books_authors(
-    books_id INTEGER,
-    authors_id INTEGER,
+    books_id INTEGER NOT NULL,
+    authors_id INTEGER NOT NULL,
     CONSTRAINT fk_books_authors FOREIGN KEY (books_id) REFERENCES books(id) ON DELETE CASCADE,
     CONSTRAINT fk_authors_books FOREIGN KEY (authors_id) REFERENCES authors(id) ON DELETE CASCADE,
     CONSTRAINT unique_books_authors UNIQUE (books_id, authors_id)
@@ -78,12 +78,12 @@ db.execute(`CREATE TABLE IF NOT EXISTS books_authors(
 
 db.execute(`CREATE TABLE IF NOT EXISTS genres(
     id INTEGER PRIMARY KEY AUTO_INCREMENT UNIQUE,
-    name VARCHAR(255)
+    name VARCHAR(255) NOT NULL
 );`)
 
 db.execute(`CREATE TABLE IF NOT EXISTS books_genres(
-    books_id INTEGER,
-    genres_id INTEGER,
+    books_id INTEGER NOT NULL,
+    genres_id INTEGER NOT NULL,
     CONSTRAINT fk_books_genres FOREIGN KEY (books_id) REFERENCES books(id) ON DELETE CASCADE,
     CONSTRAINT fk_genres_books FOREIGN KEY (genres_id) REFERENCES genres(id) ON DELETE CASCADE,
     CONSTRAINT unique_books_genres UNIQUE (books_id, genres_id)

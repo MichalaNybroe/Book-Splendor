@@ -17,11 +17,11 @@ router.get("/api/books", async (req, res) => {
             series_id,
             series.title AS series_title
         FROM books
-            JOIN books_authors ON books.id = books_authors.books_id 
-            JOIN authors ON books_authors.authors_id = authors.id
-            JOIN books_genres ON books.id = books_genres.books_id
-            JOIN genres ON books_genres.genres_id = genres.id
-            JOIN series ON series.id = books.series_id;`
+            LEFT JOIN books_authors ON books.id = books_authors.books_id 
+            LEFT JOIN authors ON books_authors.authors_id = authors.id
+            LEFT JOIN books_genres ON books.id = books_genres.books_id
+            LEFT JOIN genres ON books_genres.genres_id = genres.id
+            LEFT JOIN series ON series.id = books.series_id;`
     )
     
     const cleanedBooks = setBooks(books)
@@ -44,16 +44,16 @@ router.get("/api/books/:id", async (req, res) => {
             series_id,
             series.title AS series_title
         FROM books
-            JOIN books_authors ON books.id = books_authors.books_id 
-            JOIN authors ON books_authors.authors_id = authors.id
-            JOIN books_genres ON books.id = books_genres.books_id
-            JOIN genres ON books_genres.genres_id = genres.id
-            JOIN series ON series.id = books.series_id
+            LEFT JOIN books_authors ON books.id = books_authors.books_id 
+            LEFT JOIN authors ON books_authors.authors_id = authors.id
+            LEFT JOIN books_genres ON books.id = books_genres.books_id
+            LEFT JOIN genres ON books_genres.genres_id = genres.id
+            LEFT JOIN series ON series.id = books.series_id
         WHERE books.id=?;`, [req.params.id]
     )
         
     const cleanedbooks= setBooks(books)
-    
+
     if (!books) {
         res.status(400).send({ data: undefined, message: `No book by ${req.params.id} id`})
     } else {
@@ -83,19 +83,19 @@ router.post("/api/books", loggedinGuard, adminGuard, checkBookInput, async (req,
 router.put("/api/books/:id", loggedinGuard, adminGuard, checkBookInput, async (req, res) => {
     const { title, description, number, series, unreleased, img, authors, genres} = req.body
 
-    const [book, _] = await db.query("UPDATE books SET (title = ?, description = ?, number = ?, series_id = ?, unreleased = ?, img = ?) WHERE id=?;", [title, description, number, series.id, unreleased, img, req.params.id])
+    const [book, _] = await db.query("UPDATE books SET title = ?, description = ?, number = ?, series_id = ?, unreleased = ?, img = ? WHERE id=?;", [title, description, number, series?.id, unreleased, img, req.params.id])
     if(!book) {
         return res.status(400).send({ message: "No book with this is." })
     }
 
-    db.query("DELETE FROM books_authors WHERE books_id=?;" [req.params.id])
-    authors.forEach(author => {
-        db.query("INSERT INTO books_authors(books_id, authors_id) VALUE (?, ?);", [bookRes.id, author])
+    await db.query("DELETE FROM books_authors WHERE books_id=?;", [req.params.id])
+    authors.forEach(async author => {
+        await db.query("INSERT INTO books_authors(books_id, authors_id) VALUE (?, ?);", [req.params.id, author.id])
     })
 
-    db.query("DELETE FROM books_genres WHERE books_id=?;", [req.params.id])
-    genres.forEach(genre => {
-        db.query("INSERT INTO books_genres(books_id, genres_id) VALUE (?, ?);", [bookRes.id, genre])
+    await db.query("DELETE FROM books_genres WHERE books_id=?;", [req.params.id])
+    genres.forEach(async genre => {
+        await db.query("INSERT INTO books_genres(books_id, genres_id) VALUE (?, ?);", [req.params.id, genre.id])
     })
 
     res.send({ affectedRows: book.affectedRows})

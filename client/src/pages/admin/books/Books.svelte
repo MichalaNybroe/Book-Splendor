@@ -112,9 +112,9 @@
 			<td>{book.authors.map((author) => author.name).join(', ')}</td>
             <td>{book.genres.map((genre) => genre.name).join(', ')}</td>
             <td>
-                <Button class="update" on:click={()=> navigate("/admin/books/update")}>
+                <Link class="update" to="/admin/books/{book.id}/update">
                     <i class="fa fa-pencil"></i>
-                </Button>
+                </Link>
             </td>
             <td>
                 <Button class="danger" on:click={()=> deleteBook(book)}>

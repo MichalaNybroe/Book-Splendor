@@ -54,7 +54,7 @@
         <Route path="/admin/reviews"><ManageReviews /></Route>
         <Route path="/profile"><Profile /></Route><!--kan evt tilføje /id så andre kan tilgå hinandens sider. men sikkerhedstjek at man kun kan redigere hvis man er brugeren selv-->
         <Route path="/admin/books/create"><ManageCreateBooks /></Route>
-        <Route path="/admin/books/update"><UpdateBooks /></Route>
+        <Route path="/admin/books/:id/update" component='{UpdateBooks}'/>
         <Route path="/book/:id" component='{Book}'/>
         <Route path="/authors/:id/books" component='{AuthorBooks}'/>
         <Route path="/genres/:id/books" component='{GenreBooks}'/>

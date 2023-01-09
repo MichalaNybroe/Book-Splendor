@@ -13,20 +13,26 @@
         navigate('/')
     }
 
-    const navigate = useNavigate();
-    
+    export let id
+    const navigate = useNavigate()
     let selectedAuthors = []
     let selectedGenres = []
     let selectedSeries = []
     let genres = []
     let series = []
     let authors = []
-
     let title = ''
     let number = null
     let description = ''
     let unreleased = false
     let book_img = ''
+    let book = null
+
+    async function insertBook() {
+        fetchInfo()
+        getBook()
+
+    }
 
     async function get(endpoint) {
         let array = []
@@ -63,14 +69,9 @@
         }))
     }
 
-
-    fetchInfo()
-    getBook()
-    let book = {}
-
     async function getBook() {
         try {
-            const response = await fetch(`${$BASE_URL}/api/books/${book.id}`, {
+            const response = await fetch(`${$BASE_URL}/api/books/${id}`, {
                 credentials: 'include',
                 headers: { 'Content-Type': 'application/json' }
             })
@@ -79,14 +80,22 @@
                 const data = await response.json()
                 book = data.data
 
-                selectedAuthors = book.authors
-                selectedGenres = book.genres
-                selectedSeries = book.series
                 title = book.title
                 description = book.description
                 number = book.number
                 unreleased = book.unreleased
                 book_img = book.img
+                selectedAuthors = book.authors.map((author) => ({
+                    label: author.name,
+                    id: author.id
+                }))
+                selectedGenres = book.genres.map((genre) => ({
+                    label: genre.name,
+                    id: genre.id
+                }))
+                if (book.series_id) {
+                    selectedSeries = [{label:book.series_title, id: book.series_id}]
+                }
             } else {
                 Toastr.warning('Unable to retrieve book.')
             }
@@ -116,7 +125,7 @@
         }
 
         try {
-            const response = await fetch(`${$BASE_URL}/api/books`, {
+            const response = await fetch(`${$BASE_URL}/api/books/${id}`, {
             method: 'PUT',
             credentials: 'include',
             headers: {'Content-Type': 'application/json'},
@@ -136,66 +145,68 @@
     }
 </script>
 
+{#await insertBook()}
+    <p>Loading...</p>
+{:then _}
+    <form on:submit|preventDefault={handleSubmit}
+    id="create_book_form"
+    method="POST"
+    action="/createbook">
 
-<form on:submit|preventDefault={handleSubmit}
-id="create_book_form"
-method="POST"
-action="/createbook">
+        <div class="title">
+            <label for="title">Title</label>
+            <br>
+            <input type="text" placeholder="Title" name="title" id="title" bind:value={title} required>
+        </div>
+        <br>
+        <div class="number">
+            <label for="number">Number</label>
+            <br>
+            <input type="number" placeholder=1 name="number" id="number" min=1 bind:value={number} required>
+        </div>
+        <br>
+        <div class="multiselect">
+            <label for="series">Series</label>
+            <MultiSelect bind:selected={selectedSeries} options={series} loading={series.length===0} maxSelect={1} name="series" id="series"/>
+        </div>
+        <br>
+        <div class="multiselect">
+            <label for="authors">Authors</label>
+            <MultiSelect bind:selected={selectedAuthors} options={authors} loading={authors.length===0} minSelect={1} name="authors" required/>
+        </div>
+        <br>
+        <div class="description">
+            <label for="description">Description</label>
+            <br>
+            <textarea name="description" placeholder="Description" id="description" cols="30" rows="5" bind:value={description} required/>
+        </div>
+        <br>
+        <div class="book_img">
+            <label for="book_img">Image</label>
+            <br>
+            <input type="text" placeholder="Image" name="img" id="book_img" bind:value={book_img} required>
+        </div>
+        <br>
+        <div class="multiselect">
+            <label for="genres">Genres</label>
+            <MultiSelect bind:selected={selectedGenres} options={genres} loading={genres.length===0} minSelect={1} name="genres" required/>
+        </div>
+        <br>
+        <div class="releaseStatus">
+            <label for="unreleased">Unreleased</label>
+            <input bind:checked={unreleased} type="checkbox" name="unreleased" id="unreleased">        
+        </div>
+        <br>
+        <div class="submit">
+            <Button class="create">Update Book</Button>
+        </div>
+    </form>
+    <br>
 
-    <div class="title">
-        <label for="title">Title</label>
-        <br>
-        <input type="text" placeholder="Title" name="title" id="title" bind:value={title} required>
-    </div>
-    <br>
-    <div class="number">
-        <label for="number">Number</label>
-        <br>
-        <input type="number" placeholder=1 name="number" id="number" min=1 bind:value={number} required>
-    </div>
-    <br>
-    <div class="multiselect">
-        <label for="series">Series</label>
-        <MultiSelect bind:selected={selectedSeries} options={series} loading={series.length===0} maxSelect={1} name="series" id="series"/>
-    </div>
-    <br>
-    <div class="multiselect">
-        <label for="authors">Authors</label>
-        <MultiSelect bind:selected={selectedAuthors} options={authors} loading={authors.length===0} minSelect={1} name="authors" required/>
-    </div>
-    <br>
-    <div class="description">
-        <label for="description">Description</label>
-        <br>
-        <textarea name="description" placeholder="Description" id="description" cols="30" rows="5" bind:value={description} required/>
-      </div>
-    <br>
-    <div class="book_img">
-        <label for="book_img">Image</label>
-        <br>
-        <input type="text" placeholder="Image" name="img" id="book_img" bind:value={book_img} required>
-    </div>
-    <br>
-    <div class="multiselect">
-        <label for="genres">Genres</label>
-        <MultiSelect bind:selected={selectedGenres} options={genres} loading={genres.length===0} minSelect={1} name="genres" required/>
-    </div>
-    <br>
-    <div class="releaseStatus">
-        <label for="unreleased">Unreleased</label>
-        <input bind:checked={unreleased} type="checkbox" name="unreleased" id="unreleased">        
-    </div>
-    <br>
-    <div class="submit">
-        <Button class="create">Update Book</Button>
-    </div>
-</form>
-<br>
-
-<p>
-<Button class="goback" on:click={() => navigate(-1)}>Go back</Button>
-</p>
-
+    <p>
+    <Button class="goback" on:click={() => navigate(-1)}>Go back</Button>
+    </p>
+{/await}
 <style>
     form {
         margin-left: 5%;
