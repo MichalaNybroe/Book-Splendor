@@ -67,7 +67,8 @@
     }
 
 	.danger {
-		color:black;   
+		color:black;
+        font-size: x-large;   
 	}
 
     .danger:hover {
@@ -76,6 +77,7 @@
 
     .update {
         color: black;
+        font-size: x-large;
     }
 
     .update:hover {
