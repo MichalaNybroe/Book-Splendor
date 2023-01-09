@@ -30,25 +30,6 @@
     fetchBooks()
 </script>
 
-<!--
-<table>
-    {#each books as book}
-
-        <div class="flex-container">
-
-            <div class="flex-child magenta">
-        <td><Link to="/book"><img src="{book.img}" alt="book cover"></Link></td>
-    
-        <td>{book.title}</td>
-        <td>{book.authors.map((author) => author.name).join(', ')}</td>
-    </div>
-    </div>
-    
-    {/each}
-
-</table>
--->
-
 
 <table> 
     <tr>
@@ -62,12 +43,6 @@
 <style>
     table {
         width: 90%;
-        margin-left: 5%;
-    }
-    
-    td {
-        width: 20%;
-    }
-
-
+        margin-left: 5%;  
+    }  
 </style>
