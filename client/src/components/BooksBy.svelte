@@ -1,14 +1,17 @@
 <script>
-    import Book from '../../components/Book.svelte'
-    import { BASE_URL } from '../../store/globals'
+    import Book from '../components/Book.svelte'
+    import { BASE_URL } from '../store/globals.js'
     import * as Toastr from 'toastr'
-    import '../../../node_modules/toastr/build/toastr.css'
+    import '../../node_modules/toastr/build/toastr.css'
 
+    export let id
+    export let endpoint
+    
     let books = []
 
     async function fetchBooks() {
         try {
-            const response = await fetch(`${$BASE_URL}/api/books`, {
+            const response = await fetch(`${$BASE_URL}/api/${endpoint}/${id}`, {
                 credentials: 'include'
             })
 
@@ -27,27 +30,18 @@
     fetchBooks()
 </script>
 
-
-<div class="test">
-    {#each books as book, i}
-    <h5><Book book={book}></Book></h5>
-        
-        {#if i % 5 === 0}
-            <br>
-        {/if}
-    {/each}
-</div>
+<table> 
+    <tr>
+        {#each books as book}
+            <td><h5><Book book={book}></Book></h5></td>
+        {/each}
+    </tr>
+</table>
 
 
 <style>
-    .test {
+    table {
         width: 90%;
-        display: flex;
-        flex-wrap: wrap;
-    }
-
-    h5 {
-        width: 20%;
-    }
-
+        margin-left: 5%;  
+    }  
 </style>
