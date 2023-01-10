@@ -23,7 +23,7 @@ router.get("/api/authors/id", adminGuard, async (req, res) => {
             res.send({ data: authorsBooks})
         }
     } catch {
-        res.status(500).send({ message: 'Server error.' })
+        res.status(500).send({ message: "Server error." })
     }
 })
 

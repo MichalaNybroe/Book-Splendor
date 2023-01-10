@@ -23,7 +23,7 @@ router.get("/api/series/id", adminGuard, async (req, res) => {
         }
     }
     catch {
-        res.status(500).send({ message : 'Server error.' })
+        res.status(500).send({ message : "Server error." })
     }
 })
 

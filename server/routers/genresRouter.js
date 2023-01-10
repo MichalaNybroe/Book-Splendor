@@ -32,7 +32,7 @@ router.get("/api/genres/id", adminGuard, async (req, res) => {
             res.send({ data: genresReq})
         }
     } catch {
-        res.status(500).send({ message: 'Server error.' })
+        res.status(500).send({ message: "Server error." })
     }
 })
 
