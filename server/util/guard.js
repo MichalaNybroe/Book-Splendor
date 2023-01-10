@@ -15,7 +15,7 @@ export function userGuard(req, res, next) {
 
 export function loggedinGuard(req, res, next) {
     if (req.session.isLoggedIn !==true) {
-        return res.status(401).send({ message: "Not signed in. " })
+        return res.status(401).send({ message: "Not signed in." })
     }
     next()
 }

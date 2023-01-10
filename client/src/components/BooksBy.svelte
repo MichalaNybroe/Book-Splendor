@@ -1,16 +1,17 @@
 <script>
-    import Book from '../../components/Book.svelte'
-    import { BASE_URL } from '../../store/globals'
+    import Book from '../components/Book.svelte'
+    import { BASE_URL } from '../store/globals.js'
     import * as Toastr from 'toastr'
-    import '../../../node_modules/toastr/build/toastr.css'
+    import '../../node_modules/toastr/build/toastr.css'
 
-
+    export let id
+    export let endpoint
+    
     let books = []
-    let authors = []
 
     async function fetchBooks() {
         try {
-            const response = await fetch(`${$BASE_URL}/api/books`, {
+            const response = await fetch(`${$BASE_URL}/api/${endpoint}/${id}`, {
                 credentials: 'include'
             })
 
@@ -28,7 +29,6 @@
 
     fetchBooks()
 </script>
-
 
 <table> 
     <tr>

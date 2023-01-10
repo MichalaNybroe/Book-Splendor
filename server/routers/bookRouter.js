@@ -3,6 +3,7 @@ import { Router } from "express"
 const router = Router()
 import { adminGuard, loggedinGuard } from "../util/guard.js"
 import db from "../database/connection.js"
+import { setBooks } from "../util/setBooks.js"
 
 // save book of the week id
 
@@ -123,39 +124,6 @@ function checkBookInput(req, res, next) {
     if (!req.body.genres) return res.status(400).send({ message: "Genres is undefined." })
 
     next()
-}
-
-function setBooks(books) {
-    let booksAuthorsGenres = {}
-
-    books.forEach((book) => {
-        if(!(book.id in booksAuthorsGenres)) {
-            booksAuthorsGenres[book.id] = book
-            booksAuthorsGenres[book.id]["authors"] = {}
-            booksAuthorsGenres[book.id]["genres"] = {}
-        }
-        booksAuthorsGenres[book.id]["authors"][book.authors_id] = {
-            name: book.author_name,
-            id: book.authors_id
-        }
-        booksAuthorsGenres[book.id]["genres"][book.genres_id] = {
-            name: book.genre_name,
-            id: book.genres_id
-        }
-    })
-
-    booksAuthorsGenres = Object.values(booksAuthorsGenres).map((book) => {
-        book.authors = Object.values(book.authors)
-        book.genres = Object.values(book.genres)
-        delete book.genre_name
-        delete book.author_name
-        delete book.authors_id
-        delete book.genres_id
-        book.unreleased = !!book.unreleased
-        return book
-    })
-
-    return booksAuthorsGenres
 }
 
 export default router
