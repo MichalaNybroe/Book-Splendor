@@ -5,8 +5,16 @@ import db from "../database/connection.js"
 const router = Router()
 router.use(loggedinGuard)
 
-router.get("/api/series", adminGuard, async (req, res) => {
-    const [series,_] = await db.query("SELECT * FROM series ORDER BY title ASC;")
+router.get("/api/series/id", adminGuard, async (req, res) => {
+    const [series,_] = await db.query(
+        `SELECT 
+            books.*, 
+            series_id,
+            series.title AS series_title
+        FROM books
+            LEFT JOIN series ON series.id = books.series_id
+        WHERE series.id=?;`, [req.params.id]
+    )
     if (series === undefined) {
         res.status(400).send({ data: undefined, message: "Unable to retrieve series."})
     } else {
