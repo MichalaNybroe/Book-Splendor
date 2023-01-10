@@ -5,6 +5,15 @@ import db from "../database/connection.js"
 const router = Router()
 router.use(loggedinGuard)
 
+router.get("/api/authors", adminGuard, async (req, res) => {
+    const [authors,_] = await db.query("SELECT * FROM authors ORDER BY name ASC;")
+    if (authors === undefined) {
+        res.status(400).send({ data: undefined, message: "Unable to retrieve authors."})
+    } else {
+        res.send({ data: authors })
+    }
+})
+
 router.get("/api/authors/id", adminGuard, async (req, res) => {
     try {
         const [authorsBooks,_] = await db.query(

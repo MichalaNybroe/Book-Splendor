@@ -10,7 +10,7 @@ router.get("/api/genres", adminGuard, async (req, res) => {
     if (genres === undefined) {
         res.status(400).send({ data: undefined, message: "Unable to retrieve genres."})
     } else {
-        res.send({ data: genres})
+        res.send({ data: genres })
     }
 })
 
@@ -27,9 +27,9 @@ router.get("/api/genres/id", adminGuard, async (req, res) => {
         WHERE genres.id=?;`, [req.params.id]
         )
         if (genresReq === undefined) {
-            res.status(400).send({ data: undefined, message: "Unable to retrieve books in this genre."})
+            res.status(400).send({ data: undefined, message: "Unable to retrieve books in this genre." })
         } else {
-            res.send({ data: genresReq})
+            res.send({ data: genresReq })
         }
     } catch {
         res.status(500).send({ message: "Server error." })
