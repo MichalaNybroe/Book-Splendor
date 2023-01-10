@@ -40,7 +40,7 @@ router.post("/login", async (req, res) => {
             res.status(200).send({ data: {id: user.id, email: user.email, user_name: user.user_name, admin: !!user.admin, picture_number: user.picture_number, color: user.color}, message: "Login successful" })
         }
     } catch {
-        res.status(500).send({message: 'Server error.'})
+        res.status(500).send({ message: 'Server error.'})
     }
 })
 
