@@ -15,7 +15,7 @@ router.get("/api/authors", adminGuard, async (req, res) => {
 })
 
 router.post("/api/authors", adminGuard, async (req, res) => {
-    const { name } = req.body
+    const name = req.body.name
 
     if (!name) return res.status(400).send({ message: "Author name is undefined." })
 
