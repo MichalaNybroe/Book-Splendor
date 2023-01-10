@@ -14,6 +14,28 @@ router.get("/api/genres", adminGuard, async (req, res) => {
     }
 })
 
+router.get("/api/genres/id", adminGuard, async (req, res) => {
+    try {
+        const [genresReq,_] = await db.query(
+            `SELECT 
+            books.*, 
+            genres_id, 
+            genres.name AS genre_name
+        FROM books
+            LEFT JOIN books_genres ON books.id = books_genres.books_id
+            LEFT JOIN genres ON books_genres.genres_id = genres.id
+        WHERE genres.id=?;`, [req.params.id]
+        )
+        if (genresReq === undefined) {
+            res.status(400).send({ data: undefined, message: "Unable to retrieve books in this genre."})
+        } else {
+            res.send({ data: genresReq})
+        }
+    } catch {
+        res.status(500).send({ message: 'Server error.' })
+    }
+})
+
 router.post("/api/genres", adminGuard, async (req, res) => {
     const { name } = req.body
 

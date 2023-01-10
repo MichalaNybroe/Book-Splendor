@@ -5,12 +5,25 @@ import db from "../database/connection.js"
 const router = Router()
 router.use(loggedinGuard)
 
-router.get("/api/authors", adminGuard, async (req, res) => {
-    const [authors,_] = await db.query("SELECT * FROM authors ORDER BY name ASC;")
-    if (!authors) {
-        res.status(400).send({ data: undefined, message: "Unable to retrieve authors."})
-    } else {
-        res.send({ data: authors})
+router.get("/api/authors/id", adminGuard, async (req, res) => {
+    try {
+        const [authorsBooks,_] = await db.query(
+            `SELECT 
+            books.*, 
+            authors_id, 
+            authors.name AS author_name
+        FROM books
+            LEFT JOIN books_authors ON books.id = books_authors.books_id 
+            LEFT JOIN authors ON books_authors.authors_id = authors.id
+        WHERE authors.id=?;`, [req.params.id]
+        )
+        if (!authorsBooks) {
+            res.status(400).send({ data: undefined, message: "Unable to retrieve authors' books."})
+        } else {
+            res.send({ data: authorsBooks})
+        }
+    } catch {
+        res.status(500).send({ message: 'Server error.' })
     }
 })
 
@@ -25,5 +38,6 @@ router.post("/api/authors", adminGuard, async (req, res) => {
     }
     res.send({ affectedRows: authorRes.affectedRows, message: "Author created." })
 })
+
 
 export default router
