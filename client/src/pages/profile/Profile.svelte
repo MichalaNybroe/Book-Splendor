@@ -6,11 +6,11 @@
     import { BASE_URL } from '../../store/globals.js'
     import Button from '../../components/Button.svelte'
     import MultiSelect from 'svelte-multiselect'
+    import { Confirm } from 'svelte-confirm'
     
+    const navigate = useNavigate()
     
     if ($user === null || $user.admin === true) {
-        const navigate = useNavigate()
-
         navigate('/')
     }
 
@@ -79,6 +79,26 @@
     let pictureSelect = Object.values($user.picture_number)
     const pictures = [{id: 1, label: 'Unicorn'}, {id: 2, label: 'Mermaid'}, {id: 3, label: 'Dragon'}, {id: 4, label: 'Vampire'}, {id: 5, label: 'Robot'}, {id: 6, label: 'Skull'}]
 
+    async function deleteOwnProfile() {
+        try {
+            const response = await fetch(`${$BASE_URL}/api/users/${$user.id}`, {
+                method: 'DELETE',
+                credentials: 'include',
+                headers: { 'Content-Type': 'application/json' }
+            })
+
+            if (!response.ok) {
+                const json = await response.json()
+                Toastr.warning(json.message)
+                return
+            }
+            
+            navigate('/')
+            user.set(null)
+        } catch {
+            Toastr.error('Unable to delete book. Try again later.')
+	    }
+    }
 
 </script>
 
@@ -89,12 +109,21 @@
 </div>
 
 {#if updateMode === true} 
-    <MultiSelect on:change={()=> updatePicture()} bind:selected={pictureSelect} options={pictures} loading={pictures.length===0} maxSelect={1}/>
+    <MultiSelect on:change={() => updatePicture()} bind:selected={pictureSelect} options={pictures} loading={pictures.length===0} maxSelect={1}/>
     <input type="color" bind:value={$user.color} style="height: 50px;" on:change|preventDefault={saveColor} id="colorInp">
     <input type="text" bind:value={$user.user_name} on:change|preventDefault={updateUserName}>
-    <Button on:click={()=> exitEditMode()}>Exit Edit</Button>
+
+    <Confirm
+        confirmTitle="Delete"
+        themeColor="110"
+        let:confirm="{confirmThis}"
+    >
+        <Button class="danger" on:click={() => confirmThis(deleteOwnProfile)}>Delete User</Button>
+    </Confirm>
+
+    <Button on:click={() => exitEditMode()}>Exit Edit</Button>
 {:else}
-    <Button on:click={()=> enterEditMode()}>Edit Profile</Button>
+    <Button on:click={() => enterEditMode()}>Edit Profile</Button>
 {/if}
 
 <div id="toReadList">

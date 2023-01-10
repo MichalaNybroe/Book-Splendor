@@ -33,13 +33,13 @@ router.patch("/api/users/:id", userGuard, async (req, res) => {
 })
 
 router.delete("/api/users/:id", loggedinGuard, async (req, res, next) => {
-    if (req.session.userid === req.params.id) {
-        const result = await db.query("DELETE FROM users WHERE users.id=?;", [req.params.id])
-        
-        if (result === undefined) {
+    if (req.session.userid === Number(req.params.id)) {
+        try {
+            const result = await db.query("DELETE FROM users WHERE users.id=?;", [req.params.id])
+            req.session.destroy()
+            res.send({ data: result, message: 'User has been removed.'})
+        } catch {
             res.status(404).send({ data: undefined, message: `No user with this id`})
-        } else {
-            res.send({ data: result })
         }
     } else {
         if (req.session.admin !== true) {

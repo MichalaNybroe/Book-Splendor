@@ -48,7 +48,6 @@
 	
 	async function deleteBook(book) {
         try {
-            //confirm message before try 'Are you sure you wish to delete' TOASTR
             const response = await fetch(`${$BASE_URL}/api/books/${book.id}`, {
                 method: 'DELETE',
                 credentials: 'include',
