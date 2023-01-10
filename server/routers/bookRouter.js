@@ -28,7 +28,7 @@ router.get("/api/books", async (req, res) => {
     const cleanedBooks = setBooks(books)
 
     if (books === undefined) {
-        res.status(400).send({ data: undefined, message: `No books`})
+        res.status(400).send({ data: undefined, message: `No books` })
     } else {
         res.send({ data: cleanedBooks })
     }

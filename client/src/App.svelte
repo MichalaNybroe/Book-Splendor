@@ -5,36 +5,23 @@
   import { Route, Router } from 'svelte-navigator'
   import { BASE_URL, ENVIRONMENT } from './store/globals'
 
-  import Home from "./pages/home/Home.svelte"
-  import Login from "./pages/login/Login.svelte"
-  import Contact from "./pages/contact/Contact.svelte"
-  import Books from "./pages/books/Books.svelte"
-  import SignUp from "./pages/signup/SignUp.svelte"
-  import ForgotPassword from "./pages/forgotpassword/ForgotPassword.svelte"
-  import ManageBooks from "./pages/admin/books/Books.svelte"
-  import ManageUsers from "./pages/admin/users/Users.svelte"
-  import ManageReviews from "./pages/admin/reviews/Reviews.svelte"
-  import ManageCreateBooks from "./pages/admin/books/CreateBooks.svelte"
-  import Profile from "./pages/profile/Profile.svelte"
-  import Book from "./pages/books/Book.svelte"
-  import AuthorBooks from "./pages/authors/Author.svelte"
-  import GenreBooks from "./pages/genres/Genre.svelte"
-  import SeriesBooks from "./pages/series/Series.svelte"
-  import Series from "./components/Series.svelte"
-  import UpdateBooks from "./pages/admin/books/UpdateBooks.svelte"
-  
-/*
-  const socket = io();
-    onMount(async () => {
-        if ($ENVIRONMENT === "DEVELOPMENT") {
-            socket.on("update the page", () => {
-                location.reload()
-            });
-        }
- 
-        const response = await fetch($BASE_URL + "/profile")
-    });
-    */
+  import Home from './pages/home/Home.svelte'
+  import Login from './pages/login/Login.svelte'
+  import Contact from './pages/contact/Contact.svelte'
+  import Books from './pages/books/Books.svelte'
+  import SignUp from './pages/signup/SignUp.svelte'
+  import ForgotPassword from './pages/forgotpassword/ForgotPassword.svelte'
+  import ManageBooks from './pages/admin/books/Books.svelte'
+  import ManageUsers from './pages/admin/users/Users.svelte'
+  import ManageReviews from './pages/admin/reviews/Reviews.svelte'
+  import ManageCreateBooks from './pages/admin/books/CreateBooks.svelte'
+  import Profile from './pages/profile/Profile.svelte'
+  import Book from './pages/books/Book.svelte'
+  import AuthorBooks from './pages/authors/Author.svelte'
+  import GenreBooks from './pages/genres/Genre.svelte'
+  import SeriesBooks from './pages/series/Series.svelte'
+  import Series from './components/Series.svelte'
+  import UpdateBooks from './pages/admin/books/UpdateBooks.svelte'
 
 </script>
 

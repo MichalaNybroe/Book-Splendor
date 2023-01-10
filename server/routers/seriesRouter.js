@@ -5,6 +5,15 @@ import { setBooks } from "../util/setBooks.js"
 
 const router = Router()
 
+router.get("/api/series", adminGuard, async (req, res) => {
+    const [series,_] = await db.query("SELECT * FROM series ORDER BY title ASC;")
+    if (series === undefined) {
+        res.status(400).send({ data: undefined, message: "Unable to retrieve series."})
+    } else {
+        res.send({ data: series })
+    }
+})
+
 router.get("/api/series/:id", async (req, res) => {
     try {
         const [series,_] = await db.query(
@@ -27,7 +36,7 @@ router.get("/api/series/:id", async (req, res) => {
         }
     }
     catch {
-        res.status(500).send({ message : 'Server error.' })
+        res.status(500).send({ message : "Server error." })
     }
 })
 
