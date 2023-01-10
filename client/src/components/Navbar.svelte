@@ -54,8 +54,8 @@
         {#if $user !== null}
             <Button class="logout" on:click={logout}>Logout</Button>
         {:else}
-            <Link to="/login">Login</Link>
-        {/if}
+            <Button class="logout" on:click="{() => navigate("/login")}">Login</Button>
+         {/if}
       </nav>
 </Router>
 

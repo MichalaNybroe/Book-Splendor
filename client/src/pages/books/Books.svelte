@@ -4,9 +4,7 @@
     import * as Toastr from 'toastr'
     import '../../../node_modules/toastr/build/toastr.css'
 
-
     let books = []
-    let authors = []
 
     async function fetchBooks() {
         try {
@@ -30,22 +28,26 @@
 </script>
 
 
-<table> 
-    <tr>
-        {#each books as book}
-            <td><h5><Book book={book}></Book></h5></td>
-        {/each}
-    </tr>
-</table>
+<div class="test">
+    {#each books as book, i}
+    <h5><Book book={book}></Book></h5>
+        
+        {#if i % 5 === 0}
+            <br>
+        {/if}
+    {/each}
+</div>
 
 
 <style>
-    table {
+    .test {
         width: 90%;
-        margin-left: 5%;  
-    }  
-
-    td:nth-child(5n) {
-        content: "\a";
+        display: flex;
+        flex-wrap: wrap;
     }
+
+    h5 {
+        width: 20%;
+    }
+
 </style>
