@@ -26,8 +26,7 @@
                 </td>
 
             </div>
-
-</div>
+        </div>
     </table>
     </Link>
 </Router>

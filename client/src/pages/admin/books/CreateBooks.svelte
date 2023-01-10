@@ -75,7 +75,6 @@
         } else {
             seriesBody = selectedSeries[0]
         }
-        console.log(selectedAuthors)
 
         const body = {
             title: title,
@@ -107,68 +106,128 @@
             return
         }
     }
+
+
+
+
+    // Utiil Mode 
+    let utilMode = false
+
+    async function enterUtilMode() {
+        utilMode = true
+    }
+
+    async function exitUtilMode() {
+        fetchInfo()
+        utilMode = false
+    }
+
+    let selectedOption = []
+    let options = ['Serie', 'Author', 'Genre']
+    let newData = ''
+
+    async function handleUtilSubmit() {
+        let body
+
+        if (selectedOption[0] === 'Serie') {
+            body = { title: newData }
+        } else {
+            body = { name: newData }
+        }
+        console.log(body)
+        console.log(selectedOption[0])
+        
+        try {
+            const response = await fetch(`${$BASE_URL}/api/${selectedOption[0]}s`, {
+            method: 'POST',
+            credentials: 'include',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(body)
+        })
+
+        if (!response.ok) {
+            const json = await response.json()
+            Toastr.warning(json.message)
+            return
+        }
+            Toastr.success(`${selectedOption[0]} created.`)
+        } catch {
+            Toastr.error(`Unable to create ${selectedOption[0]}. Try again later.`)
+            return
+        }
+    }
+
 </script>
 
+{#if utilMode === false}
+    <form on:submit|preventDefault={handleSubmit}
+    id="create_book_form"
+    method="POST"
+    action="/createbook">
 
-<form on:submit|preventDefault={handleSubmit}
-id="create_book_form"
-method="POST"
-action="/createbook">
+        <div class="title">
+            <label for="title">Title</label>
+            <br>
+            <input type="text" placeholder="Title" name="title" id="title" bind:value={title} required>
+        </div>
+        <br>
+        <div class="number">
+            <label for="number">Number</label>
+            <br>
+            <input type="number" placeholder=1 name="number" id="number" min=1 bind:value={number} required>
+        </div>
+        <br>
+        <div class="multiselect">
+            <label for="series">Series</label>
+            <MultiSelect bind:selected={selectedSeries} options={series} loading={series.length===0} maxSelect={1} name="series" id="series"/>
+        </div>
+        <br>
+        <div class="multiselect">
+            <label for="authors">Authors</label>
+            <MultiSelect bind:selected={selectedAuthors} options={authors} loading={authors.length===0} minSelect={1} name="authors" required/>
+        </div>
+        <br>
+        <div class="description">
+            <label for="description">Description</label>
+            <br>
+            <textarea name="description" placeholder="Description" id="description" cols="30" rows="5" bind:value={description} required/>
+        </div>
+        <br>
+        <div class="book_img">
+            <label for="book_img">Image</label>
+            <br>
+            <input type="text" placeholder="Image" name="img" id="book_img" bind:value={book_img} required>
+        </div>
+        <br>
+        <div class="multiselect">
+            <label for="genres">Genres</label>
+            <MultiSelect bind:selected={selectedGenres} options={genres} loading={genres.length===0} minSelect={1} name="genres" required/>
+        </div>
+        <br>
+        <div class="releaseStatus">
+            <label for="unreleased">Unreleased</label>
+            <input bind:checked={unreleased} type="checkbox" name="unreleased" id="unreleased">        
+        </div>
+        <br>
+        <div class="submit">
+            <Button class="create">Create Book</Button>
+        </div>
+    </form>
+    <br>
 
-    <div class="title">
-        <label for="title">Title</label>
-        <br>
-        <input type="text" placeholder="Title" name="title" id="title" bind:value={title} required>
-    </div>
-    <br>
-    <div class="number">
-        <label for="number">Number</label>
-        <br>
-        <input type="number" placeholder=1 name="number" id="number" min=1 bind:value={number} required>
-    </div>
-    <br>
-    <div class="multiselect">
-        <label for="series">Series</label>
-        <MultiSelect bind:selected={selectedSeries} options={series} loading={series.length===0} maxSelect={1} name="series" id="series"/>
-    </div>
-    <br>
-    <div class="multiselect">
-        <label for="authors">Authors</label>
-        <MultiSelect bind:selected={selectedAuthors} options={authors} loading={authors.length===0} minSelect={1} name="authors" required/>
-    </div>
-    <br>
-    <div class="description">
-        <label for="description">Description</label>
-        <br>
-        <textarea name="description" placeholder="Description" id="description" cols="30" rows="5" bind:value={description} required/>
-      </div>
-    <br>
-    <div class="book_img">
-        <label for="book_img">Image</label>
-        <br>
-        <input type="text" placeholder="Image" name="img" id="book_img" bind:value={book_img} required>
-    </div>
-    <br>
-    <div class="multiselect">
-        <label for="genres">Genres</label>
-        <MultiSelect bind:selected={selectedGenres} options={genres} loading={genres.length===0} minSelect={1} name="genres" required/>
-    </div>
-    <br>
-    <div class="releaseStatus">
-        <label for="unreleased">Unreleased</label>
-        <input bind:checked={unreleased} type="checkbox" name="unreleased" id="unreleased">        
-    </div>
-    <br>
-    <div class="submit">
-        <Button class="create">Create Book</Button>
-    </div>
-</form>
-<br>
+    <p>
+    <Button class="goback" on:click={() => navigate(-1)}>Go back</Button>
+    </p>
 
-<p>
-<Button class="goback" on:click={() => navigate(-1)}>Go back</Button>
-</p>
-
+    <Button on:click={enterUtilMode}>UtilMode</Button>
+{:else}
+    <form on:submit|preventDefault={handleUtilSubmit}>
+        <MultiSelect bind:selected={selectedOption} options={options} loading={selectedOption.length===0} maxSelect={1} required></MultiSelect>
+        <input type="text" placeholder="Lord of the Rings" bind:value={newData} required>
+        <Button class="create">Create {!selectedOption ? 'Element' : selectedOption}</Button>
+    </form>
+    <Button on:click={exitUtilMode}>Back to Book</Button>
+{/if}
 <style>
     form {
         margin-left: 5%;
