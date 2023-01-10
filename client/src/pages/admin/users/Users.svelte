@@ -4,6 +4,7 @@
     import { BASE_URL } from '../../../store/globals.js'
     import * as Toastr from 'toastr'
     import '../../../../node_modules/toastr/build/toastr.css'
+    import { Confirm } from 'svelte-confirm'
 
     
     if($user?.admin !== true) {
@@ -66,9 +67,15 @@
 			{#each row as cell}
 			<td>{cell}</td>
 			{/each}
-			<button on:click={() => deleteRow(row)}>
-				X
-			</button>
+            <Confirm
+                confirmTitle="Delete"
+                themeColor="110"
+                let:confirm="{confirmThis}"
+            >
+                <button on:click={() => confirmThis(deleteRow, row)}>
+                    X
+                </button>
+            </Confirm>
 		</tr>
 	{/each}
 </table>

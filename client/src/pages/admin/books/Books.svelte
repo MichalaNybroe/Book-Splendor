@@ -5,6 +5,7 @@
     import * as Toastr from 'toastr'
     import '../../../../node_modules/toastr/build/toastr.css'
     import Button from '../../../components/Button.svelte'
+    import { Confirm } from 'svelte-confirm'
 
 
     if($user?.admin !== true) {
@@ -117,9 +118,15 @@
                 </Link>
             </td>
             <td>
-                <Button class="danger" on:click={()=> deleteBook(book)}>
-                    <i class="w3-margin-left fa fa-trash"></i>
-                </Button>
+                <Confirm
+                confirmTitle="Delete"
+                themeColor="110"
+                let:confirm="{confirmThis}"
+                >
+                    <Button class="danger" on:click={()=> confirmThis(deleteBook, book)}>
+                        <i class="w3-margin-left fa fa-trash"></i>
+                    </Button>
+                </Confirm>
             </td>
 		</tr>
 	{/each}
