@@ -30,7 +30,6 @@
         font-size: 0.875em;
         font-weight: bold;
         outline: none;
-        padding: 5px 15px;
     }
 
     button:hover {
@@ -68,7 +67,8 @@
 
 	.danger {
 		color:black;
-        font-size: x-large;   
+        font-size: x-large;
+        padding: 5px 15px;   
 	}
 
     .danger:hover {
