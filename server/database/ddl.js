@@ -122,6 +122,10 @@ if (isInDeleteMode) {
     db.execute(`INSERT INTO books(title, description, number, unreleased, img, series_id) VALUE (?, ?, ?, ?, ?, ?);`, ["A Court of Wings and Ruin", "Feyre is a huntress. She thinks nothing of slaughtering a wolf to capture its prey. But, like all mortals, she fears what lingers mercilessly beyond the forest. And she will learn that taking the life of a magical creature comes at a high price…", 3, false, "https://images.booksense.com/images/606/575/9781635575606.jpg", 3])
     db.execute(`INSERT INTO books(title, description, number, unreleased, img, series_id) VALUE (?, ?, ?, ?, ?, ?);`, ["A Court of Frost and Starlight", "Feyre is a huntress. She thinks nothing of slaughtering a wolf to capture its prey. But, like all mortals, she fears what lingers mercilessly beyond the forest. And she will learn that taking the life of a magical creature comes at a high price…", 4, false, "https://res.cloudinary.com/bloomsbury-atlas/image/upload/w_568,c_scale/jackets/9781681199061.jpg", 3])
     db.execute(`INSERT INTO books(title, description, number, unreleased, img, series_id) VALUE (?, ?, ?, ?, ?, ?);`, ["A Court of Silver Flames", "Feyre is a huntress. She thinks nothing of slaughtering a wolf to capture its prey. But, like all mortals, she fears what lingers mercilessly beyond the forest. And she will learn that taking the life of a magical creature comes at a high price…", 5, false, "https://kbimages1-a.akamaihd.net/33cbc7f1-dd5c-4d2c-a17f-adbc68569d7e/1200/1200/False/a-court-of-silver-flames.jpg", 3])
+    db.execute(`INSERT INTO books(title, description, number, unreleased, img, series_id) VALUE (?, ?, ?, ?, ?, ?);`, ["The Cruel Prince", "Jude was seven when her parents were murdered and she and her two sisters were stolen away to live in the treacherous High Court of Faerie.", 1, false, "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1574535986i/26032825.jpg", 4])
+    db.execute(`INSERT INTO books(title, description, number, unreleased, img, series_id) VALUE (?, ?, ?, ?, ?, ?);`, ["The Wicked King", "Jude was seven when her parents were murdered and she and her two sisters were stolen away to live in the treacherous High Court of Faerie.", 2, false, "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1520620414i/26032887.jpg", 4])
+    db.execute(`INSERT INTO books(title, description, number, unreleased, img, series_id) VALUE (?, ?, ?, ?, ?, ?);`, ["The Queen of Nothing", "Jude was seven when her parents were murdered and she and her two sisters were stolen away to live in the treacherous High Court of Faerie.", 3, false, "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1553624975i/26032912.jpg", 4])
+    db.execute(`INSERT INTO books(title, description, number, unreleased, img, series_id) VALUE (?, ?, ?, ?, ?, ?);`, ["How the King of Elfhame Learned to Hate Stories", "Jude was seven when her parents were murdered and she and her two sisters were stolen away to live in the treacherous High Court of Faerie.", 4, false, "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1589827409i/53439886.jpg", 4])
 
     //users_books
     db.execute(`INSERT INTO users_books(users_id, books_id, want_to_read, has_read) VALUE (?, ?, ?, ?);`, [2, 1, false, true])
@@ -157,6 +161,10 @@ if (isInDeleteMode) {
     db.execute(`INSERT INTO books_authors(books_id, authors_id) VALUE (?, ?);`, [13, 3])
     db.execute(`INSERT INTO books_authors(books_id, authors_id) VALUE (?, ?);`, [14, 3])
     db.execute(`INSERT INTO books_authors(books_id, authors_id) VALUE (?, ?);`, [15, 3])
+    db.execute(`INSERT INTO books_authors(books_id, authors_id) VALUE (?, ?);`, [16, 4])
+    db.execute(`INSERT INTO books_authors(books_id, authors_id) VALUE (?, ?);`, [17, 4])
+    db.execute(`INSERT INTO books_authors(books_id, authors_id) VALUE (?, ?);`, [18, 4])
+    db.execute(`INSERT INTO books_authors(books_id, authors_id) VALUE (?, ?);`, [19, 4])
 
     //genres
     db.execute(`INSERT INTO genres(name) VALUE (?);`, ["High Fantasy"])
@@ -196,6 +204,14 @@ if (isInDeleteMode) {
     db.execute(`INSERT INTO books_genres(books_id, genres_id) VALUE (?, ?);`, [15, 3])
     db.execute(`INSERT INTO books_genres(books_id, genres_id) VALUE (?, ?);`, [15, 6])
     db.execute(`INSERT INTO books_genres(books_id, genres_id) VALUE (?, ?);`, [15, 7])
+    db.execute(`INSERT INTO books_genres(books_id, genres_id) VALUE (?, ?);`, [16, 1])
+    db.execute(`INSERT INTO books_genres(books_id, genres_id) VALUE (?, ?);`, [16, 6])
+    db.execute(`INSERT INTO books_genres(books_id, genres_id) VALUE (?, ?);`, [17, 1])
+    db.execute(`INSERT INTO books_genres(books_id, genres_id) VALUE (?, ?);`, [17, 6])
+    db.execute(`INSERT INTO books_genres(books_id, genres_id) VALUE (?, ?);`, [18, 1])
+    db.execute(`INSERT INTO books_genres(books_id, genres_id) VALUE (?, ?);`, [18, 6])
+    db.execute(`INSERT INTO books_genres(books_id, genres_id) VALUE (?, ?);`, [19, 1])
+    db.execute(`INSERT INTO books_genres(books_id, genres_id) VALUE (?, ?);`, [19, 6])
 }
 
 db.end()
