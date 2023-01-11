@@ -25,7 +25,7 @@
 
 </script>
 
-<main class="margin-left">
+<main class="content">
   <Router>
     <Navbar></Navbar>
 
@@ -53,7 +53,7 @@
 </main>
 
 <style>
-  .margin-left {
-    margin-left: 5px
+  .content {
+    margin: 0 5px 0 5px
   }
 </style>
