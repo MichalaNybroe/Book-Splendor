@@ -153,5 +153,6 @@
         padding-bottom: 5px;
         margin-left: 50px;
         font-family: Georgia, 'Times New Roman', Times, serif;
+        color: #474544;
     }
 </style>
