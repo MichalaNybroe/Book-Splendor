@@ -6,8 +6,6 @@ import { setBooks } from "../util/setBooks.js"
 const router = Router()
 
 router.get("/api/series", adminGuard, async (req, res) => {
-    console.log('in seriesrouter')
-    console.log(req.session)
     const [series,_] = await db.query("SELECT * FROM series ORDER BY title ASC;")
     if (series === undefined) {
         res.status(400).send({ data: undefined, message: "Unable to retrieve series."})

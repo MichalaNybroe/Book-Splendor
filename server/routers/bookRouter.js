@@ -8,8 +8,6 @@ import { setBooks } from "../util/setBooks.js"
 // save book of the week id
 
 router.get("/api/books", async (req, res) => {
-    console.log('in bookrouter')
-    console.log(req.session)
     const [books,_] = await db.query(
         `SELECT 
             books.*, 
