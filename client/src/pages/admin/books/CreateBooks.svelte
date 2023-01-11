@@ -221,11 +221,18 @@
     
 {:else}
     <form on:submit|preventDefault={handleUtilSubmit}>
+        <div class="multiselect">
         <MultiSelect bind:selected={selectedOption} options={options} loading={selectedOption.length===0} maxSelect={1} required></MultiSelect>
+        </div>
+        <br>
         <input type="text" placeholder="Lord of the Rings" bind:value={newData} required>
+        <br>
+        <br>
         <Button class="create">Create {!selectedOption ? 'Element' : selectedOption}</Button>
     </form>
-    <Button on:click={exitUtilMode}>Back to Book</Button>
+    <p>
+    <Button class="goback" on:click={exitUtilMode}>Back to Book</Button>
+    </p>
 {/if}
 <style>
     form {
