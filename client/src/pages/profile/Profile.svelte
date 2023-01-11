@@ -104,26 +104,31 @@
 
 <div id="profilebanner" style="background-color: {$user.color};color:white">
     <img id="profilePicture" src="/profilPictures/{$user.picture_number}.png" alt="Profile." height="200">
-
     <h3 id="username">{$user?.user_name}</h3>
 </div>
 
 {#if updateMode === true} 
     <MultiSelect on:change={() => updatePicture()} bind:selected={pictureSelect} options={pictures} loading={pictures.length===0} maxSelect={1}/>
+    <br>
     <input type="color" bind:value={$user.color} style="height: 50px;" on:change|preventDefault={saveColor} id="colorInp">
+    <br>
+    <br>
     <input type="text" bind:value={$user.user_name} on:change|preventDefault={updateUserName}>
+    <br>
+    <br>
+    <Button class="create" on:click={() => exitEditMode()}>Exit Edit</Button>
 
     <Confirm
         confirmTitle="Delete"
         themeColor="110"
         let:confirm="{confirmThis}"
     >
-        <Button class="danger" on:click={() => confirmThis(deleteOwnProfile)}>Delete User</Button>
+    <br>
+    <br>
+        <Button class="deleteUser" on:click={() => confirmThis(deleteOwnProfile)}>Delete User</Button>
     </Confirm>
-
-    <Button on:click={() => exitEditMode()}>Exit Edit</Button>
 {:else}
-    <Button on:click={() => enterEditMode()}>Edit Profile</Button>
+    <Button class="create" on:click={() => enterEditMode()}>Edit Profile</Button>
 {/if}
 
 <div id="toReadList">
@@ -139,6 +144,15 @@
 </div>
 
 
-<Router primary={false}>
+<!-- <Router primary={false}>
     <Link to="/invite">Invite a friend?</Link>
-</Router>
+</Router> -->
+
+<style>
+    h3 {
+        padding-bottom: 5px;
+        margin-left: 50px;
+        font-family: Georgia, 'Times New Roman', Times, serif;
+        color: #474544;
+    }
+</style>

@@ -77,3 +77,51 @@
 		</tr>
 	{/each}
 </table>
+
+<style>
+    :global(body) {
+       font-family: Georgia, 'Times New Roman', Times, serif;
+       margin-left: 5%;
+   }
+
+   .danger {
+       color:black;
+       font-size: x-large;
+       padding: 5px 15px;   
+   }
+
+   .danger:hover {
+       color: red;
+       background-color: white;
+   }
+
+   button {
+       background: none;
+       border: none;
+       color: #474544;
+       cursor: pointer;
+       display: inline-block;
+       font-family: "Helvetica", Arial, sans-serif;
+       font-size: 0.875em;
+       font-weight: bold;
+       outline: none;
+       padding: 5px 15px;
+   }
+
+   button:hover {
+       background: #474544;
+       color: #f2f3eb;
+   }
+
+   table {
+       padding: 37.5px;
+   }
+
+   table {
+       width: 90%;
+   }
+
+   tr {
+       text-align: left;
+   }
+</style>

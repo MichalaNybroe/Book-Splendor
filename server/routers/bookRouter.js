@@ -6,6 +6,16 @@ import { setBooks } from "../util/setBooks.js"
 const router = Router()
 
 // save book of the week id
+router.put("/api/books/:id", loggedinGuard, adminGuard, checkBookInput, async (req, res) => {
+    const { recommended } = req.body
+
+    const [book, _] = await db.query("UPDATE books SET recommended = ? WHERE id=?;", [recommended, req.params.id])
+    if(!book) {
+        return res.status(400).send({ message: "Book not be found." })
+    }
+    res.send({ affectedRows: book.affectedRows})
+})
+
 
 router.get("/api/books", async (req, res) => {
     const [books, _] = await db.query(

@@ -6,6 +6,7 @@
     import '../../../../node_modules/toastr/build/toastr.css'
     import Button from '../../../components/Button.svelte'
     import { Confirm } from 'svelte-confirm'
+ 
 
     const navigate = useNavigate()
 
@@ -14,18 +15,47 @@
     }
     
 
+    // BOOK OF THE WEEK
+    async function toggleRecommend(book) {
+        book.recommended = !book.recommended;
+        const body = {
+            recommended: recommended
+        }
+        
+        try {
+            const response = await fetch(`${$BASE_URL}/api/books/${book.id}`, {
+            method: 'PUT',
+            credentials: 'include',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(body)
+        })
+
+        if (!response.ok) {
+            const json = await response.json()
+            Toastr.warning(json.message)
+            return
+        }
+            Toastr.success('Book recommended.')
+        } catch {
+            Toastr.error('Unable to recommend book. Try again later.')
+            return
+        }
+    }
+    // END OF RECOMMENDED BOOKS
+
+
     let sortBooks = ''
     let searchId = ''
     let searchAuthor = ''
     let searchTitle = ''
     let books = []
-    let columns = ['Id', 'Title', 'Number', 'Series', 'Authors', 'Genres', 'Update', 'Delete']
+    let columns = ['Id', 'Title', 'Number', 'Series', 'Authors', 'Genres', 'Recommend' ,'Update', 'Delete']
     let sortBooksDropDown = ['date', 'series', 'unreleased']
     let selected = ''
 
     
     async function retrieveBooks() {
-       // søg med paramtre
+       // søg med parametre
         try {
             const response = await fetch(`${$BASE_URL}/api/books`, {
                 credentials: 'include',
@@ -109,6 +139,9 @@
 			<td>{book.series_title ?? ''}</td>
 			<td>{book.authors.map((author) => author.name).join(', ')}</td>
             <td>{book.genres.map((genre) => genre.name).join(', ')}</td>
+            <td>   
+			<input type="checkbox" bind:checked={book.isFavorite} on:click={()=> toggleRecommend(book)} />
+            </td>
             <td>
                 <Link class="update" to="/admin/books/{book.id}/update">
                     <i class="fa fa-pencil"></i>
