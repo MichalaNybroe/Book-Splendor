@@ -102,6 +102,10 @@
         color: green;
     }
 
+    .save {
+        font-size: 24px;
+    }
+
     .create {
         background: none;
         border: solid 1px #474544;

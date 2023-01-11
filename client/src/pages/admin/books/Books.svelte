@@ -6,6 +6,7 @@
     import '../../../../node_modules/toastr/build/toastr.css'
     import Button from '../../../components/Button.svelte'
     import { Confirm } from 'svelte-confirm'
+ 
 
     const navigate = useNavigate()
 
@@ -13,13 +14,65 @@
         navigate('/')
     }
     
+    // BOOK OF THE WEEK
+/*     let lastChecked;
+    function toggleFavorite(event, book) {
+        if (event.shiftKey && lastChecked) {
+            // handle shift click here
+            const start = books.indexOf(book);
+            const end = books.indexOf(lastChecked);
+            const selectedBooks = books.slice(Math.min(start, end), Math.max(start, end) + 1);
+            selectedBooks.forEach(b => b.isFavorite = lastChecked.isFavorite);
+        } else {
+            // handle normal click here
+            book.isFavorite = !book.isFavorite;
+            lastChecked = book;
+        }
+    }
+ */
+
+    async function toggleFavorite(book) {
+        try {
+            const response = await fetch(`${$BASE_URL}/api/books/${book.id}`, {
+            method: 'POST',
+            credentials: 'include',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(body)
+        })
+
+        if (!response.ok) {
+            const json = await response.json()
+            Toastr.warning(json.message)
+            return
+        }
+            Toastr.success('Book created.')
+        } catch {
+            Toastr.error('Unable to create book. Try again later.')
+            return
+        }
+    }
+
+   /*  var num= 0
+    var icons= ['☆', '★']
+    let botw = false
+
+    function swapIcon() {
+		console.log("Swapping icon")
+		num++
+		if (num >= icons.length) {
+			num= 0
+		}
+	} */
+
+    // END OF RECOMMENDED BOOKS
+
 
     let sortBooks = ''
     let searchId = ''
     let searchAuthor = ''
     let searchTitle = ''
     let books = []
-    let columns = ['Id', 'Title', 'Number', 'Series', 'Authors', 'Genres', 'Update', 'Delete']
+    let columns = ['Id', 'Title', 'Number', 'Series', 'Authors', 'Genres', 'Recommend' ,'Update', 'Delete']
     let sortBooksDropDown = ['date', 'series', 'unreleased']
     let selected = ''
 
@@ -109,6 +162,11 @@
 			<td>{book.series_title ?? ''}</td>
 			<td>{book.authors.map((author) => author.name).join(', ')}</td>
             <td>{book.genres.map((genre) => genre.name).join(', ')}</td>
+            <td>
+                
+			<input type="checkbox" bind:checked={book.isFavorite} on:click={event => toggleFavorite(event, book)} />
+		
+            </td>
             <td>
                 <Link class="update" to="/admin/books/{book.id}/update">
                     <i class="fa fa-pencil"></i>
