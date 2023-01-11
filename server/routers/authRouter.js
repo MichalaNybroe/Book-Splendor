@@ -46,7 +46,7 @@ router.post("/login", async (req, res) => {
 
 
 router.post("/logout", (req, res) => {
-    req.session.destroy() //tjek at session.isLoggedIn bliver false
+    req.session.destroy()
     res.send({ message: "Logged out." })
 })
 

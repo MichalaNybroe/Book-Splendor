@@ -60,7 +60,9 @@ db.execute(`CREATE TABLE IF NOT EXISTS reviews(
     text VARCHAR(1000),
     rating SMALLINT(5) NOT NULL,
     users_id INTEGER NOT NULL,
-    CONSTRAINT fk_users_reviews FOREIGN KEY (users_id) REFERENCES users(id) ON DELETE CASCADE
+    books_id INTEGER NOT NULL,
+    CONSTRAINT fk_users_reviews FOREIGN KEY (users_id) REFERENCES users(id) ON DELETE CASCADE,
+    CONSTRAINT fk_books_reviews FOREIGN KEY (books_id) REFERENCES books(id) ON DELETE CASCADE
 );`)
 
 db.execute(`CREATE TABLE IF NOT EXISTS authors(
@@ -126,8 +128,8 @@ if (isInDeleteMode) {
     db.execute(`INSERT INTO users_books(users_id, books_id, want_to_read, has_read) VALUE (?, ?, ?, ?);`, [2, 2, true, false])
     
     //reviews
-    db.execute(`INSERT INTO reviews(users_id, subject, text, rating) VALUE (?, ?, ?, ?);`, [2, "LOVED IT", "LOVED ITTT", 4])
-    db.execute(`INSERT INTO reviews(users_id, subject, text, rating) VALUE (?, ?, ?, ?);`, [2, "Big fan", "My favourite book ever", 5])
+    db.execute(`INSERT INTO reviews(users_id, subject, text, rating, books_id) VALUE (?, ?, ?, ?, ?);`, [2, "LOVED IT", "LOVED ITTT", 4, 5])
+    db.execute(`INSERT INTO reviews(users_id, subject, text, rating, books_id) VALUE (?, ?, ?, ?, ?);`, [2, "Big fan", "My favourite book ever", 5, 11])
 
     //authors
     db.execute(`INSERT INTO authors(name) VALUE (?);`, ["J.R.R. Tolkien"])
