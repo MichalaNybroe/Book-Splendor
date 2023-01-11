@@ -75,6 +75,24 @@
         color: red;
     }
 
+    .deleteUser {
+        background: none;
+        border: solid 1px #474544;
+        color: #474544;
+        cursor: pointer;
+        display: inline-block;
+        font-family: "Helvetica", Arial, sans-serif;
+        font-size: 0.875em;
+        font-weight: bold;
+        outline: none;
+        padding: 5px 15px;
+        width: 115px;   
+	}
+
+    .deleteUser:hover {
+        background-color: red;
+    }
+
     .update {
         color: black;
         font-size: x-large;
