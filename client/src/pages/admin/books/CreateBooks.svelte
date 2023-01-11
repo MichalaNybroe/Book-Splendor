@@ -7,13 +7,11 @@
     import MultiSelect from 'svelte-multiselect'
     import Button from '../../../components/Button.svelte'
     
-    if($user?.admin !== true) {
-        const navigate = useNavigate()
+    const navigate = useNavigate()
 
+    if($user?.admin !== true) {
         navigate('/')
     }
-
-    const navigate = useNavigate();
     
     let selectedAuthors = []
     let selectedGenres = []
