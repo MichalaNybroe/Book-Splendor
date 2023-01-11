@@ -1,19 +1,5 @@
 <script>
-    import { user } from '../../../store/auth.js'
-    import { useNavigate } from 'svelte-navigator'
-
-    
-    if($user?.admin !== true) {
-        const navigate = useNavigate()
-
-        navigate('/')
-    }
+    import AdminList from '../../../components/AdminList.svelte'
 </script>
 
-
-
-<style>
-    :global(body) {
-        margin-left: 5%;
-    }
-</style>
+<AdminList endpoint={'reviews'} single={'review'} columns={['id', 'subject', 'text', 'rating', 'User Id', 'Book Id']}></AdminList>

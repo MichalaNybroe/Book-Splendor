@@ -62,7 +62,8 @@ db.execute(`CREATE TABLE IF NOT EXISTS reviews(
     users_id INTEGER NOT NULL,
     books_id INTEGER NOT NULL,
     CONSTRAINT fk_users_reviews FOREIGN KEY (users_id) REFERENCES users(id) ON DELETE CASCADE,
-    CONSTRAINT fk_books_reviews FOREIGN KEY (books_id) REFERENCES books(id) ON DELETE CASCADE
+    CONSTRAINT fk_books_reviews FOREIGN KEY (books_id) REFERENCES books(id) ON DELETE CASCADE,
+    CONSTRAINT unique_users_books UNIQUE (users_id, books_id)
 );`)
 
 db.execute(`CREATE TABLE IF NOT EXISTS authors(

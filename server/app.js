@@ -27,6 +27,22 @@ app.use(superLimiter)*/
 
 app.use(express.json())
 
+// Socket
+import { createServer } from "http"
+import { Server } from "socket.io"
+
+const httpServer = createServer(app)
+const io = new Server(httpServer, {
+    cors: {
+        origin: `http://localhost:5173`,
+        credentials: true
+    }
+})
+app.set('io', io)
+
+io.on("connection", (socket) => {
+})
+
 //Routers
 import authRouter from "./routers/authRouter.js"
 import bookRouter from "./routers/bookRouter.js"
@@ -35,6 +51,7 @@ import authorsRouter from "./routers/authorsRouter.js"
 import genresRouter from "./routers/genresRouter.js"
 import seriesRouter from "./routers/seriesRouter.js"
 import userRouter from "./routers/userRouter.js"
+import reviewRouter from "./routers/reviewRouter.js"
 app.use(authRouter)
 app.use(bookRouter)
 app.use(contactFormRouter)
@@ -42,7 +59,8 @@ app.use(authorsRouter)
 app.use(genresRouter)
 app.use(seriesRouter)
 app.use(userRouter)
+app.use(reviewRouter)
 
 
 const PORT = Number(process.env.PORT) || 8080
-app.listen(PORT, console.log("Server is running on port ", PORT))
+httpServer.listen(PORT, console.log("Server is running on port ", PORT))

@@ -3,7 +3,6 @@
   import Footer from './components/Footer.svelte'
 
   import { Route, Router } from 'svelte-navigator'
-  import { BASE_URL, ENVIRONMENT } from './store/globals'
 
   import Home from './pages/home/Home.svelte'
   import Login from './pages/login/Login.svelte'
@@ -20,9 +19,7 @@
   import AuthorBooks from './pages/authors/Author.svelte'
   import GenreBooks from './pages/genres/Genre.svelte'
   import SeriesBooks from './pages/series/Series.svelte'
-  import Series from './components/Series.svelte'
   import UpdateBooks from './pages/admin/books/UpdateBooks.svelte'
-
 </script>
 
 <main class="content">

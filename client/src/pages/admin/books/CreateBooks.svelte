@@ -132,8 +132,6 @@
         } else {
             body = { name: newData }
         }
-        console.log(body)
-        console.log(selectedOption[0])
         
         try {
             const response = await fetch(`${$BASE_URL}/api/${selectedOption[0]}s`, {
@@ -143,6 +141,7 @@
             body: JSON.stringify(body)
         })
 
+        // Do we need this
         if (!response.ok) {
             const json = await response.json()
             Toastr.warning(json.message)

@@ -7,15 +7,24 @@ import db from "../database/connection.js"
 router.use(loggedinGuard)
 
 router.get("/api/users", adminGuard, async (req, res) => {
-    const [users,_] = await db.query("SELECT * FROM users;")
-    if (users === undefined) {
-        res.status(400).send({ data: undefined, message: `Unable to retrieve users`})
-    } else {
+    try {
+        const [users,_] = await db.query("SELECT * FROM users;")
         const userList = []
         users.forEach((user) => {
             userList.push({id: user.id, email: user.email, user_name: user.user_name})
         })
         res.send({ data: userList})
+    } catch {
+        res.status(400).send({ data: undefined, message: `Unable to retrieve users`})
+    }
+})
+
+router.get("/api/users/:id/reviews", userGuard, async (req, res) => {
+    try {
+        const [reviews, _] = await db.query('SELECT * FROM reviews WHERE users_id=?;', [req.params.id])
+        res.send({ data: reviews})
+    } catch {
+        res.status(404).send({ data: undefined, message: "Unable to retrieve reviews." })
     }
 })
 
@@ -32,7 +41,7 @@ router.patch("/api/users/:id", userGuard, async (req, res) => {
     }
 })
 
-router.delete("/api/users/:id", loggedinGuard, async (req, res, next) => {
+router.delete("/api/users/:id", async (req, res, next) => {
     if (req.session.userid === Number(req.params.id)) {
         try {
             const result = await db.query("DELETE FROM users WHERE users.id=?;", [req.params.id])
@@ -45,14 +54,27 @@ router.delete("/api/users/:id", loggedinGuard, async (req, res, next) => {
         if (req.session.admin !== true) {
             return res.status(401).send({ message: "Not authorized." })
         }
-        const result = await db.query("DELETE FROM users WHERE users.id=?;", [req.params.id])
-        
-        if (result === undefined) {
-            res.status(404).send({ data: undefined, message: `No user with ${req.params.id} id`})
-        } else {
+
+        try {
+            const result = await db.query("DELETE FROM users WHERE users.id=?;", [req.params.id])
             res.send({ data: result })
+        } catch {
+            res.status(404).send({ data: undefined, message: `No user with ${req.params.id} id`})
         }
     } 
+})
+
+router.delete("/api/users/:userid/reviews/:reviewid", async (req, res) => {
+    if (req.session.userid === Number(req.params.userid)) {
+        try {
+            const result = await db.query("DELETE FROM reviews WHERE users_id=? AND id=?;", [req.params.userid, req.params.reviewid])
+            res.send({ data: result })
+        } catch {
+            res.status(404).send({ data: undefined, message: `No user with ${req.params.id} id`})
+        }
+    } else {
+        return res.status(401).send({ message: "Not authorized." })
+    }
 })
 
 
