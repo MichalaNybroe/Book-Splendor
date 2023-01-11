@@ -72,7 +72,7 @@
             />
             <br />
             <br>
-            <Button class="login" on:click={()=> login()}>Login </Button>
+            <Button class="login">Login </Button>
             <Link to="/forgotPassword"><p  id="forgotPW">Forgot your password?</p></Link>
             <Link to="/signUp"><p id="signUp">Sign Up</p></Link>
         </form>

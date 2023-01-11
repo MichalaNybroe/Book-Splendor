@@ -7,14 +7,12 @@
     import Button from '../../../components/Button.svelte'
     import { Confirm } from 'svelte-confirm'
 
+    const navigate = useNavigate()
 
     if($user?.admin !== true) {
-        const navigate = useNavigate()
-
         navigate('/')
     }
-
-    const navigate = useNavigate();
+    
 
     let sortBooks = ''
     let searchId = ''
