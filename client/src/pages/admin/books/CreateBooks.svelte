@@ -211,13 +211,14 @@
             <Button class="create">Create Book</Button>
         </div>
     </form>
-    <br>
-
     <p>
+    <Button class="create" on:click={enterUtilMode}>UtilMode</Button>
+    <br>
+    <br>
     <Button class="goback" on:click={() => navigate(-1)}>Go back</Button>
     </p>
 
-    <Button on:click={enterUtilMode}>UtilMode</Button>
+    
 {:else}
     <form on:submit|preventDefault={handleUtilSubmit}>
         <MultiSelect bind:selected={selectedOption} options={options} loading={selectedOption.length===0} maxSelect={1} required></MultiSelect>
