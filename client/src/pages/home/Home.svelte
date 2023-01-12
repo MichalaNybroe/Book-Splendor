@@ -1,9 +1,9 @@
 <script>
-    import Book from "../../components/Book.svelte"
-    import CarouselBook from "../../components/CarouselBook.svelte"
-    import { BASE_URL } from "../../store/globals"
-    import * as Toastr from "toastr"
-    import "../../../node_modules/toastr/build/toastr.css"
+    import Book from '../../components/Book.svelte'
+    import CarouselBook from '../../components/CarouselBook.svelte'
+    import { BASE_URL } from '../../store/globals'
+    import * as Toastr from 'toastr'
+    import '../../../node_modules/toastr/build/toastr.css'
     import Carousel from 'svelte-carousel'
 
     //Genres
@@ -78,8 +78,7 @@
     fetchSciFiBooks()
 
  
-    //Books of the week
-    
+    //CAROUSEL
     export let timingFunction = 'ease-in-out'
     export let arrows = false
     export let infinite = true
@@ -95,12 +94,6 @@
     export let particlesToShow = 1
     export let particlesToScroll = 1
 
-    /* const colors = [
-        { color: '#e5f9f0', text: '0' },
-        { color: '#ccf3e2', text: '1' },
-        { color: '#b2edd3', text: '2' }
-    ] */
-
     //FETCH BOOK OF THE WEEK
     let recommendedBooks = []
 
@@ -113,7 +106,7 @@
 
             const data = await response.json()
                 const recommendedBooks = data.data
-                return recommendedBooks62
+                return recommendedBooks
         } catch {
             Toastr.error('Unable to retrieve books. Try again later.')
         }
@@ -151,23 +144,6 @@
                 
                 </div>
             {/each}
-    
-            <!-- 
-                {#each recommendedBooks as carouselbook}
-                    <div class="color-container">
-                        <CarouselBook {carouselbook}></CarouselBook>
-                    </div>
-                {/each}
-            -->
-        
-        <!--   {#each colors as { color, text } (color)}
-            <div
-            class="color-container"
-            style="background-color: {color};"
-            >
-            <p>{text}</p>
-            </div>
-        {/each} -->
         </Carousel>
     </div>
 

@@ -42,9 +42,12 @@
             return
         }
     }
-    // END OF RECOMMENDED BOOKS
+    // END OF BOOK OF THE WEEK
 
-
+    const searchIdInput = ''
+    const searchAuthorInput = ''
+    const searchTitleInput = ''
+    let searchForm
     let sortBooks = ''
     let searchId = ''
     let searchAuthor = ''
@@ -72,8 +75,76 @@
         } catch {
             Toastr.error('Unable to retrieve books. Try again later.')
         }
-        
     }
+
+    //SEARCH BOOKS
+    async function searchBooks(parameters) {
+    // Build the query string from the search parameters
+    let queryString = '';
+    for (let param in parameters) {
+        queryString += `${param}=${parameters[param]}&`;
+    }
+    try {
+        // Send a GET request to the server with the search parameters in the query string
+        const response = await fetch(`${$BASE_URL}/api/books?${queryString}`, {
+            credentials: 'include',
+            headers: { 'Content-Type': 'application/json' }
+        });
+
+        if (response.ok) {
+            const data = await response.json();
+            books = data.data;
+        } else {
+            Toastr.warning('Unable to retrieve books.');
+        }
+    } catch {
+        Toastr.error('Unable to retrieve books. Try again later.');
+    }
+}
+ /*    async function retrieveBooks() {
+    const searchId = searchIdInput.value;
+    const searchAuthor = searchAuthorInput.value;
+    const searchTitle = searchTitleInput.value;
+    try {
+        const response = await fetch(`${$BASE_URL}/api/books/search?searchId=${searchId}&searchAuthor=${searchAuthor}&searchTitle=${searchTitle}`, {
+            credentials: 'include',
+            headers: { 'Content-Type': 'application/json' }
+        })
+
+        if (response.ok) {
+            const data = await response.json()
+            books = data.data
+        } else {
+            Toastr.warning('Unable to retrieve books.')
+        }
+    } catch {
+        Toastr.error('Unable to retrieve books. Try again later.')
+        }
+    }  */
+  /*   async function searchBooks() {
+        const selected = searchForm.elements.sortBooksDropDown.value;
+        const searchId = searchForm.elements.search_books_id.value;
+        const searchAuthor = searchForm.elements.search_books_author.value;
+        const searchTitle = searchForm.elements.search_books_title.value;
+        const data = { selected, searchId, searchAuthor, searchTitle };
+        console.log(data)
+        try {
+            const response = await fetch("/api/books/search", {
+                method: 'POST',
+                credentials: 'include',
+                body: JSON.stringify(data),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+            const json = await response.json()
+            console.log(json)
+        } catch {
+            Toastr.error('Unable to search for books. Try again later.')
+        }
+    }
+ */
+
 	
 	async function deleteBook(book) {
         try {
@@ -104,7 +175,8 @@
 </Router>
 </p>
 
-<form id="searchBooksForm" on:submit|preventDefault={retrieveBooks}>
+<!--SEARCH BOOKS-->
+<form id="searchBooksForm" bind:this={searchForm} on:submit|preventDefault={searchBooks}>
     <label for="sortBooksDropDown">Sort by</label>
     <select name="sortBooksDropDown" bind:value={selected}>
         {#each sortBooksDropDown as value}
@@ -113,16 +185,15 @@
     </select>
 
     <label for="search_books_id">Id</label>
-    <input type="number" name="search_books_id" id="search_books_id">
+    <input type="number" name="search_books_id" id="search_books_id" bind:value={searchId}>
 
     <label for="search_books_author">Author</label>
-    <input type="text" name="search_books_author" id="search_books_author">
+    <input type="text" name="search_books_author" id="search_books_author" bind:value={searchAuthor}>
 
     <label for="search_books_title">Title</label>
-    <input type="text" name="search_books_title" id="search_books_title">
+    <input type="text" name="search_books_title" id="search_books_title" bind:value={searchTitle}>
 
     <button type="submit">Search</button>
-    <!--<input type="submit" value="Search">-->
 </form>
 
 <table>
