@@ -102,9 +102,9 @@
     }
 }
  /*    async function retrieveBooks() {
-    const searchId = searchIdInput.value;
-    const searchAuthor = searchAuthorInput.value;
-    const searchTitle = searchTitleInput.value;
+    const searchId = searchIdInput.value
+    const searchAuthor = searchAuthorInput.value
+    const searchTitle = searchTitleInput.value
     try {
         const response = await fetch(`${$BASE_URL}/api/books/search?searchId=${searchId}&searchAuthor=${searchAuthor}&searchTitle=${searchTitle}`, {
             credentials: 'include',
@@ -121,12 +121,13 @@
         Toastr.error('Unable to retrieve books. Try again later.')
         }
     }  */
+    
   /*   async function searchBooks() {
-        const selected = searchForm.elements.sortBooksDropDown.value;
-        const searchId = searchForm.elements.search_books_id.value;
-        const searchAuthor = searchForm.elements.search_books_author.value;
-        const searchTitle = searchForm.elements.search_books_title.value;
-        const data = { selected, searchId, searchAuthor, searchTitle };
+        const selected = searchForm.elements.sortBooksDropDown.value
+        const searchId = searchForm.elements.search_books_id.value
+        const searchAuthor = searchForm.elements.search_books_author.value
+        const searchTitle = searchForm.elements.search_books_title.value
+        const data = { selected, searchId, searchAuthor, searchTitle }
         console.log(data)
         try {
             const response = await fetch("/api/books/search", {

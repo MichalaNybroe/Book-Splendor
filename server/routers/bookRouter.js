@@ -34,42 +34,36 @@ router.get("/api/books", async (req, res) => {
 
 /* 
 router.get("/api/books", async (req, res) => {
-    // extract the search parameters from the query string
-    const { searchId, searchAuthor, searchTitle } = req.query;
+    const { searchId, searchAuthor, searchTitle } = req.query
 
-    // start building the SQL query
-    let query = `SELECT * FROM books`;
+    let query = `SELECT * FROM books`
     let where = []; // array to store WHERE clauses
 
-    // check if the searchId parameter is provided
     if (searchId) {
       where.push(`id = '${searchId}'`)
     }
 
-    // check if the searchAuthor parameter is provided
     if (searchAuthor) {
       where.push(`author LIKE '%${searchAuthor}%'`)
     }
 
-    // check if the searchTitle parameter is provided
     if (searchTitle) {
       where.push(`title LIKE '%${searchTitle}%'`)
     }
 
-    // if any WHERE clauses have been added, add them to the query
     if (where.length > 0) {
-        query += ` WHERE ${where.join(" AND ")}`;
+        query += ` WHERE ${where.join(" AND ")}`
     }
 
     try {
-        const [books] = await db.query(query);
+        const [books] = await db.query(query)
         if (!books || books.length === 0) {
-            return res.status(404).send({ data: undefined, message: "Unable to find books with search criteria." });
+            return res.status(404).send({ data: undefined, message: 'Unable to find books with search criteria.' })
         }
-        res.send({ data: books });
+        res.send({ data: books })
     } catch (error) {
-        console.error(error);
-        res.status(500).send({ data: undefined, message: "Error while searching for books" });
+        console.error(error)
+        res.status(500).send({ data: undefined, message: 'Error while searching for books' });
     }
 }); */
 

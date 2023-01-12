@@ -107,6 +107,7 @@ if (isInDeleteMode) {
     db.execute(`INSERT INTO series(title) VALUE (?);`, ["Court of Thorns and Roses"])
     db.execute(`INSERT INTO series(title) VALUE (?);`, ["The Folk of the Air"])
     db.execute(`INSERT INTO series(title) VALUE (?);`, ["The Murderbot Diaries"])
+    db.execute(`INSERT INTO series(title) VALUE (?);`, ["コーヒーが冷めないうちに"])
 
     //books
     db.execute(`INSERT INTO books(title, description, number, unreleased, img, series_id, recommended) VALUE (?, ?, ?, ?, ?, ?, ?);`, ["The Fellowship of the Ring", "One Ring to rule them all, One Ring to find them, One Ring to bring them all and in the darkeness bind them. In ancient times the Rings of Power were crafted by the Elven-smiths, and Sauron, The Dark Lord, forged the One Ring, filling it with his own power so that he could rule all others. But the One Ring was taken from him, and though he sought it throughout Middle-earth, it remained lost to him. After many ages it fell into the hands of Bilbo Baggins, as told in The Hobbit.", 1, false, "https://upload.wikimedia.org/wikipedia/en/8/8e/The_Fellowship_of_the_Ring_cover.gif", 1, false])
@@ -128,6 +129,8 @@ if (isInDeleteMode) {
     db.execute(`INSERT INTO books(title, description, number, unreleased, img, series_id, recommended) VALUE (?, ?, ?, ?, ?, ?, ?);`, ["The Wicked King", "Jude was seven when her parents were murdered and she and her two sisters were stolen away to live in the treacherous High Court of Faerie.", 2, false, "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1520620414i/26032887.jpg", 4, false])
     db.execute(`INSERT INTO books(title, description, number, unreleased, img, series_id, recommended) VALUE (?, ?, ?, ?, ?, ?, ?);`, ["The Queen of Nothing", "Jude was seven when her parents were murdered and she and her two sisters were stolen away to live in the treacherous High Court of Faerie.", 3, false, "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1553624975i/26032912.jpg", 4, false])
     db.execute(`INSERT INTO books(title, description, number, unreleased, img, series_id, recommended) VALUE (?, ?, ?, ?, ?, ?, ?);`, ["How the King of Elfhame Learned to Hate Stories", "Jude was seven when her parents were murdered and she and her two sisters were stolen away to live in the treacherous High Court of Faerie.", 4, false, "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1589827409i/53439886.jpg", 4, true])
+    db.execute(`INSERT INTO books(title, description, number, unreleased, img, series_id, recommended) VALUE (?, ?, ?, ?, ?, ?, ?);`, ["Before the Coffee Gets Cold", "In a small back alley in Tokyo, there is a café which has been serving carefully brewed coffee for more than one hundred years. But this coffee shop offers its customers a unique experience: the chance to travel back in time.", 1, false, "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1560955053i/44421460.jpg", 6, true])
+    db.execute(`INSERT INTO books(title, description, number, unreleased, img, series_id, recommended) VALUE (?, ?, ?, ?, ?, ?, ?);`, ["Before the Coffee Gets Cold: Tales from the Café", "This beautiful, simple tale tells the story of people who must face up to their past, in order to move on with their lives. Kawaguchi once again invites the reader to ask themselves: what would you change if you could travel back in time?", 2, false, "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1593780745i/54373691.jpg", 6, false])
 
     //users_books
     db.execute(`INSERT INTO users_books(users_id, books_id, want_to_read, has_read) VALUE (?, ?, ?, ?);`, [2, 1, false, true])
@@ -147,6 +150,7 @@ if (isInDeleteMode) {
     db.execute(`INSERT INTO authors(name) VALUE (?);`, ["Terry Pratchett"])
     db.execute(`INSERT INTO authors(name) VALUE (?);`, ["Neil Gaiman"])
     db.execute(`INSERT INTO authors(name) VALUE (?);`, ["Martha Wells"])
+    db.execute(`INSERT INTO authors(name) VALUE (?);`, ["Toshikazu Kawaguchi"])
 
     //books_authors
     db.execute(`INSERT INTO books_authors(books_id, authors_id) VALUE (?, ?);`, [1, 1])
@@ -169,6 +173,8 @@ if (isInDeleteMode) {
     db.execute(`INSERT INTO books_authors(books_id, authors_id) VALUE (?, ?);`, [17, 4])
     db.execute(`INSERT INTO books_authors(books_id, authors_id) VALUE (?, ?);`, [18, 4])
     db.execute(`INSERT INTO books_authors(books_id, authors_id) VALUE (?, ?);`, [19, 4])
+    db.execute(`INSERT INTO books_authors(books_id, authors_id) VALUE (?, ?);`, [20, 8])
+    db.execute(`INSERT INTO books_authors(books_id, authors_id) VALUE (?, ?);`, [21, 8])
 
     //genres
     db.execute(`INSERT INTO genres(name) VALUE (?);`, ["High Fantasy"])
@@ -216,6 +222,8 @@ if (isInDeleteMode) {
     db.execute(`INSERT INTO books_genres(books_id, genres_id) VALUE (?, ?);`, [18, 6])
     db.execute(`INSERT INTO books_genres(books_id, genres_id) VALUE (?, ?);`, [19, 1])
     db.execute(`INSERT INTO books_genres(books_id, genres_id) VALUE (?, ?);`, [19, 6])
+    db.execute(`INSERT INTO books_genres(books_id, genres_id) VALUE (?, ?);`, [20, 5])
+    db.execute(`INSERT INTO books_genres(books_id, genres_id) VALUE (?, ?);`, [21, 5])
 }
 
 db.end()
