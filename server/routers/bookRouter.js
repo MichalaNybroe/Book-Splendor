@@ -32,6 +32,48 @@ router.get("/api/books", async (req, res) => {
     }
 })
 
+//SEARCH BOOKS
+router.post("/api/books/search", async (req, res) => {
+    const { selected, searchId, searchAuthor, searchTitle } = req.body;
+    let query = `SELECT 
+              books.*, 
+              authors_id, 
+              authors.name AS author_name,
+              genres_id,
+              genres.name AS genre_name,
+              series_id,
+              series.title AS series_title
+          FROM books
+              LEFT JOIN books_authors ON books.id = books_authors.books_id 
+              LEFT JOIN authors ON books_authors.authors_id = authors.id
+              LEFT JOIN books_genres ON books.id = books_genres.books_id
+              LEFT JOIN genres ON books_genres.genres_id = genres.id
+              LEFT JOIN series ON series.id = books.series_id`;
+    if (searchId) {
+      query += ` WHERE books.id = '${searchId}'`
+    }
+    if (searchAuthor) {
+      query += ` WHERE authors.name LIKE '%${searchAuthor}%'`
+    }
+    if (searchTitle) {
+      query += ` WHERE books.title LIKE '%${searchTitle}%'`
+    }
+    if (selected) {
+      query += ` ORDER BY ${selected}`
+    }
+    const [books, _] = await db.query(query)
+    const cleanedBooks = setBooks(books)
+    console.log(cleanedBooks)
+  
+    if (!books || books.length === 0) {
+      res.status(404).send({ data: undefined, message: `Unable to find books with search criteria.` })
+    } else {
+        console.log(cleanedBooks)
+      res.send({ data: cleanedBooks })
+    }
+  }) 
+
+
 router.get("/api/books/:id", async (req, res) => {
     const [books, _] = await db.query(
         `SELECT 
