@@ -28,7 +28,7 @@
 </script>
 
 
-<div class="test">
+<div class="book-container">
     {#each books as book, i}
     <h5><Book book={book}></Book></h5>
         
@@ -40,7 +40,7 @@
 
 
 <style>
-    .test {
+    .book-container {
         width: 90%;
         display: flex;
         flex-wrap: wrap;

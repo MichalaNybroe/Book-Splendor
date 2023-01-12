@@ -111,92 +111,91 @@
                 credentials: 'include',
             })
 
-            if (response.ok) {
-                const data = await response.json()
-                recommendedBooks = data.data
-            } else {
-                const data = await response.json()
-                Toastr.warning(data.message)
-            }
+            const data = await response.json()
+                const recommendedBooks = data.data
+                return recommendedBooks62
         } catch {
             Toastr.error('Unable to retrieve books. Try again later.')
         }
     }
 
-    fetchRecommendations()
-
 </script>
+{#await fetchRecommendations()}
+    <p>Loading...</p>
+{:then recBooks} 
+        <!--BOOK OF THE WEEK CAROUSEL-->
+    <h2>Books of the Week</h2>
 
-<!--BOOK OF THE WEEK CAROUSEL-->
-<h2>Books of the Week</h2>
-
-<div class="main-container">
-    <Carousel  
-        {timingFunction}
-        {arrows}
-        {infinite}
-        {initialPageIndex}
-        {duration}
-        {autoplay}
-        {autoplayDuration}
-        {autoplayDirection}
-        {pauseOnFocus}
-        {autoplayProgressVisible}
-        {dots}
-        {swiping}
-        {particlesToShow}
-        {particlesToScroll}
-    >
-         {#each recommendedBooks as carouselbook (carouselbook)}
-            <div 
-                class="color-container">
-        
-                <CarouselBook {carouselbook}></CarouselBook>
+    <div class="main-container">
+        <Carousel  
+            {timingFunction}
+            {arrows}
+            {infinite}
+            {initialPageIndex}
+            {duration}
+            {autoplay}
+            {autoplayDuration}
+            {autoplayDirection}
+            {pauseOnFocus}
+            {autoplayProgressVisible}
+            {dots}
+            {swiping}
+            {particlesToShow}
+            {particlesToScroll}
+        >
+            {#each recBooks as book (book)}
+                <div 
+                    class="color-container">
             
-        </div>
-        {/each}
- 
-        <!-- 
-            {#each recommendedBooks as carouselbook}
-                <div class="color-container">
-                    <CarouselBook {carouselbook}></CarouselBook>
+                    <CarouselBook carouselbook={book}></CarouselBook>
+                
                 </div>
             {/each}
-        -->
-      
-    <!--   {#each colors as { color, text } (color)}
-        <div
-          class="color-container"
-          style="background-color: {color};"
-        >
-          <p>{text}</p>
+    
+            <!-- 
+                {#each recommendedBooks as carouselbook}
+                    <div class="color-container">
+                        <CarouselBook {carouselbook}></CarouselBook>
+                    </div>
+                {/each}
+            -->
+        
+        <!--   {#each colors as { color, text } (color)}
+            <div
+            class="color-container"
+            style="background-color: {color};"
+            >
+            <p>{text}</p>
+            </div>
+        {/each} -->
+        </Carousel>
+    </div>
+
+
+
+    <!--GENRES-->
+    <h2>Romance</h2>
+        <div class="genres">
+            {#each romanceBooks as book, i}
+                <h5><Book {book} /></h5>
+            {/each}
         </div>
-      {/each} -->
-    </Carousel>
-  </div>
+
+    <h2>High Fantasy</h2>
+        <div class="genres">
+            {#each highFantasyBooks as book, i}
+                <h5><Book {book} /></h5>
+            {/each}
+        </div>
+    <h2>Sci-fi</h2>
+        <div class="genres">
+            {#each sciFiBooks as book, i}
+                <h5><Book {book} /></h5>
+            {/each}
+        </div>
+{/await}
 
 
-
-<!--GENRES-->
-<h2>Romance</h2>
-    <div class="genres">
-        {#each romanceBooks as book, i}
-            <h5><Book {book} /></h5>
-        {/each}
-    </div>
-
-<h2>High Fantasy</h2>
-    <div class="genres">
-        {#each highFantasyBooks as book, i}
-            <h5><Book {book} /></h5>
-        {/each}
-    </div>
-<h2>Sci-fi</h2>
-    <div class="genres">
-        {#each sciFiBooks as book, i}
-            <h5><Book {book} /></h5>
-        {/each}
-    </div>
 
 <style>
     h5 {

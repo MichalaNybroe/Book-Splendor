@@ -106,7 +106,10 @@
             {:else}
                 <StarRating rating={book.average_rating}></StarRating>
             {/if}
+            {#if book.series_id === null}
+            {:else}
             <Link to="/series/{book.series_id}/books"><p>{book.series_title} {book.number}</p></Link>
+            {/if}
             <h4>Authors</h4>
             {#each book.authors as author}
                 <Link to="/authors/{author.id}/books"><Author author={author}/></Link>
