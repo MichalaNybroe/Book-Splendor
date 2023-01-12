@@ -17,14 +17,15 @@
 
     // BOOK OF THE WEEK
     async function toggleRecommend(book) {
-        book.recommended = !book.recommended;
+        book.recommended = !book.recommended        
+
         const body = {
-            recommended: recommended
+            recommended: book.recommended
         }
         
         try {
             const response = await fetch(`${$BASE_URL}/api/books/${book.id}`, {
-            method: 'PUT',
+            method: 'PATCH',
             credentials: 'include',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify(body)
@@ -35,7 +36,7 @@
             Toastr.warning(json.message)
             return
         }
-            Toastr.success('Book recommended.')
+            Toastr.success(`${book.title} registered as recommended.`)
         } catch {
             Toastr.error('Unable to recommend book. Try again later.')
             return
@@ -140,7 +141,7 @@
 			<td>{book.authors.map((author) => author.name).join(', ')}</td>
             <td>{book.genres.map((genre) => genre.name).join(', ')}</td>
             <td>   
-			<input type="checkbox" bind:checked={book.isFavorite} on:click={()=> toggleRecommend(book)} />
+			<input type="checkbox" bind:checked={book.recommended} on:click={()=> toggleRecommend(book)} />
             </td>
             <td>
                 <Link class="update" to="/admin/books/{book.id}/update">
