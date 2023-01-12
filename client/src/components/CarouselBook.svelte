@@ -34,7 +34,7 @@
                     <StarRating rating={carouselbook.average_rating}></StarRating>
                     
                     {/if}
-                    <h4>{carouselbook.description}</h4>
+                    <p>{carouselbook.description}</p>
                     <br>
 
             </div>

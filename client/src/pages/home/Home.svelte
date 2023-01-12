@@ -178,20 +178,20 @@
 
 
 <!--GENRES-->
-<h4>Romance</h4>
+<h2>Romance</h2>
     <div class="genres">
         {#each romanceBooks as book, i}
             <h5><Book {book} /></h5>
         {/each}
     </div>
 
-<h4>High Fantasy</h4>
+<h2>High Fantasy</h2>
     <div class="genres">
         {#each highFantasyBooks as book, i}
             <h5><Book {book} /></h5>
         {/each}
     </div>
-<h4>Sci-fi</h4>
+<h2>Sci-fi</h2>
     <div class="genres">
         {#each sciFiBooks as book, i}
             <h5><Book {book} /></h5>
@@ -203,16 +203,22 @@
         width: 20%;
     }
 
+    h2 {
+        margin-bottom: 2%;
+        margin-top: 2%;
+    }
+
     .genres {
         width: 100%;
         display: flex;
+        margin-bottom: 5%;
     }
 
     .main-container {
         height: 100%;
     }
-
+/* 
     .color-container {
-       
-    }
+        height: 200vh;
+    } */
 </style>
