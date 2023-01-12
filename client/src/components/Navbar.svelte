@@ -56,6 +56,7 @@
         {:else}
             <Button class="logout" on:click="{() => navigate("/login")}">Login</Button>
          {/if}
+        </h1>
       </nav>
 </Router>
 

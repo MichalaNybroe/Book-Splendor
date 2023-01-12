@@ -7,12 +7,15 @@
     import Button from '../../components/Button.svelte'
     import MultiSelect from 'svelte-multiselect'
     import { Confirm } from 'svelte-confirm'
+    import UsersReview from '../../components/UsersReview.svelte'
     
     const navigate = useNavigate()
     
     if ($user === null || $user.admin === true) {
         navigate('/')
     }
+
+    // See own reviews
 
 
     // Update Profile
@@ -137,8 +140,11 @@
 
 </div>
 
+<h3>Own Reviews</h3>
 <div id="reviewList">
-
+    {#each $user.reviews as review}
+        <UsersReview review={review}></UsersReview>
+    {/each}
 </div>
 
 

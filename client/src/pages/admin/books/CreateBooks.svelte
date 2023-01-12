@@ -34,8 +34,7 @@
             }
         } catch {
             Toastr.error('Unable to retrieve data. Please try again later.')
-        }
-        
+        } 
     }
    
     async function fetchInfo() {
