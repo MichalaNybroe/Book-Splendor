@@ -164,10 +164,7 @@
 </table>
 
 <style>
-    :global(body) {
-        font-family: Georgia, 'Times New Roman', Times, serif;
-        margin-left: 5%;
-    }
+    
 
     p {
         margin-left: 37.5px;

@@ -31,13 +31,27 @@ router.get("/api/users/:id/reviews", userGuard, async (req, res) => {
 router.patch("/api/users/:id", userGuard, async (req, res) => {
     // Tilføj response for hver hvis det virker og for hver hvis det mislykkes
     if (req.body.user_name) {
-        await db.query("UPDATE users SET user_name = ? WHERE id=?;", [req.body.user_name, req.session.userid])
-        res.send()
+        try {
+            await db.query("UPDATE users SET user_name = ? WHERE id=?;", [req.body.user_name, req.session.userid])
+            res.send({ message: 'Username has been successfully updated.' })
+        } catch {
+            res.status(500).send({ message: 'Unable to update username.' })
+        }
     } else if (req.body.color) {
-        await db.query("UPDATE users SET color = ? WHERE id=?;", [req.body.color, req.session.userid])
-        res.send("Color updated.")
+        try {
+            await db.query("UPDATE users SET color = ? WHERE id=?;", [req.body.color, req.session.userid])
+            res.send("Color updated.")
+        } catch {
+            res.status(500).send({ message: 'Unable to update users color.' })
+        }
+        
     } else if (req.body.picture_number) {
-        db.query("UPDATE users SET picture_number = ? WHERE id=?;", [req.body.picture_number, req.session.userid])
+        try {
+            await db.query("UPDATE users SET picture_number = ? WHERE id=?;", [req.body.picture_number, req.session.userid])
+            res.send({ message: 'Profile picture updated.' })
+        } catch {
+            res.status(500).send({ message: 'Unable to update profile picture.' })
+        }
     }
 })
 

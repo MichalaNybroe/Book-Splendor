@@ -83,10 +83,6 @@
 
 
 <style>
-      :global(body) {
-        font-family: Georgia, 'Times New Roman', Times, serif;
-    }
-
     form {
         text-align: center;
     }

@@ -79,11 +79,6 @@
 </table>
 
 <style>
-    :global(body) {
-       font-family: Georgia, 'Times New Roman', Times, serif;
-       margin-left: 5%;
-   }
-
    .danger {
        color:black;
        font-size: x-large;
