@@ -42,7 +42,7 @@ router.get("/api/books/recommendations", async (req, res) => {
         )
             
         const cleanedbooks= setBooks(books)
-        console.log(cleanedbooks)
+        
         res.send({ data: cleanedbooks })
     } catch {
         res.status(400).send({ data: undefined, message: `Error occurrance`})

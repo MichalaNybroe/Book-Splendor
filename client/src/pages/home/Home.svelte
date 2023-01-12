@@ -79,7 +79,6 @@
 
  
     //Books of the week
-    
     export let timingFunction = 'ease-in-out'
     export let arrows = false
     export let infinite = true
@@ -95,15 +94,8 @@
     export let particlesToShow = 1
     export let particlesToScroll = 1
 
-    /* const colors = [
-        { color: '#e5f9f0', text: '0' },
-        { color: '#ccf3e2', text: '1' },
-        { color: '#b2edd3', text: '2' }
-    ] */
 
     //FETCH BOOK OF THE WEEK
-    let recommendedBooks = []
-
 
     async function fetchRecommendations() {
         try {
@@ -112,8 +104,8 @@
             })
 
             const data = await response.json()
-                const recommendedBooks = data.data
-                return recommendedBooks62
+            const recommendedBooks = data.data
+            return recommendedBooks
         } catch {
             Toastr.error('Unable to retrieve books. Try again later.')
         }
@@ -151,23 +143,6 @@
                 
                 </div>
             {/each}
-    
-            <!-- 
-                {#each recommendedBooks as carouselbook}
-                    <div class="color-container">
-                        <CarouselBook {carouselbook}></CarouselBook>
-                    </div>
-                {/each}
-            -->
-        
-        <!--   {#each colors as { color, text } (color)}
-            <div
-            class="color-container"
-            style="background-color: {color};"
-            >
-            <p>{text}</p>
-            </div>
-        {/each} -->
         </Carousel>
     </div>
 
@@ -216,8 +191,4 @@
     .main-container {
         height: 100%;
     }
-/* 
-    .color-container {
-        height: 200vh;
-    } */
 </style>

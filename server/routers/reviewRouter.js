@@ -11,7 +11,7 @@ router.use(loggedinGuard)
 router.get("/api/reviews", adminGuard, async (req, res) => {
     try {
         const [reviews, _] = await db.query('SELECT * FROM reviews;')
-        res.send({ data: reviews})
+        res.send({ data: reviews })
     } catch {
         res.status(404).send({ data: undefined, message: "Unable to retrieve reviews." })
     }

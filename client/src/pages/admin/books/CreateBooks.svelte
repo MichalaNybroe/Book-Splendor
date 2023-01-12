@@ -220,7 +220,7 @@
 {:else}
     <form on:submit|preventDefault={handleUtilSubmit}>
         <div class="multiselect">
-        <MultiSelect bind:selected={selectedOption} options={options} loading={selectedOption.length===0} maxSelect={1} required></MultiSelect>
+        <MultiSelect bind:selected={selectedOption} options={options} loading={options.length===0} maxSelect={1} required></MultiSelect>
         </div>
         <br>
         <input type="text" placeholder="Lord of the Rings" bind:value={newData} required>
