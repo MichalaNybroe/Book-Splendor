@@ -103,8 +103,8 @@
             })
 
             const data = await response.json()
-            const recommendedBooks = data.data
-            return recommendedBooks
+                const recommendedBooks = data.data
+                return recommendedBooks
         } catch {
             Toastr.error('Unable to retrieve books. Try again later.')
         }
