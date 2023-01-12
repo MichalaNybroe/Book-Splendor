@@ -6,14 +6,48 @@ import { setBooks } from "../util/setBooks.js"
 const router = Router()
 
 // save book of the week id
-router.put("/api/books/:id", loggedinGuard, adminGuard, checkBookInput, async (req, res) => {
+router.patch("/api/books/:id", loggedinGuard, adminGuard, async (req, res) => {
     const { recommended } = req.body
 
     const [book, _] = await db.query("UPDATE books SET recommended = ? WHERE id=?;", [recommended, req.params.id])
     if(!book) {
-        return res.status(400).send({ message: "Book not be found." })
+        return res.status(400).send({ message: "Book not found." })
     }
-    res.send({ affectedRows: book.affectedRows})
+    res.send({ affectedRows: book.affectedRows })
+})
+
+// get book of the week
+router.get("/api/books/recommendations", async (req, res) => {
+    try {
+        const [books, _] = await db.query(
+            `SELECT
+                books.*,
+                authors_id, 
+                authors.name AS author_name,
+                genres_id,
+                genres.name AS genre_name,
+                series_id,
+                series.title AS series_title,
+                book.description AS book_description,
+                reviews.id AS review_id,
+                reviews.rating AS review_rating,
+                (SELECT AVG(reviews.rating) FROM reviews WHERE reviews.books_id = books.id) AS average_rating
+            FROM books
+                LEFT JOIN books_authors ON books.id = books_authors.books_id 
+                LEFT JOIN authors ON books_authors.authors_id = authors.id
+                LEFT JOIN books_genres ON books.id = books_genres.books_id
+                LEFT JOIN genres ON books_genres.genres_id = genres.id
+                LEFT JOIN series ON series.id = books.series_id
+                LEFT JOIN reviews ON reviews.books_id = books.id
+            WHERE books.recommended=1;`
+        )
+            
+        const cleanedbooks= setBooks(books)
+        console.log(cleanedbooks)
+        res.send({ data: cleanedbooks })
+    } catch {
+        res.status(400).send({ data: undefined, message: `Error occurrance`})
+    }
 })
 
 

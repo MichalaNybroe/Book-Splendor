@@ -45,6 +45,7 @@ export function setBooks(books) {
         delete book.review_user_name
         delete book.review_user_picture
         book.unreleased = !!book.unreleased
+        book.recommended = !!book.recommended
         book.average_rating = parseFloat(book.average_rating)
         return book
     })
