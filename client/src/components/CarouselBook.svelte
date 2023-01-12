@@ -2,6 +2,7 @@
     export let carouselbook
 
     import { Link, Router } from 'svelte-navigator'
+    import StarRating from 'svelte-star-rating'
 
 </script>
 
@@ -15,16 +16,25 @@
             <div class="flex-child">
                     <h3>{carouselbook.title}</h3>
                     <br>
-                    {carouselbook.series_title}
+                    <h4>{carouselbook.series_title} {carouselbook.number}</h4>
                     <br>
-                    {carouselbook.average_rating}
-                <br>
+                    
                     {#each carouselbook.authors as author, index}
                         <Link to="/authors/{author.id}/books">{author.name}
                             {#if index < (carouselbook.authors.length-1)}, 
                             {/if}
                         </Link>
                     {/each}
+                    <br>
+                    
+                    {#if !carouselbook.average_rating}
+                    <br>
+                    {:else}
+                    <br>
+                    <StarRating rating={carouselbook.average_rating}></StarRating>
+                    
+                    {/if}
+                    <h4>{carouselbook.description}</h4>
                     <br>
 
             </div>
@@ -43,5 +53,6 @@
 
     .flex-child {
         display: inline-block;
+        width: 400px;
     }
 </style>

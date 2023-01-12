@@ -28,7 +28,6 @@ router.get("/api/books/recommendations", async (req, res) => {
                 genres.name AS genre_name,
                 series_id,
                 series.title AS series_title,
-                book.description AS book_description,
                 reviews.id AS review_id,
                 reviews.rating AS review_rating,
                 (SELECT AVG(reviews.rating) FROM reviews WHERE reviews.books_id = books.id) AS average_rating
