@@ -22,7 +22,7 @@
   import UpdateBooks from './pages/admin/books/UpdateBooks.svelte'
 </script>
 
-<main class="content">
+<main>
   <Router>
     <Navbar></Navbar>
 
@@ -50,7 +50,4 @@
 </main>
 
 <style>
-  .content {
-    margin: 0 5px 0 5px
-  }
 </style>
