@@ -8,6 +8,7 @@
     import MultiSelect from 'svelte-multiselect'
     import { Confirm } from 'svelte-confirm'
     import UsersReview from '../../components/UsersReview.svelte'
+    import Book from '../../components/Book.svelte'
     
     const navigate = useNavigate()
     
@@ -15,15 +16,35 @@
         navigate('/')
     }
 
-    // See own reviews
+    let pictureSelect = []
+    const pictures = [{id: 1, label: 'Unicorn'}, {id: 2, label: 'Mermaid'}, {id: 3, label: 'Dragon'}, {id: 4, label: 'Vampire'}, {id: 5, label: 'Robot'}, {id: 6, label: 'Skull'}]
 
+    let color = ''
+    let username = ''
+
+    // Get Profile Information
+    async function getInfo() {
+        try {
+            const response = await fetch(`${$BASE_URL}/api/profile/${$user.id}`, {
+                credentials: 'include'
+            })
+            if(response.ok) {
+                const data = await response.json()
+                const user = data.data
+                color = user.color
+                username = user.user_name
+                pictureSelect = Object.values(user.picture_number)
+                return user
+            }
+            const data = await response.json()
+            Toastr.warning(data.message)
+        } catch {
+            Toastr.error('Failed to receive profile. Try again later.')
+        }
+    }
 
     // Update Profile
     let updateMode = false
-
-    let pictureSelect = Object.values($user.picture_number)
-    const pictures = [{id: 1, label: 'Unicorn'}, {id: 2, label: 'Mermaid'}, {id: 3, label: 'Dragon'}, {id: 4, label: 'Vampire'}, {id: 5, label: 'Robot'}, {id: 6, label: 'Skull'}]
-
 
     async function patchUser(body, success, unsuccess) {
         try {
@@ -45,13 +66,13 @@
     }
 
     function saveColor() {
-        const body = { color: $user.color }
+        const body = { color: color }
 
         patchUser(body, 'Banner color updated.', 'Banner color update was unsuccessfull.')
     }
 
     async function updateUserName() {
-        const body = { user_name: $user.user_name }
+        const body = { user_name: username }
 
         patchUser(body, 'Username sucessfully updated.', 'Unsucessfull attempt at updating username.')
     }
@@ -71,7 +92,7 @@
                 return
             }
             Toastr.success('Profile picture sucessfully updated.')
-            $user.picture_number = pictureSelect[0].id
+            pictureSelect = pictureSelect
         } catch {
             Toastr.error('Unable to update user. Try again later.')
         }
@@ -105,47 +126,57 @@
             Toastr.error('Unable to delete book. Try again later.')
 	    }
     }
-
 </script>
 
-<div id="profilebanner" style="background-color: {$user.color};color:white">
-    <img id="profilePicture" src="/profilPictures/{$user.picture_number}.png" alt="Profile." height="200">
+{#await getInfo()}
+    <p>Loading...</p>
+{:then user}
+    <div id="profilebanner" style="background-color: {color};color:white">
+        <img id="profilePicture" src="/profilPictures/{pictureSelect}.png" alt="Profile." height="200">
 
-    <h3 id="username">{$user?.user_name}</h3>
-</div>
+        <h3 id="username">{username}</h3>
+    </div>
 
-{#if updateMode === true} 
-    <MultiSelect on:change={() => updatePicture()} bind:selected={pictureSelect} options={pictures} loading={pictures.length===0} maxSelect={1}/>
-    <input type="color" bind:value={$user.color} style="height: 50px;" on:change|preventDefault={saveColor} id="colorInp">
-    <input type="text" bind:value={$user.user_name} on:change|preventDefault={updateUserName}>
+    {#if updateMode === true} 
+        <MultiSelect on:change={() => updatePicture()} bind:selected={pictureSelect} options={pictures} loading={pictures.length===0} maxSelect={1}/>
+        <input type="color" bind:value={color} style="height: 50px;" on:change|preventDefault={saveColor} id="colorInp">
+        <input type="text" bind:value={username} on:change|preventDefault={updateUserName}>
 
-    <Confirm
-        confirmTitle="Delete"
-        themeColor="110"
-        let:confirm="{confirmThis}"
-    >
-        <Button class="danger" on:click={() => confirmThis(deleteOwnProfile)}>Delete User</Button>
-    </Confirm>
+        <Confirm
+            confirmTitle="Delete"
+            themeColor="110"
+            let:confirm="{confirmThis}"
+        >
+            <Button class="danger" on:click={() => confirmThis(deleteOwnProfile)}>Delete User</Button>
+        </Confirm>
 
-    <Button on:click={() => exitEditMode()}>Exit Edit</Button>
-{:else}
-    <Button on:click={() => enterEditMode()}>Edit Profile</Button>
-{/if}
+        <Button on:click={() => exitEditMode()}>Exit Edit</Button>
+    {:else}
+        <Button on:click={() => enterEditMode()}>Edit Profile</Button>
+    {/if}
 
-<div id="toReadList">
+    <h3>Want to read</h3>
+    <div id="toReadList">
+        {#each user?.want_to_read as book}
+            <Book book={book}></Book>
+        {/each}
+    </div>
 
-</div>
+    <h3>Read</h3>
+    <div id="readList">
+        {#each user?.read as book}
+            <Book book={book}></Book>
+        {/each}
+    </div>
 
-<div id="readList">
+    <h3>Own Reviews</h3>
+    <div id="reviewList">
+        {#each user.reviews as review}
+            <UsersReview review={review}></UsersReview>
+        {/each}
+    </div>
+{/await}
 
-</div>
-
-<h3>Own Reviews</h3>
-<div id="reviewList">
-    {#each $user.reviews as review}
-        <UsersReview review={review}></UsersReview>
-    {/each}
-</div>
 
 
 <Router primary={false}>

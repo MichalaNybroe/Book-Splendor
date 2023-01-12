@@ -95,8 +95,6 @@
     export let particlesToScroll = 1
 
     //FETCH BOOK OF THE WEEK
-    let recommendedBooks = []
-
 
     async function fetchRecommendations() {
         try {
@@ -105,8 +103,8 @@
             })
 
             const data = await response.json()
-                const recommendedBooks = data.data
-                return recommendedBooks
+            const recommendedBooks = data.data
+            return recommendedBooks
         } catch {
             Toastr.error('Unable to retrieve books. Try again later.')
         }
@@ -192,8 +190,4 @@
     .main-container {
         height: 100%;
     }
-/* 
-    .color-container {
-        height: 200vh;
-    } */
 </style>

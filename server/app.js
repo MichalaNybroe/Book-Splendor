@@ -52,6 +52,7 @@ import genresRouter from "./routers/genresRouter.js"
 import seriesRouter from "./routers/seriesRouter.js"
 import userRouter from "./routers/userRouter.js"
 import reviewRouter from "./routers/reviewRouter.js"
+import profileRouter from "./routers/profileRouter.js"
 app.use(authRouter)
 app.use(bookRouter)
 app.use(contactFormRouter)
@@ -60,6 +61,7 @@ app.use(genresRouter)
 app.use(seriesRouter)
 app.use(userRouter)
 app.use(reviewRouter)
+app.use(profileRouter)
 
 
 const PORT = Number(process.env.PORT) || 8080

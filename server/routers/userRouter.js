@@ -19,17 +19,7 @@ router.get("/api/users", adminGuard, async (req, res) => {
     }
 })
 
-/*router.get("/api/users/:id/reviews", userGuard, async (req, res) => {
-    try {
-        const [reviews, _] = await db.query('SELECT * FROM reviews WHERE users_id=?;', [req.params.id])
-        res.send({ data: reviews})
-    } catch {
-        res.status(404).send({ data: undefined, message: "Unable to retrieve reviews." })
-    }
-})*/
-
 router.patch("/api/users/:id", userGuard, async (req, res) => {
-    // Tilføj response for hver hvis det virker og for hver hvis det mislykkes
     if (req.body.user_name) {
         try {
             await db.query("UPDATE users SET user_name = ? WHERE id=?;", [req.body.user_name, req.session.userid])
