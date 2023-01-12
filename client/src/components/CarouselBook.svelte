@@ -48,7 +48,7 @@
     }
 
     .flex-container {
-     display: inline-block;
+        display: inline-block;
     }
 
     .flex-child {

@@ -102,7 +102,6 @@
     ] */
 
     //FETCH BOOK OF THE WEEK
-    let currentIndex = 0;
     let recommendedBooks = []
 
 
@@ -148,11 +147,22 @@
         {particlesToShow}
         {particlesToScroll}
     >
-        <div class="color-container">
-            {#each recommendedBooks as carouselbook}
+         {#each recommendedBooks as carouselbook (carouselbook)}
+            <div 
+                class="color-container">
+        
                 <CarouselBook {carouselbook}></CarouselBook>
-            {/each}
+            
         </div>
+        {/each}
+ 
+        <!-- 
+            {#each recommendedBooks as carouselbook}
+                <div class="color-container">
+                    <CarouselBook {carouselbook}></CarouselBook>
+                </div>
+            {/each}
+        -->
       
     <!--   {#each colors as { color, text } (color)}
         <div
@@ -203,6 +213,6 @@
     }
 
     .color-container {
-        height: 2000vh;
+       
     }
 </style>
