@@ -5,51 +5,6 @@ import { setBooks } from "../util/setBooks.js"
 
 const router = Router()
 
-// save book of the week id
-router.patch("/api/books/:id", loggedinGuard, adminGuard, async (req, res) => {
-    const { recommended } = req.body
-
-    const [book, _] = await db.query("UPDATE books SET recommended = ? WHERE id=?;", [recommended, req.params.id])
-    if(!book) {
-        return res.status(400).send({ message: "Book not found." })
-    }
-    res.send({ affectedRows: book.affectedRows })
-})
-
-// get book of the week
-router.get("/api/books/recommendations", async (req, res) => {
-    try {
-        const [books, _] = await db.query(
-            `SELECT
-                books.*,
-                authors_id, 
-                authors.name AS author_name,
-                genres_id,
-                genres.name AS genre_name,
-                series_id,
-                series.title AS series_title,
-                reviews.id AS review_id,
-                reviews.rating AS review_rating,
-                (SELECT AVG(reviews.rating) FROM reviews WHERE reviews.books_id = books.id) AS average_rating
-            FROM books
-                LEFT JOIN books_authors ON books.id = books_authors.books_id 
-                LEFT JOIN authors ON books_authors.authors_id = authors.id
-                LEFT JOIN books_genres ON books.id = books_genres.books_id
-                LEFT JOIN genres ON books_genres.genres_id = genres.id
-                LEFT JOIN series ON series.id = books.series_id
-                LEFT JOIN reviews ON reviews.books_id = books.id
-            WHERE books.recommended=1;`
-        )
-            
-        const cleanedbooks= setBooks(books)
-        
-        res.send({ data: cleanedbooks })
-    } catch {
-        res.status(400).send({ data: undefined, message: `Error occurrance`})
-    }
-})
-
-
 router.get("/api/books", async (req, res) => {
     const [books, _] = await db.query(
         `SELECT 
@@ -76,6 +31,48 @@ router.get("/api/books", async (req, res) => {
         res.send({ data: cleanedBooks })
     }
 })
+
+//SEARCH BOOKS
+router.post("/api/books/search", async (req, res) => {
+    const { selected, searchId, searchAuthor, searchTitle } = req.body;
+    let query = `SELECT 
+              books.*, 
+              authors_id, 
+              authors.name AS author_name,
+              genres_id,
+              genres.name AS genre_name,
+              series_id,
+              series.title AS series_title
+          FROM books
+              LEFT JOIN books_authors ON books.id = books_authors.books_id 
+              LEFT JOIN authors ON books_authors.authors_id = authors.id
+              LEFT JOIN books_genres ON books.id = books_genres.books_id
+              LEFT JOIN genres ON books_genres.genres_id = genres.id
+              LEFT JOIN series ON series.id = books.series_id`;
+    if (searchId) {
+      query += ` WHERE books.id = '${searchId}'`
+    }
+    if (searchAuthor) {
+      query += ` WHERE authors.name LIKE '%${searchAuthor}%'`
+    }
+    if (searchTitle) {
+      query += ` WHERE books.title LIKE '%${searchTitle}%'`
+    }
+    if (selected) {
+      query += ` ORDER BY ${selected}`
+    }
+    const [books, _] = await db.query(query)
+    const cleanedBooks = setBooks(books)
+    console.log(cleanedBooks)
+  
+    if (!books || books.length === 0) {
+      res.status(404).send({ data: undefined, message: `Unable to find books with search criteria.` })
+    } else {
+        console.log(cleanedBooks)
+      res.send({ data: cleanedBooks })
+    }
+  }) 
+
 
 router.get("/api/books/:id", async (req, res) => {
     const [books, _] = await db.query(
@@ -111,6 +108,38 @@ router.get("/api/books/:id", async (req, res) => {
         res.status(400).send({ data: undefined, message: `No book by ${req.params.id} id`})
     } else {
         res.send({ data: cleanedbooks[0] })
+    }
+})
+
+// get book of the week
+router.get("/api/books/recommendations", async (req, res) => {
+    try {
+        const [books, _] = await db.query(
+            `SELECT
+                books.*,
+                authors_id, 
+                authors.name AS author_name,
+                genres_id,
+                genres.name AS genre_name,
+                series_id,
+                series.title AS series_title,
+                reviews.id AS review_id,
+                reviews.rating AS review_rating,
+                (SELECT AVG(reviews.rating) FROM reviews WHERE reviews.books_id = books.id) AS average_rating
+            FROM books
+                LEFT JOIN books_authors ON books.id = books_authors.books_id 
+                LEFT JOIN authors ON books_authors.authors_id = authors.id
+                LEFT JOIN books_genres ON books.id = books_genres.books_id
+                LEFT JOIN genres ON books_genres.genres_id = genres.id
+                LEFT JOIN series ON series.id = books.series_id
+                LEFT JOIN reviews ON reviews.books_id = books.id
+            WHERE books.recommended=1;`
+        )
+            
+        const cleanedbooks= setBooks(books)
+        res.send({ data: cleanedbooks })
+    } catch {
+        res.status(400).send({ data: undefined, message: `Error occurrance`})
     }
 })
 
@@ -154,6 +183,17 @@ router.put("/api/books/:id", loggedinGuard, adminGuard, checkBookInput, async (r
     } catch {
         return res.status(404).send({ message: "No book with this id." })
     }
+})
+
+// save book of the week id
+router.patch("/api/books/:id", loggedinGuard, adminGuard, async (req, res) => {
+    const { recommended } = req.body
+
+    const [book, _] = await db.query("UPDATE books SET recommended = ? WHERE id=?;", [recommended, req.params.id])
+    if(!book) {
+        return res.status(400).send({ message: "Book not found." })
+    }
+    res.send({ affectedRows: book.affectedRows })
 })
 
 router.delete("/api/books/:id", loggedinGuard, adminGuard, async (req, res) => {
