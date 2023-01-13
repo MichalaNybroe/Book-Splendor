@@ -51,11 +51,11 @@ router.get("/api/books?", async (req, res) => {
         const cleanedBooks = setBooks(bookList)
         res.send({ data: cleanedBooks })
     } catch {
-        res.status(400).send({ data: undefined, message: "Unable to retrieve books." })
+        res.status(400).send({ data: undefined, message: "No books found." })
     }
 })
 
-  // get books of the week
+// get books of the week
 router.get("/api/books/recommendations", async (req, res) => {
     try {
         const [books, _] = await db.query(
@@ -83,7 +83,7 @@ router.get("/api/books/recommendations", async (req, res) => {
         const cleanedbooks= setBooks(books)
         res.send({ data: cleanedbooks })
     } catch {
-        res.status(400).send({ data: undefined, message: "Error occurred while recommending book."})
+        res.status(500).send({ data: undefined, message: "Could not recommend book."})
     }
 })
 
@@ -119,7 +119,7 @@ router.get("/api/books/:id", async (req, res) => {
         const cleanedbooks= setBooks(books)
         res.send({ data: cleanedbooks })
     } catch {
-        res.status(400).send({ data: undefined, message: `No book by ${req.params.id} id`})
+        res.status(404).send({ data: undefined, message: `No book by ${req.params.id} id`})
     }
 })
 
@@ -139,7 +139,7 @@ router.post("/api/books", loggedinGuard, adminGuard, checkBookInput, async (req,
     
         res.send({ affectedRows: bookRes.affectedRows, message: "Book created." })
     } catch {
-        return res.status(400).send("Unable to create book.")
+        return res.status(500).send("Unable to create book.")
     }
 })
 
@@ -167,22 +167,32 @@ router.put("/api/books/:id", loggedinGuard, adminGuard, checkBookInput, async (r
 
 // save book of the week id
 router.patch("/api/books/:id", loggedinGuard, adminGuard, async (req, res) => {
-    const { recommended } = req.body
+    try {
+        const { recommended } = req.body
 
-    const [book, _] = await db.query("UPDATE books SET recommended = ? WHERE id=?;", [recommended, req.params.id])
-    if(!book) {
-        return res.status(400).send({ message: "Book not found." })
+        const [book, _] = await db.query("UPDATE books SET recommended = ? WHERE id=?;", [recommended, req.params.id])
+        if(!book) {
+            return res.status(404).send({ message: "Book not found." })
+        }
+        res.send({ affectedRows: book.affectedRows })
+    } catch {
+        res.status(500).send("Book could not be recommended.")
     }
-    res.send({ affectedRows: book.affectedRows })
+   
 })
 
 router.delete("/api/books/:id", loggedinGuard, adminGuard, async (req, res) => {
-    const result = await db.query("DELETE FROM books WHERE books.id=?;", [req.params.id])
-    if (result === undefined) {
-      res.status(404).send({ data: undefined, message: `No book with ${req.params.id} id`})
-    } else {
-        res.send({ data: result })
+    try {
+        const result = await db.query("DELETE FROM books WHERE books.id=?;", [req.params.id])
+        if (result === undefined) {
+          res.status(404).send({ data: undefined, message: `No book with ${req.params.id} id`})
+        } else {
+            res.send({ data: result })
+        }
+    } catch {
+        res.status(500).send("Book unsuccesfully deleted.")
     }
+
 })
 
 

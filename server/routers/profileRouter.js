@@ -5,7 +5,7 @@ import { userGuard, loggedinGuard } from "../util/guard.js"
 import db from "../database/connection.js"
 import { setBooks } from "../util/setBooks.js"
 
-router.get("/api/profile/:id", async (req, res) => {
+router.get("/api/profile/:id", userGuard, loggedinGuard, async (req, res) => {
     try {
         const [ [user] ] = await db.query("SELECT * FROM users WHERE id=?", [req.params.id])
         const [ reviews ] = await db.query("SELECT reviews.*, books.title AS review_book_title FROM reviews JOIN books ON reviews.books_id = books.id WHERE users_id=? LIMIT 5", [req.params.id])

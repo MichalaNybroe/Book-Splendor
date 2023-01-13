@@ -15,7 +15,7 @@ router.get("/api/users", adminGuard, async (req, res) => {
         })
         res.send({ data: userList})
     } catch {
-        res.status(400).send({ data: undefined, message: `Unable to retrieve users`})
+        res.status(500).send({ data: undefined, message: "Unable to retrieve users" })
     }
 })
 
@@ -25,14 +25,14 @@ router.patch("/api/users/:id", userGuard, async (req, res) => {
             await db.query("UPDATE users SET user_name = ? WHERE id=?;", [req.body.user_name, req.session.userid])
             res.send({ message: 'Username has been successfully updated.' })
         } catch {
-            res.status(500).send({ message: 'Unable to update username.' })
+            res.status(500).send({ message: "Unable to update username." })
         }
     } else if (req.body.color) {
         try {
             await db.query("UPDATE users SET color = ? WHERE id=?;", [req.body.color, req.session.userid])
             res.send("Color updated.")
         } catch {
-            res.status(500).send({ message: 'Unable to update users color.' })
+            res.status(500).send({ message: "Unable to update users color." })
         }
         
     } else if (req.body.picture_number) {
@@ -40,7 +40,7 @@ router.patch("/api/users/:id", userGuard, async (req, res) => {
             await db.query("UPDATE users SET picture_number = ? WHERE id=?;", [req.body.picture_number, req.session.userid])
             res.send({ message: 'Profile picture updated.' })
         } catch {
-            res.status(500).send({ message: 'Unable to update profile picture.' })
+            res.status(500).send({ message: "Unable to update profile picture." })
         }
     }
 })
@@ -50,9 +50,9 @@ router.delete("/api/users/:id", async (req, res, next) => {
         try {
             const result = await db.query("DELETE FROM users WHERE users.id=?;", [req.params.id])
             req.session.destroy()
-            res.send({ data: result, message: 'User has been removed.'})
+            res.send({ data: result, message: "User has been removed." })
         } catch {
-            res.status(404).send({ data: undefined, message: `No user with this id`})
+            res.status(404).send({ data: undefined, message: "No user with this id" })
         }
     } else {
         if (req.session.admin !== true) {

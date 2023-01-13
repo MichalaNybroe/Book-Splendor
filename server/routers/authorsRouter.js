@@ -76,7 +76,7 @@ router.post("/api/authors", loggedinGuard, adminGuard, async (req, res) => {
         const [authorRes, _] = await db.query("INSERT INTO authors(name) VALUE(?);", [name])
         
         if (authorRes === undefined) {
-            return res.status(404).send("Unable to create author.")
+            return res.status(400).send("Unable to create author.")
         } else {
             res.send({ affectedRows: authorRes.affectedRows, message: "Author created." })
         }
