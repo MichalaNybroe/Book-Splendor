@@ -53,7 +53,7 @@ router.put("/api/reviews/:id", async (req, res) => {
     
         res.send({ affectedRows: reviewRes.affectedRows})
     } catch {
-        return res.status(404).send({ message: "Unsucessfull update of review." })
+        return res.status(500).send({ message: "Unsucessfull update of review." })
     }
 })
 

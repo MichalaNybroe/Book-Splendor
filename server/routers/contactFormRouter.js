@@ -8,7 +8,7 @@ router.post("/contact", async (req, res) => {
     try {
         sendMail("Book Splendor", "customerService@bookSplendor.dk", subject, mail)    
     } catch {
-        res.send( { message: "Success." })
+        res.status(500).send( { message: "Success." })
     }
 })
 

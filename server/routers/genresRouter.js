@@ -36,7 +36,7 @@ router.get("/api/genres/:id", async (req, res) => {
         WHERE genres.id=?;`, [req.params.id]
         )
         if (genresReq === undefined) {
-            res.status(400).send({ data: undefined, message: "Unable to retrieve books in this genre." })
+            res.status(404).send({ data: undefined, message: "Unable to retrieve books in this genre." })
         } else {
             res.send({ data: setBooks(genresReq)})
         }
