@@ -16,7 +16,6 @@ router.get("/api/authors", adminGuard, async (req, res) => {
 
 //SEARCH BOOKS BY AUTHOR NAME
 router.get("/api/authors/:name", async (req, res) => {
-    const { searchAuthor } = [req.query.name]
     try {
         const books = await db.query (
         `SELECT 
@@ -33,13 +32,12 @@ router.get("/api/authors/:name", async (req, res) => {
             LEFT JOIN books_genres ON books.id = books_genres.books_id
             LEFT JOIN genres ON books_genres.genres_id = genres.id
             LEFT JOIN series ON series.id = books.series_id
-        WHERE authors.name LIKE '%(?)%';`, [searchAuthor])
-    console.log(books)
-    const cleanedBooks = setBooks(books)
-    console.log(cleanedBooks)
-    res.send({ data: cleanedBooks })
+        WHERE authors.name LIKE '%${req.params.name}%'`
+        )
+        const cleanedBooks = setBooks(books)
+        res.send({ data: cleanedBooks })
     } catch {
-    res.status(404).send({ data: undefined, message: "Unable to find books with search criteria." })
+        res.status(404).send({ data: undefined, message: "Unable to find books with search criteria." })
     }
 }) 
 

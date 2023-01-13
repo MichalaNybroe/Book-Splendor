@@ -34,29 +34,28 @@ router.get("/api/books", async (req, res) => {
 
 //SEARCH BOOKS BY TITLE: BOOK OR SERIES
 router.get("/api/books/:title", async (req, res) => {
-    const { searchTitle } = [req.params.id]
     try {
-    const [books, _] = await db.query (
-        `SELECT 
-            books.*, 
-            authors_id, 
-            authors.name AS author_name,
-            genres_id,
-            genres.name AS genre_name,
-            series_id,
-            series.title AS series_title
-        FROM books
-            LEFT JOIN books_authors ON books.id = books_authors.books_id 
-            LEFT JOIN authors ON books_authors.authors_id = authors.id
-            LEFT JOIN books_genres ON books.id = books_genres.books_id
-            LEFT JOIN genres ON books_genres.genres_id = genres.id
-            LEFT JOIN series ON series.id = books.series_id
-        WHERE books.title LIKE '%${searchTitle}%'
-        OR WHERE series.title LIKE '%${searchTitle}%';`
-        )
-    
-    const cleanedBooks = setBooks(books)
-    res.send({ data: cleanedBooks })
+        const [books, _] = await db.query (
+            `SELECT 
+                books.*, 
+                authors_id, 
+                authors.name AS author_name,
+                genres_id,
+                genres.name AS genre_name,
+                series_id,
+                series.title AS series_title
+            FROM books
+                LEFT JOIN books_authors ON books.id = books_authors.books_id 
+                LEFT JOIN authors ON books_authors.authors_id = authors.id
+                LEFT JOIN books_genres ON books.id = books_genres.books_id
+                LEFT JOIN genres ON books_genres.genres_id = genres.id
+                LEFT JOIN series ON series.id = books.series_id
+            WHERE books.title LIKE '%${req.params.title}%'
+            OR WHERE series.title LIKE '%${req.params.title}%';`
+            )
+        
+        const cleanedBooks = setBooks(books)
+        res.send({ data: cleanedBooks })
     } catch {
         res.status(404).send({ data: undefined, message: "Unable to find books with search criteria." }) 
     }
