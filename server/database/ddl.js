@@ -109,6 +109,7 @@ if (isInDeleteMode) {
     db.execute(`INSERT INTO series(title) VALUE (?);`, ["Court of Thorns and Roses"])
     db.execute(`INSERT INTO series(title) VALUE (?);`, ["The Folk of the Air"])
     db.execute(`INSERT INTO series(title) VALUE (?);`, ["The Murderbot Diaries"])
+    db.execute(`INSERT INTO series(title) VALUE (?);`, ["コーヒーが冷めないうちに"])
 
     //books
     db.execute(`INSERT INTO books(title, description, number, unreleased, img, series_id, recommended) VALUE (?, ?, ?, ?, ?, ?, ?);`, ["The Fellowship of the Ring", "One Ring to rule them all, One Ring to find them, One Ring to bring them all and in the darkeness bind them. In ancient times the Rings of Power were crafted by the Elven-smiths, and Sauron, The Dark Lord, forged the One Ring, filling it with his own power so that he could rule all others. But the One Ring was taken from him, and though he sought it throughout Middle-earth, it remained lost to him. After many ages it fell into the hands of Bilbo Baggins, as told in The Hobbit.", 1, false, "https://upload.wikimedia.org/wikipedia/en/8/8e/The_Fellowship_of_the_Ring_cover.gif", 1, false])
@@ -133,6 +134,8 @@ if (isInDeleteMode) {
     db.execute(`INSERT INTO books(title, description, number, unreleased, img, series_id, recommended) VALUE (?, ?, ?, ?, ?, ?, ?);`, ["The Hunger Games", "Winning means fame and fortune. Losing means certain death. The Hunger Games have begun. . . . In the ruins of a place once known as North America lies the nation of Panem, a shining Capitol surrounded by twelve outlying districts. The Capitol is harsh and cruel and keeps the districts in line by forcing them all to send one boy and one girl between the ages of twelve and eighteen to participate in the annual Hunger Games, a fight to the death on live TV. Sixteen-year-old Katniss Everdeen regards it as a death sentence when she steps forward to take her sister's place in the Games. But Katniss has been close to dead before-and survival, for her, is second nature. Without really meaning to, she becomes a contender. But if she is to win, she will have to start making choices that weigh survival against humanity and life against love.", 1, false, "https://catalog.kentonlibrary.org/opac/extras/ac/jacket/large/r/593617", 2, false])
     db.execute(`INSERT INTO books(title, description, number, unreleased, img, series_id, recommended) VALUE (?, ?, ?, ?, ?, ?, ?);`, ["Catching Fire", "Winning means fame and fortune. Losing means certain death. The Hunger Games have begun. . . . In the ruins of a place once known as North America lies the nation of Panem, a shining Capitol surrounded by twelve outlying districts. The Capitol is harsh and cruel and keeps the districts in line by forcing them all to send one boy and one girl between the ages of twelve and eighteen to participate in the annual Hunger Games, a fight to the death on live TV. Sixteen-year-old Katniss Everdeen regards it as a death sentence when she steps forward to take her sister's place in the Games. But Katniss has been close to dead before-and survival, for her, is second nature. Without really meaning to, she becomes a contender. But if she is to win, she will have to start making choices that weigh survival against humanity and life against love.", 2, false, "https://imgcdn.saxo.com/_9780439023498", 2, false])
     db.execute(`INSERT INTO books(title, description, number, unreleased, img, series_id, recommended) VALUE (?, ?, ?, ?, ?, ?, ?);`, ["Mockingjay", "Winning means fame and fortune. Losing means certain death. The Hunger Games have begun. . . . In the ruins of a place once known as North America lies the nation of Panem, a shining Capitol surrounded by twelve outlying districts. The Capitol is harsh and cruel and keeps the districts in line by forcing them all to send one boy and one girl between the ages of twelve and eighteen to participate in the annual Hunger Games, a fight to the death on live TV. Sixteen-year-old Katniss Everdeen regards it as a death sentence when she steps forward to take her sister's place in the Games. But Katniss has been close to dead before-and survival, for her, is second nature. Without really meaning to, she becomes a contender. But if she is to win, she will have to start making choices that weigh survival against humanity and life against love.", 3, false, "https://imgcdn.saxo.com/_9780439023511", 2, false])
+    db.execute(`INSERT INTO books(title, description, number, unreleased, img, series_id, recommended) VALUE (?, ?, ?, ?, ?, ?, ?);`, ["Before the Coffee Gets Cold", "In a small back alley in Tokyo, there is a café which has been serving carefully brewed coffee for more than one hundred years. But this coffee shop offers its customers a unique experience: the chance to travel back in time.", 1, false, "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1560955053i/44421460.jpg", 6, true])
+    db.execute(`INSERT INTO books(title, description, number, unreleased, img, series_id, recommended) VALUE (?, ?, ?, ?, ?, ?, ?);`, ["Before the Coffee Gets Cold: Tales from the Café", "This beautiful, simple tale tells the story of people who must face up to their past, in order to move on with their lives. Kawaguchi once again invites the reader to ask themselves: what would you change if you could travel back in time?", 2, false, "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1593780745i/54373691.jpg", 6, false])
 
     //users_books
     db.execute(`INSERT INTO users_books(users_id, books_id, want_to_read, has_read) VALUE (?, ?, ?, ?);`, [2, 1, false, true])
@@ -160,6 +163,7 @@ if (isInDeleteMode) {
     db.execute(`INSERT INTO authors(name) VALUE (?);`, ["Terry Pratchett"])
     db.execute(`INSERT INTO authors(name) VALUE (?);`, ["Neil Gaiman"])
     db.execute(`INSERT INTO authors(name) VALUE (?);`, ["Martha Wells"])
+    db.execute(`INSERT INTO authors(name) VALUE (?);`, ["Toshikazu Kawaguchi"])
 
     //books_authors
     db.execute(`INSERT INTO books_authors(books_id, authors_id) VALUE (?, ?);`, [1, 1])
@@ -185,6 +189,8 @@ if (isInDeleteMode) {
     db.execute(`INSERT INTO books_authors(books_id, authors_id) VALUE (?, ?);`, [20, 2])
     db.execute(`INSERT INTO books_authors(books_id, authors_id) VALUE (?, ?);`, [21, 2])
     db.execute(`INSERT INTO books_authors(books_id, authors_id) VALUE (?, ?);`, [22, 2])
+    db.execute(`INSERT INTO books_authors(books_id, authors_id) VALUE (?, ?);`, [23, 8])
+    db.execute(`INSERT INTO books_authors(books_id, authors_id) VALUE (?, ?);`, [24, 8])
 
     //genres
     db.execute(`INSERT INTO genres(name) VALUE (?);`, ["High Fantasy"])
@@ -238,6 +244,8 @@ if (isInDeleteMode) {
     db.execute(`INSERT INTO books_genres(books_id, genres_id) VALUE (?, ?);`, [21, 6])
     db.execute(`INSERT INTO books_genres(books_id, genres_id) VALUE (?, ?);`, [22, 5])
     db.execute(`INSERT INTO books_genres(books_id, genres_id) VALUE (?, ?);`, [22, 6])
+    db.execute(`INSERT INTO books_genres(books_id, genres_id) VALUE (?, ?);`, [23, 5])
+    db.execute(`INSERT INTO books_genres(books_id, genres_id) VALUE (?, ?);`, [24, 5])
 }
 
 db.end()

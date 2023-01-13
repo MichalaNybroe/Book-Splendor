@@ -1,9 +1,9 @@
 <script>
-    import Book from "../../components/Book.svelte"
-    import CarouselBook from "../../components/CarouselBook.svelte"
-    import { BASE_URL } from "../../store/globals"
-    import * as Toastr from "toastr"
-    import "../../../node_modules/toastr/build/toastr.css"
+    import Book from '../../components/Book.svelte'
+    import CarouselBook from '../../components/CarouselBook.svelte'
+    import { BASE_URL } from '../../store/globals'
+    import * as Toastr from 'toastr'
+    import '../../../node_modules/toastr/build/toastr.css'
     import Carousel from 'svelte-carousel'
 
     //Genres
@@ -78,7 +78,7 @@
     fetchSciFiBooks()
 
  
-    //Books of the week
+    //CAROUSEL
     export let timingFunction = 'ease-in-out'
     export let arrows = false
     export let infinite = true
@@ -94,7 +94,6 @@
     export let particlesToShow = 1
     export let particlesToScroll = 1
 
-
     //FETCH BOOK OF THE WEEK
 
     async function fetchRecommendations() {
@@ -104,8 +103,8 @@
             })
 
             const data = await response.json()
-            const recommendedBooks = data.data
-            return recommendedBooks
+                const recommendedBooks = data.data
+                return recommendedBooks
         } catch {
             Toastr.error('Unable to retrieve books. Try again later.')
         }

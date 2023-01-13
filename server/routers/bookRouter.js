@@ -32,6 +32,42 @@ router.get("/api/books", async (req, res) => {
     }
 })
 
+/* 
+router.get("/api/books", async (req, res) => {
+    const { searchId, searchAuthor, searchTitle } = req.query
+
+    let query = `SELECT * FROM books`
+    let where = []; // array to store WHERE clauses
+
+    if (searchId) {
+      where.push(`id = '${searchId}'`)
+    }
+
+    if (searchAuthor) {
+      where.push(`author LIKE '%${searchAuthor}%'`)
+    }
+
+    if (searchTitle) {
+      where.push(`title LIKE '%${searchTitle}%'`)
+    }
+
+    if (where.length > 0) {
+        query += ` WHERE ${where.join(" AND ")}`
+    }
+
+    try {
+        const [books] = await db.query(query)
+        if (!books || books.length === 0) {
+            return res.status(404).send({ data: undefined, message: 'Unable to find books with search criteria.' })
+        }
+        res.send({ data: books })
+    } catch (error) {
+        console.error(error)
+        res.status(500).send({ data: undefined, message: 'Error while searching for books' });
+    }
+}); */
+
+
 //SEARCH BOOKS
 router.post("/api/books/search", async (req, res) => {
     const { selected, searchId, searchAuthor, searchTitle } = req.body;
