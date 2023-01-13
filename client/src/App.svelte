@@ -26,7 +26,7 @@
   <Router>
     <Navbar></Navbar>
 
-      <div>
+      <div id="content">
         <Route path="/"><Home /></Route>
         <Route path="/login"><Login /></Route>
         <Route path="/contact"><Contact /></Route>
@@ -50,4 +50,8 @@
 </main>
 
 <style>
+
+  #content {
+    margin: 100px 180px;
+  }
 </style>

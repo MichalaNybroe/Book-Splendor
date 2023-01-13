@@ -7,26 +7,44 @@
 
 
 <Router primary={false}>
-    <Link to="/book/{book.id}"> 
-        <div class="flex-container">
-            <div class="flex-child">
-                <img src="{book.img}" alt="book cover">
-                <br>
-                    {book.title}
-                <br>
-                    {#each book.authors as author, index}
-                        <Link to="/authors/{author.id}/books">{author.name}
-                            {#if index < (book.authors.length-1)}, 
-                            {/if}
-                        </Link>
-                    {/each}
-            </div>
-        </div>
-    </Link>
+    <div class="bookDiv">
+        <Link to="/book/{book.id}"> <img src="{book.img}" alt="book cover"></Link>
+        <br>
+        <Link to="/book/{book.id}"><p>{book.title}</p></Link>
+        <br>
+            {#each book.authors as author, index}
+                <Link to="/authors/{author.id}/books">
+                    <p id="authors">{author.name}
+                    {#if index < (book.authors.length-1)}, 
+                    {/if}
+                    </p>
+                </Link>
+            {/each}
+    </div>
 </Router> 
 
 <style>
-    img {
-        height: 200px;
+    .bookDiv img {
+        height: 250px;
+        display: block;
+        width: 50%;
+        margin-left: auto;
+        margin-right: auto;
     }
+
+    .bookDiv {
+        margin-bottom: 20px;
+        margin-left: 20px;
+        margin-right: 20px;
+    }
+
+    .bookDiv p {
+        text-align: center;
+        font-size: 20px;
+    }
+
+    #authors {
+        margin: auto;
+    }
+
 </style>

@@ -11,6 +11,7 @@
     import Review from '../../components/Review.svelte'
     import StarRating from 'svelte-star-rating'
     import { onDestroy } from 'svelte'
+    import PageHeader from '../../components/PageHeader.svelte'
 
     export let id
 
@@ -99,8 +100,8 @@
     {#await getBook()}
         <p>Loading...</p>
     {:then book} 
+            <PageHeader header={book.title}></PageHeader>
             <img id="bookCover" src="{book.img}" alt="Book cover.">
-            <h3>{book.title}</h3>
             {#if book.average_rating === null}
                 <p>No reviews</p>
             {:else}

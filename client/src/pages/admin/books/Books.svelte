@@ -6,6 +6,7 @@
     import '../../../../node_modules/toastr/build/toastr.css'
     import Button from '../../../components/Button.svelte'
     import { Confirm } from 'svelte-confirm'
+    import PageHeader from '../../../components/PageHeader.svelte'
  
 
     const navigate = useNavigate()
@@ -141,7 +142,7 @@
 </p>
 
 
-<h3>Search books</h3>
+<PageHeader header={'Search Books'}></PageHeader>
 <form id="searchBooksForm" bind:this={searchIdForm} on:submit|preventDefault={searchById}>
     <label for="search_books_id">Search by Id</label>
     <input type="number" name="search_books_id" id="search_books_id" bind:value={searchId} required>
@@ -257,4 +258,8 @@
         font-weight: 400;
         letter-spacing: 1px;
     }
+
+    td {
+    border-top: 1px solid #EEE;
+   }
 </style>

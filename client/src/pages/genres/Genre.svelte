@@ -3,4 +3,15 @@
     export let id
 </script>
 
-<BooksBy endpoint={'genres'} id={id}></BooksBy>
+<div>
+    <BooksBy endpoint={'genres'} id={id}></BooksBy>
+</div>
+
+
+<style>
+    div {
+        width: 100%;
+        display: flex;
+        margin-bottom: 5%;
+    }
+</style>

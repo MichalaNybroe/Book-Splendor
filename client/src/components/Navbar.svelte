@@ -64,6 +64,11 @@
 
 <style>
     .margin-left {
-        margin-left: 29px
+        margin: 50px 50px 30px 50px;
+      
+    }
+
+    nav {
+        border-bottom: 1px solid #EEE;
     }
 </style>

@@ -3,11 +3,10 @@
     import { BASE_URL } from '../store/globals.js'
     import * as Toastr from 'toastr'
     import '../../node_modules/toastr/build/toastr.css'
+    import PageHeader from '../components/PageHeader.svelte'
 
     export let id
     export let endpoint
-    
-    let books = []
 
     async function fetchBooks() {
         try {
@@ -17,7 +16,9 @@
 
             if(response.ok) {
                 const data = await response.json()
-                books = data.data
+                const books = data.data
+                console.log(books)
+                return books
             } else {
                 const data = await response.json()
                 Toastr.warning(data.message)
@@ -26,22 +27,42 @@
             Toastr.error('Unable to retrieve books. Try again later.')
         } 
     }
-
-    fetchBooks()
 </script>
 
-<table> 
-    <tr>
-        {#each books as book}
-            <td><h5><Book book={book}></Book></h5></td>
-        {/each}
-    </tr>
-</table>
+{#await fetchBooks()}
+    <p>Loading...</p>
+{:then books} 
+    
+    <br>
 
+    <div>
+        {#if endpoint === 'genres'}
+            <PageHeader header={`Books in ${books[0].genres[0].name} Genre`}></PageHeader>
+        {:else if endpoint === 'authors'}
+            <PageHeader header={`Books by ${books[0].authors[0].name}`}></PageHeader>
+        {:else}
+        <PageHeader header={`Books in ${books[0].series_title}`}></PageHeader>
+        {/if}
+
+        <br>
+        {#each books as book, i}
+            <h5><Book book={book}></Book></h5>
+            {#if i % 5 === 0}
+                <br>
+            {/if}
+        {/each}
+    </div>
+{/await}
 
 <style>
-    table {
-        width: 90%;
-        margin-left: 5%;  
+    div {
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap; 
     }  
+
+    h5 {
+        width: 20%;
+    }
+
 </style>

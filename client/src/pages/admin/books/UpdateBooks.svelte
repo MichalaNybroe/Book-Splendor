@@ -6,7 +6,8 @@
     import '../../../../node_modules/toastr/build/toastr.css'
     import MultiSelect from 'svelte-multiselect'
     import Button from '../../../components/Button.svelte'
-    
+    import PageHeader from '../../../components/PageHeader.svelte'
+
     if($user?.admin !== true) {
         const navigate = useNavigate()
 
@@ -148,6 +149,7 @@
 {#await insertBook()}
     <p>Loading...</p>
 {:then _}
+    <PageHeader header={`Update: "${title}"`}></PageHeader>
     <form on:submit|preventDefault={handleSubmit}
     id="create_book_form"
     method="POST"

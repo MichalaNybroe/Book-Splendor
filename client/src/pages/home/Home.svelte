@@ -5,6 +5,7 @@
     import * as Toastr from 'toastr'
     import '../../../node_modules/toastr/build/toastr.css'
     import Carousel from 'svelte-carousel'
+    import PageHeader from '../../components/PageHeader.svelte'
 
     //Genres
     let romanceBooks = []
@@ -115,7 +116,7 @@
     <p>Loading...</p>
 {:then recBooks} 
         <!--BOOK OF THE WEEK CAROUSEL-->
-    <h2>Books of the Week</h2>
+    <PageHeader header={"Books of the week"}></PageHeader>
 
     <div class="main-container">
         <Carousel  
@@ -177,7 +178,7 @@
     }
 
     h2 {
-        margin-bottom: 2%;
+        margin-bottom: 3%;
         margin-top: 2%;
     }
 

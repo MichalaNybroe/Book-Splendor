@@ -3,6 +3,7 @@
     import { BASE_URL } from '../../store/globals.js'
     import * as Toastr from 'toastr'
     import '../../../node_modules/toastr/build/toastr.css'
+    import PageHeader from '../../components/PageHeader.svelte'
 
     let books = []
 
@@ -27,6 +28,7 @@
     fetchBooks()
 </script>
 
+<PageHeader header={"Books"}></PageHeader>
 
 <div class="book-container">
     {#each books as book, i}
@@ -41,7 +43,7 @@
 
 <style>
     .book-container {
-        width: 90%;
+        width: 100%;
         display: flex;
         flex-wrap: wrap;
     }

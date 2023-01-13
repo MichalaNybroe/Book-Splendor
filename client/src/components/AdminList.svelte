@@ -5,6 +5,7 @@
     import * as Toastr from 'toastr'
     import '../../node_modules/toastr/build/toastr.css'
     import { Confirm } from 'svelte-confirm'
+    import PageHeader from './PageHeader.svelte';
 
     if($user?.admin !== true) {
         const navigate = useNavigate()
@@ -15,6 +16,7 @@
     export let endpoint
     export let single
     export let columns
+    export let header
     let list = []
 
     async function fetchList() {
@@ -52,6 +54,7 @@
     }
 </script>
 
+<PageHeader header={header}></PageHeader>
 <table>
 	<tr>
 		{#each columns as column}
@@ -117,5 +120,9 @@
 
    tr {
        text-align: left;
+   }
+
+   td {
+    border-top: 1px solid #EEE;
    }
 </style>
