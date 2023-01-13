@@ -73,8 +73,40 @@ router.post("/api/books/search", async (req, res) => {
     }
   }) 
 
+  // get books of the week
+router.get("/api/books/recommendations", async (req, res) => {
+    try {
+        const [books, _] = await db.query(
+            `SELECT
+                books.*,
+                authors_id, 
+                authors.name AS author_name,
+                genres_id,
+                genres.name AS genre_name,
+                series_id,
+                series.title AS series_title,
+                reviews.id AS review_id,
+                reviews.rating AS review_rating,
+                (SELECT AVG(reviews.rating) FROM reviews WHERE reviews.books_id = books.id) AS average_rating
+            FROM books
+                LEFT JOIN books_authors ON books.id = books_authors.books_id 
+                LEFT JOIN authors ON books_authors.authors_id = authors.id
+                LEFT JOIN books_genres ON books.id = books_genres.books_id
+                LEFT JOIN genres ON books_genres.genres_id = genres.id
+                LEFT JOIN series ON series.id = books.series_id
+                LEFT JOIN reviews ON reviews.books_id = books.id
+            WHERE books.recommended=1;`
+        )
+            
+        const cleanedbooks= setBooks(books)
+        res.send({ data: cleanedbooks })
+    } catch {
+        res.status(400).send({ data: undefined, message: `Error occurrance`})
+    }
+})
 
 router.get("/api/books/:id", async (req, res) => {
+    console.log('h')
     const [books, _] = await db.query(
         `SELECT 
             books.*, 
@@ -108,38 +140,6 @@ router.get("/api/books/:id", async (req, res) => {
         res.status(400).send({ data: undefined, message: `No book by ${req.params.id} id`})
     } else {
         res.send({ data: cleanedbooks[0] })
-    }
-})
-
-// get book of the week
-router.get("/api/books/recommendations", async (req, res) => {
-    try {
-        const [books, _] = await db.query(
-            `SELECT
-                books.*,
-                authors_id, 
-                authors.name AS author_name,
-                genres_id,
-                genres.name AS genre_name,
-                series_id,
-                series.title AS series_title,
-                reviews.id AS review_id,
-                reviews.rating AS review_rating,
-                (SELECT AVG(reviews.rating) FROM reviews WHERE reviews.books_id = books.id) AS average_rating
-            FROM books
-                LEFT JOIN books_authors ON books.id = books_authors.books_id 
-                LEFT JOIN authors ON books_authors.authors_id = authors.id
-                LEFT JOIN books_genres ON books.id = books_genres.books_id
-                LEFT JOIN genres ON books_genres.genres_id = genres.id
-                LEFT JOIN series ON series.id = books.series_id
-                LEFT JOIN reviews ON reviews.books_id = books.id
-            WHERE books.recommended=1;`
-        )
-            
-        const cleanedbooks= setBooks(books)
-        res.send({ data: cleanedbooks })
-    } catch {
-        res.status(400).send({ data: undefined, message: `Error occurrance`})
     }
 })
 

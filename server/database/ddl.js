@@ -100,6 +100,8 @@ if (isInDeleteMode) {
     VALUES (?, ?, ?, ?, ?, ?);`, [process.env.ADMIN_EMAIL, "adminOne", await encryptPassword(process.env.ADMIN_PASSWORD), true, 2, "#FF5733"])
     db.execute(`INSERT INTO users(email, user_name, password, admin, picture_number, color) 
     VALUES (?, ?, ?, ?, ?, ?);`, [process.env.USER_EMAIL, "mayFlower", await encryptPassword(process.env.USER_PASSWORD), false, 6, "#30EBF3"])
+    db.execute(`INSERT INTO users(email, user_name, password, admin, picture_number, color) 
+    VALUES (?, ?, ?, ?, ?, ?);`, [process.env.SECOND_USER_EMAIL, "Lilly Madelaine", await encryptPassword(process.env.USER_PASSWORD), false, 6, "#30EBF3"])
 
     //series
     db.execute(`INSERT INTO series(title) VALUE (?);`, ["Lord of the Rings"])
@@ -128,16 +130,27 @@ if (isInDeleteMode) {
     db.execute(`INSERT INTO books(title, description, number, unreleased, img, series_id, recommended) VALUE (?, ?, ?, ?, ?, ?, ?);`, ["The Wicked King", "Jude was seven when her parents were murdered and she and her two sisters were stolen away to live in the treacherous High Court of Faerie.", 2, false, "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1520620414i/26032887.jpg", 4, false])
     db.execute(`INSERT INTO books(title, description, number, unreleased, img, series_id, recommended) VALUE (?, ?, ?, ?, ?, ?, ?);`, ["The Queen of Nothing", "Jude was seven when her parents were murdered and she and her two sisters were stolen away to live in the treacherous High Court of Faerie.", 3, false, "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1553624975i/26032912.jpg", 4, false])
     db.execute(`INSERT INTO books(title, description, number, unreleased, img, series_id, recommended) VALUE (?, ?, ?, ?, ?, ?, ?);`, ["How the King of Elfhame Learned to Hate Stories", "Jude was seven when her parents were murdered and she and her two sisters were stolen away to live in the treacherous High Court of Faerie.", 4, false, "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1589827409i/53439886.jpg", 4, true])
+    db.execute(`INSERT INTO books(title, description, number, unreleased, img, series_id, recommended) VALUE (?, ?, ?, ?, ?, ?, ?);`, ["The Hunger Games", "Winning means fame and fortune. Losing means certain death. The Hunger Games have begun. . . . In the ruins of a place once known as North America lies the nation of Panem, a shining Capitol surrounded by twelve outlying districts. The Capitol is harsh and cruel and keeps the districts in line by forcing them all to send one boy and one girl between the ages of twelve and eighteen to participate in the annual Hunger Games, a fight to the death on live TV. Sixteen-year-old Katniss Everdeen regards it as a death sentence when she steps forward to take her sister's place in the Games. But Katniss has been close to dead before-and survival, for her, is second nature. Without really meaning to, she becomes a contender. But if she is to win, she will have to start making choices that weigh survival against humanity and life against love.", 1, false, "https://catalog.kentonlibrary.org/opac/extras/ac/jacket/large/r/593617", 2, false])
+    db.execute(`INSERT INTO books(title, description, number, unreleased, img, series_id, recommended) VALUE (?, ?, ?, ?, ?, ?, ?);`, ["Catching Fire", "Winning means fame and fortune. Losing means certain death. The Hunger Games have begun. . . . In the ruins of a place once known as North America lies the nation of Panem, a shining Capitol surrounded by twelve outlying districts. The Capitol is harsh and cruel and keeps the districts in line by forcing them all to send one boy and one girl between the ages of twelve and eighteen to participate in the annual Hunger Games, a fight to the death on live TV. Sixteen-year-old Katniss Everdeen regards it as a death sentence when she steps forward to take her sister's place in the Games. But Katniss has been close to dead before-and survival, for her, is second nature. Without really meaning to, she becomes a contender. But if she is to win, she will have to start making choices that weigh survival against humanity and life against love.", 2, false, "https://imgcdn.saxo.com/_9780439023498", 2, false])
+    db.execute(`INSERT INTO books(title, description, number, unreleased, img, series_id, recommended) VALUE (?, ?, ?, ?, ?, ?, ?);`, ["Mockingjay", "Winning means fame and fortune. Losing means certain death. The Hunger Games have begun. . . . In the ruins of a place once known as North America lies the nation of Panem, a shining Capitol surrounded by twelve outlying districts. The Capitol is harsh and cruel and keeps the districts in line by forcing them all to send one boy and one girl between the ages of twelve and eighteen to participate in the annual Hunger Games, a fight to the death on live TV. Sixteen-year-old Katniss Everdeen regards it as a death sentence when she steps forward to take her sister's place in the Games. But Katniss has been close to dead before-and survival, for her, is second nature. Without really meaning to, she becomes a contender. But if she is to win, she will have to start making choices that weigh survival against humanity and life against love.", 3, false, "https://imgcdn.saxo.com/_9780439023511", 2, false])
 
     //users_books
     db.execute(`INSERT INTO users_books(users_id, books_id, want_to_read, has_read) VALUE (?, ?, ?, ?);`, [2, 1, false, true])
     db.execute(`INSERT INTO users_books(users_id, books_id, want_to_read, has_read) VALUE (?, ?, ?, ?);`, [2, 2, true, false])
+    db.execute(`INSERT INTO users_books(users_id, books_id, want_to_read, has_read) VALUE (?, ?, ?, ?);`, [3, 11, true, false])
+    db.execute(`INSERT INTO users_books(users_id, books_id, want_to_read, has_read) VALUE (?, ?, ?, ?);`, [3, 1, false, true])
+    db.execute(`INSERT INTO users_books(users_id, books_id, want_to_read, has_read) VALUE (?, ?, ?, ?);`, [3, 2, false, true])
+    db.execute(`INSERT INTO users_books(users_id, books_id, want_to_read, has_read) VALUE (?, ?, ?, ?);`, [3, 3, false, true])
+    db.execute(`INSERT INTO users_books(users_id, books_id, want_to_read, has_read) VALUE (?, ?, ?, ?);`, [3, 20, true, false])
     
     //reviews
     db.execute(`INSERT INTO reviews(users_id, subject, text, rating, books_id) VALUE (?, ?, ?, ?, ?);`, [2, "LOVED IT", "LOVED ITTT", 4, 5])
     db.execute(`INSERT INTO reviews(users_id, subject, text, rating, books_id) VALUE (?, ?, ?, ?, ?);`, [2, "Big fan", "My favourite book ever", 5, 11])
     db.execute(`INSERT INTO reviews(users_id, subject, text, rating, books_id) VALUE (?, ?, ?, ?, ?);`, [2, "Not for me", "This book is so good for my poor taste :(", 2, 6])
     db.execute(`INSERT INTO reviews(users_id, subject, text, rating, books_id) VALUE (?, ?, ?, ?, ?);`, [2, "Funny", "These two guys can make some pretty funny stuff!", 4, 4])
+    db.execute(`INSERT INTO reviews(users_id, subject, text, rating, books_id) VALUE (?, ?, ?, ?, ?);`, [3, "Intrigued!", "I enjoyed it so much!!", 5, 1])
+    db.execute(`INSERT INTO reviews(users_id, subject, text, rating, books_id) VALUE (?, ?, ?, ?, ?);`, [3, "Still good", "A tad long but so interesting! Can recommend!", 4, 2])
+    db.execute(`INSERT INTO reviews(users_id, subject, text, rating, books_id) VALUE (?, ?, ?, ?, ?);`, [3, "Still good", "A tad long but so interesting! Can recommend!", 4, 3])
 
     //authors
     db.execute(`INSERT INTO authors(name) VALUE (?);`, ["J.R.R. Tolkien"])
@@ -169,6 +182,9 @@ if (isInDeleteMode) {
     db.execute(`INSERT INTO books_authors(books_id, authors_id) VALUE (?, ?);`, [17, 4])
     db.execute(`INSERT INTO books_authors(books_id, authors_id) VALUE (?, ?);`, [18, 4])
     db.execute(`INSERT INTO books_authors(books_id, authors_id) VALUE (?, ?);`, [19, 4])
+    db.execute(`INSERT INTO books_authors(books_id, authors_id) VALUE (?, ?);`, [20, 2])
+    db.execute(`INSERT INTO books_authors(books_id, authors_id) VALUE (?, ?);`, [21, 2])
+    db.execute(`INSERT INTO books_authors(books_id, authors_id) VALUE (?, ?);`, [22, 2])
 
     //genres
     db.execute(`INSERT INTO genres(name) VALUE (?);`, ["High Fantasy"])
@@ -216,6 +232,12 @@ if (isInDeleteMode) {
     db.execute(`INSERT INTO books_genres(books_id, genres_id) VALUE (?, ?);`, [18, 6])
     db.execute(`INSERT INTO books_genres(books_id, genres_id) VALUE (?, ?);`, [19, 1])
     db.execute(`INSERT INTO books_genres(books_id, genres_id) VALUE (?, ?);`, [19, 6])
+    db.execute(`INSERT INTO books_genres(books_id, genres_id) VALUE (?, ?);`, [20, 5])
+    db.execute(`INSERT INTO books_genres(books_id, genres_id) VALUE (?, ?);`, [20, 6])
+    db.execute(`INSERT INTO books_genres(books_id, genres_id) VALUE (?, ?);`, [21, 5])
+    db.execute(`INSERT INTO books_genres(books_id, genres_id) VALUE (?, ?);`, [21, 6])
+    db.execute(`INSERT INTO books_genres(books_id, genres_id) VALUE (?, ?);`, [22, 5])
+    db.execute(`INSERT INTO books_genres(books_id, genres_id) VALUE (?, ?);`, [22, 6])
 }
 
 db.end()
