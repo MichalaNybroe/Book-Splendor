@@ -6,12 +6,17 @@ import { setBooks } from "../util/setBooks.js"
 const router = Router()
 
 router.get("/api/series", adminGuard, async (req, res) => {
-    const [series,_] = await db.query("SELECT * FROM series ORDER BY title ASC;")
-    if (series === undefined) {
-        res.status(400).send({ data: undefined, message: "Unable to retrieve series."})
-    } else {
-        res.send({ data: series })
+    try {
+        const [series,_] = await db.query("SELECT * FROM series ORDER BY title ASC;")
+        if (series === undefined) {
+            res.status(400).send({ data: undefined, message: "Unable to retrieve series."})
+        } else {
+            res.send({ data: series })
+        }
+    } catch {
+        res.status(500).send("Server error.")
     }
+    
 })
 
 router.get("/api/series/:id", async (req, res) => {
@@ -41,15 +46,19 @@ router.get("/api/series/:id", async (req, res) => {
 })
 
 router.post("/api/series", loggedinGuard, adminGuard, async (req, res) => {
-    const { title } = req.body
+    try {
+        const { title } = req.body
 
-    if (!title) return res.status(400).send({ message: "Series title is undefined." })
-
-    const [serieRes, _] = await db.query("INSERT INTO series(title) VALUE(?);", [title])
-    if (serieRes === undefined) {
-        return res.status(404).send("Unable to create series.")
-    }
-    res.send({ affectedRows: serieRes.affectedRows, message: "Series created." })
+        if (!title) return res.status(400).send({ message: "Series title is undefined." })
+    
+        const [serieRes, _] = await db.query("INSERT INTO series(title) VALUE(?);", [title])
+        if (serieRes === undefined) {
+            return res.status(404).send("Unable to create series.")
+        }
+        res.send({ affectedRows: serieRes.affectedRows, message: "Series created." })
+    } catch {
+        res.status(500).send("Server error.")
+    } 
 })
 
 export default router

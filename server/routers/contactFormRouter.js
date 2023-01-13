@@ -6,10 +6,9 @@ router.post("/contact", async (req, res) => {
     const {name, email, subject, message} = req.body
     const mail = `Name: ${name} \n Sender: ${email} \n Message: ${message}`
     try {
-        sendMail("Book Splendor", "customerService@bookSplendor.dk", subject, mail)
-        .then(() => res.send( { message: "Success." }))    
+        sendMail("Book Splendor", "customerService@bookSplendor.dk", subject, mail)    
     } catch {
-        res.status(400).send( { msg: "An error occurred. "})
+        res.send( { message: "Success." })
     }
 })
 

@@ -52,14 +52,13 @@ router.post("/login", async (req, res) => {
 router.post("/logout", (req, res) => {
     try {
         req.session.destroy()
-        res.send({ message: "Logged out." })
+        res.send({ message: "Logged out." })    
     } catch {
-        res.status(400).send({ message: "Logout unsuccessful." })
+        res.status(500).send("Server error")
     }
-    
 })
 
-//måske fjern når vi tænker scope? 
+//fjern når vi tænker scope?
 router.post("/forgotPassword",  async (req, res) => {
     const email = req.body.email
     const link = "www.ja/updatePassword.ja" // hvad skal dette link være // hash værdi
@@ -72,7 +71,7 @@ router.post("/forgotPassword",  async (req, res) => {
     }
 })
 
-//måske fjern når vi tænker scope? 
+//fjern når vi tænker scope?
 router.post("/updatePassword", checkPasswordSecurity, (req, res) => {
     // how do we check link security?
     const { email, password } = req.body

@@ -6,11 +6,16 @@ import { setBooks } from "../util/setBooks.js"
 const router = Router()
 
 router.get("/api/authors", adminGuard, async (req, res) => {
-    try {
+     try {
         const [authors,_] = await db.query("SELECT * FROM authors ORDER BY name ASC;")
-        res.send({ data: authors })
+        
+        if (authors === undefined) {
+            res.status(400).send({ data: undefined, message: "Unable to retrieve authors."})
+        } else {
+            res.send({ data: authors }) }
+
     } catch {
-        res.status(400).send({ data: undefined, message: "Unable to retrieve authors."})
+        res.status(500).send({ data: "Server error. "})
     }
 })
 
@@ -70,9 +75,13 @@ router.post("/api/authors", loggedinGuard, adminGuard, async (req, res) => {
 
         const [authorRes, _] = await db.query("INSERT INTO authors(name) VALUE(?);", [name])
         
-        res.send({ affectedRows: authorRes.affectedRows, message: "Author created." })
+        if (authorRes === undefined) {
+            return res.status(404).send("Unable to create author.")
+        } else {
+            res.send({ affectedRows: authorRes.affectedRows, message: "Author created." })
+        }
     } catch {
-        return res.status(404).send("Unable to create author.")
+        return res.status(500).send("Server error")
     }
 })
 
