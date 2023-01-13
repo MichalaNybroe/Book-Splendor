@@ -26,86 +26,39 @@ router.get("/api/books", async (req, res) => {
     const cleanedBooks = setBooks(books)
 
     if (books === undefined) {
-        res.status(400).send({ data: undefined, message: `Unable to retrieve books.` })
+        res.status(400).send({ data: undefined, message: "Unable to retrieve books." })
     } else {
         res.send({ data: cleanedBooks })
     }
 })
 
-/* 
-router.get("/api/books", async (req, res) => {
-    const { searchId, searchAuthor, searchTitle } = req.query
-
-    let query = `SELECT * FROM books`
-    let where = []; // array to store WHERE clauses
-
-    if (searchId) {
-      where.push(`id = '${searchId}'`)
-    }
-
-    if (searchAuthor) {
-      where.push(`author LIKE '%${searchAuthor}%'`)
-    }
-
-    if (searchTitle) {
-      where.push(`title LIKE '%${searchTitle}%'`)
-    }
-
-    if (where.length > 0) {
-        query += ` WHERE ${where.join(" AND ")}`
-    }
-
+//SEARCH BOOKS BY TITLE: BOOK OR SERIES
+router.get("/api/books/:title", async (req, res) => {
+    const { searchTitle } = [req.params.id]
     try {
-        const [books] = await db.query(query)
-        if (!books || books.length === 0) {
-            return res.status(404).send({ data: undefined, message: 'Unable to find books with search criteria.' })
-        }
-        res.send({ data: books })
-    } catch (error) {
-        console.error(error)
-        res.status(500).send({ data: undefined, message: 'Error while searching for books' });
-    }
-}); */
-
-
-//SEARCH BOOKS
-router.post("/api/books/search", async (req, res) => {
-    const { selected, searchId, searchAuthor, searchTitle } = req.body;
-    let query = `SELECT 
-              books.*, 
-              authors_id, 
-              authors.name AS author_name,
-              genres_id,
-              genres.name AS genre_name,
-              series_id,
-              series.title AS series_title
-          FROM books
-              LEFT JOIN books_authors ON books.id = books_authors.books_id 
-              LEFT JOIN authors ON books_authors.authors_id = authors.id
-              LEFT JOIN books_genres ON books.id = books_genres.books_id
-              LEFT JOIN genres ON books_genres.genres_id = genres.id
-              LEFT JOIN series ON series.id = books.series_id`;
-    if (searchId) {
-      query += ` WHERE books.id = '${searchId}'`
-    }
-    if (searchAuthor) {
-      query += ` WHERE authors.name LIKE '%${searchAuthor}%'`
-    }
-    if (searchTitle) {
-      query += ` WHERE books.title LIKE '%${searchTitle}%'`
-    }
-    if (selected) {
-      query += ` ORDER BY ${selected}`
-    }
-    const [books, _] = await db.query(query)
+    const [books, _] = await db.query (
+        `SELECT 
+            books.*, 
+            authors_id, 
+            authors.name AS author_name,
+            genres_id,
+            genres.name AS genre_name,
+            series_id,
+            series.title AS series_title
+        FROM books
+            LEFT JOIN books_authors ON books.id = books_authors.books_id 
+            LEFT JOIN authors ON books_authors.authors_id = authors.id
+            LEFT JOIN books_genres ON books.id = books_genres.books_id
+            LEFT JOIN genres ON books_genres.genres_id = genres.id
+            LEFT JOIN series ON series.id = books.series_id
+        WHERE books.title LIKE '%${searchTitle}%'
+        OR WHERE series.title LIKE '%${searchTitle}%';`
+        )
+    
     const cleanedBooks = setBooks(books)
-    console.log(cleanedBooks)
-  
-    if (!books || books.length === 0) {
-      res.status(404).send({ data: undefined, message: `Unable to find books with search criteria.` })
-    } else {
-        console.log(cleanedBooks)
-      res.send({ data: cleanedBooks })
+    res.send({ data: cleanedBooks })
+    } catch {
+        res.status(404).send({ data: undefined, message: "Unable to find books with search criteria." }) 
     }
   }) 
 
@@ -137,7 +90,7 @@ router.get("/api/books/recommendations", async (req, res) => {
         const cleanedbooks= setBooks(books)
         res.send({ data: cleanedbooks })
     } catch {
-        res.status(400).send({ data: undefined, message: `Error occurrance`})
+        res.status(400).send({ data: undefined, message: "Error occurred while recommending book."})
     }
 })
 
