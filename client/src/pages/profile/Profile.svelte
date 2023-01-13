@@ -12,7 +12,7 @@
     
     const navigate = useNavigate()
     
-    if ($user === null || $user.admin === true) {
+    if (!$user || $user.admin === true) {
         navigate('/')
     }
 
@@ -33,8 +33,7 @@
                 const user = data.data
                 color = user.color
                 username = user.user_name
-                pictureSelect = [user.picture_number]
-                console.log(pictureSelect)
+                pictureSelect = [pictures[user.picture_number-1]]
                 return user
             }
             const data = await response.json()
@@ -93,10 +92,6 @@
                 return
             }
             Toastr.success('Profile picture sucessfully updated.')
-            console.log(pictureSelect[0].id)
-            let id = pictureSelect[0].id
-            pictureSelect = options[id]
-            console.log(pictureSelect)
         } catch {
             Toastr.error('Unable to update user. Try again later.')
         }
@@ -136,7 +131,7 @@
     <p>Loading...</p>
 {:then user}
     <div id="profilebanner" style="background-color: {color};color:white">
-        <img id="profilePicture" src="/profilPictures/{pictureSelect}.png" alt="Profile." height="200">
+        <img id="profilePicture" src="/profilPictures/{pictureSelect[0].id}.png" alt="Profile." height="200">
 
         <h3 id="username">{username}</h3>
     </div>
