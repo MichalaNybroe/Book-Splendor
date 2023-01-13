@@ -156,7 +156,7 @@ if (isInDeleteMode) {
     db.execute(`INSERT INTO reviews(users_id, subject, text, rating, books_id) VALUE (?, ?, ?, ?, ?);`, [2, "Funny", "These two guys can make some pretty funny stuff!", 4, 4])
     db.execute(`INSERT INTO reviews(users_id, subject, text, rating, books_id) VALUE (?, ?, ?, ?, ?);`, [3, "Intrigued!", "I enjoyed it so much!!", 5, 1])
     db.execute(`INSERT INTO reviews(users_id, subject, text, rating, books_id) VALUE (?, ?, ?, ?, ?);`, [3, "Still good", "A tad long but so interesting! Can recommend!", 4, 2])
-    db.execute(`INSERT INTO reviews(users_id, subject, text, rating, books_id) VALUE (?, ?, ?, ?, ?);`, [3, "Still good", "A tad long but so interesting! Can recommend!", 4, 3])
+    db.execute(`INSERT INTO reviews(users_id, subject, text, rating, books_id) VALUE (?, ?, ?, ?, ?);`, [3, "Still good", "Also a tad long but so interesting! Can recommend!", 4, 3])
 
     //authors
     db.execute(`INSERT INTO authors(name) VALUE (?);`, ["J.R.R. Tolkien"])
@@ -195,6 +195,8 @@ if (isInDeleteMode) {
     db.execute(`INSERT INTO books_authors(books_id, authors_id) VALUE (?, ?);`, [22, 2])
     db.execute(`INSERT INTO books_authors(books_id, authors_id) VALUE (?, ?);`, [23, 8])
     db.execute(`INSERT INTO books_authors(books_id, authors_id) VALUE (?, ?);`, [24, 8])
+    db.execute(`INSERT INTO books_authors(books_id, authors_id) VALUE (?, ?);`, [25, 9])
+    db.execute(`INSERT INTO books_authors(books_id, authors_id) VALUE (?, ?);`, [26, 9])
 
     //genres
     db.execute(`INSERT INTO genres(name) VALUE (?);`, ["High Fantasy"])
@@ -250,6 +252,8 @@ if (isInDeleteMode) {
     db.execute(`INSERT INTO books_genres(books_id, genres_id) VALUE (?, ?);`, [22, 6])
     db.execute(`INSERT INTO books_genres(books_id, genres_id) VALUE (?, ?);`, [23, 5])
     db.execute(`INSERT INTO books_genres(books_id, genres_id) VALUE (?, ?);`, [24, 5])
+    db.execute(`INSERT INTO books_genres(books_id, genres_id) VALUE (?, ?);`, [25, 3])
+    db.execute(`INSERT INTO books_genres(books_id, genres_id) VALUE (?, ?);`, [26, 3])
 }
 
 db.end()
