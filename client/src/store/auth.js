@@ -1,3 +1,5 @@
 import { writable } from "svelte/store"
 
-export const user = writable(null)
+let localData = localStorage.getItem("user")
+export const user = writable(localData ? JSON.parse(localData) : null)
+

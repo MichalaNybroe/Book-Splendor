@@ -32,6 +32,7 @@
             }
             const data = await response.json()
             user.set(data.data)
+            localStorage.setItem("user", JSON.stringify($user))
 
             if($user.admin === true) {
                 navigate('/admin/books')

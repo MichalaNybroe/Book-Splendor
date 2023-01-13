@@ -22,6 +22,7 @@
             if(response.ok){
                 navigate('/')
                 user.set(null)
+                localStorage.removeItem("user")
             } else {
                 const json = await response.json()
                 Toastr.warning(json.message)
