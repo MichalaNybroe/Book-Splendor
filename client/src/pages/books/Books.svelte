@@ -1,6 +1,6 @@
 <script>
     import Book from '../../components/Book.svelte'
-    import { BASE_URL } from '../../store/globals'
+    import { BASE_URL } from '../../store/globals.js'
     import * as Toastr from 'toastr'
     import '../../../node_modules/toastr/build/toastr.css'
 

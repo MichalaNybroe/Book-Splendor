@@ -94,7 +94,7 @@ router.get("/api/books/recommendations", async (req, res) => {
 })
 
 router.get("/api/books/:id", async (req, res) => {
-    console.log('h')
+    console.log('in book by id')
     const [books, _] = await db.query(
         `SELECT 
             books.*, 
