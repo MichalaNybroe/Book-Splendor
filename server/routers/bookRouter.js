@@ -70,7 +70,7 @@ router.get("/api/books", async (req, res) => {
 
 //SEARCH BOOKS
 router.post("/api/books/search", async (req, res) => {
-    const { selected, searchId, searchAuthor, searchTitle } = req.body;
+    const { selected, searchId, searchAuthor, searchTitle } = req.body
     let query = `SELECT 
               books.*, 
               authors_id, 
@@ -84,7 +84,7 @@ router.post("/api/books/search", async (req, res) => {
               LEFT JOIN authors ON books_authors.authors_id = authors.id
               LEFT JOIN books_genres ON books.id = books_genres.books_id
               LEFT JOIN genres ON books_genres.genres_id = genres.id
-              LEFT JOIN series ON series.id = books.series_id`;
+              LEFT JOIN series ON series.id = books.series_id`
     if (searchId) {
       query += ` WHERE books.id = '${searchId}'`
     }
@@ -95,7 +95,7 @@ router.post("/api/books/search", async (req, res) => {
       query += ` WHERE books.title LIKE '%${searchTitle}%'`
     }
     if (selected) {
-      query += ` ORDER BY ${selected}`
+      query += ` ORDER BY books.${selected}`
     }
     const [books, _] = await db.query(query)
     const cleanedBooks = setBooks(books)
@@ -142,7 +142,7 @@ router.get("/api/books/recommendations", async (req, res) => {
 })
 
 router.get("/api/books/:id", async (req, res) => {
-    console.log('h')
+    console.log('in book by id')
     const [books, _] = await db.query(
         `SELECT 
             books.*, 

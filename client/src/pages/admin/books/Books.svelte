@@ -13,9 +13,31 @@
     if($user?.admin !== true) {
         navigate('/')
     }
-    
 
-    // BOOK OF THE WEEK
+
+    let books = []
+    let columns = ['Id', 'Title', 'Number', 'Series', 'Authors', 'Genres', 'Recommend' ,'Update', 'Delete']
+
+    async function retrieveBooks() {
+        try {
+            const response = await fetch(`${$BASE_URL}/api/books`, {
+                credentials: 'include',
+                headers: { 'Content-Type': 'application/json' }
+            })
+
+            if (response.ok) {
+                const data = await response.json()
+                books = data.data
+            } else {
+                Toastr.warning('Unable to retrieve books.')
+            }
+        } catch {
+            Toastr.error('Unable to retrieve books. Try again later.')
+        }
+    }
+
+    
+    // BOOKS OF THE WEEK
     async function toggleRecommend(book) {
         book.recommended = !book.recommended        
 
@@ -42,109 +64,7 @@
             return
         }
     }
-    // END OF BOOK OF THE WEEK
-
-    const searchIdInput = ''
-    const searchAuthorInput = ''
-    const searchTitleInput = ''
-    let searchForm
-    let sortBooks = ''
-    let searchId = ''
-    let searchAuthor = ''
-    let searchTitle = ''
-    let books = []
-    let columns = ['Id', 'Title', 'Number', 'Series', 'Authors', 'Genres', 'Recommend' ,'Update', 'Delete']
-    let sortBooksDropDown = ['date', 'series', 'unreleased']
-    let selected = ''
-
-    
-    async function retrieveBooks() {
-       // søg med parametre
-        try {
-            const response = await fetch(`${$BASE_URL}/api/books`, {
-                credentials: 'include',
-                headers: { 'Content-Type': 'application/json' }
-            })
-
-            if (response.ok) {
-                const data = await response.json()
-                books = data.data
-            } else {
-                Toastr.warning('Unable to retrieve books.')
-            }
-        } catch {
-            Toastr.error('Unable to retrieve books. Try again later.')
-        }
-    }
-
-    //SEARCH BOOKS
-    async function searchBooks(parameters) {
-    // Build the query string from the search parameters
-    let queryString = '';
-    for (let param in parameters) {
-        queryString += `${param}=${parameters[param]}&`;
-    }
-    try {
-        // Send a GET request to the server with the search parameters in the query string
-        const response = await fetch(`${$BASE_URL}/api/books?${queryString}`, {
-            credentials: 'include',
-            headers: { 'Content-Type': 'application/json' }
-        });
-
-        if (response.ok) {
-            const data = await response.json();
-            books = data.data;
-        } else {
-            Toastr.warning('Unable to retrieve books.');
-        }
-    } catch {
-        Toastr.error('Unable to retrieve books. Try again later.');
-    }
-}
- /*    async function retrieveBooks() {
-    const searchId = searchIdInput.value
-    const searchAuthor = searchAuthorInput.value
-    const searchTitle = searchTitleInput.value
-    try {
-        const response = await fetch(`${$BASE_URL}/api/books/search?searchId=${searchId}&searchAuthor=${searchAuthor}&searchTitle=${searchTitle}`, {
-            credentials: 'include',
-            headers: { 'Content-Type': 'application/json' }
-        })
-
-        if (response.ok) {
-            const data = await response.json()
-            books = data.data
-        } else {
-            Toastr.warning('Unable to retrieve books.')
-        }
-    } catch {
-        Toastr.error('Unable to retrieve books. Try again later.')
-        }
-    }  */
-    
-  /*   async function searchBooks() {
-        const selected = searchForm.elements.sortBooksDropDown.value
-        const searchId = searchForm.elements.search_books_id.value
-        const searchAuthor = searchForm.elements.search_books_author.value
-        const searchTitle = searchForm.elements.search_books_title.value
-        const data = { selected, searchId, searchAuthor, searchTitle }
-        console.log(data)
-        try {
-            const response = await fetch("/api/books/search", {
-                method: 'POST',
-                credentials: 'include',
-                body: JSON.stringify(data),
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            });
-            const json = await response.json()
-            console.log(json)
-        } catch {
-            Toastr.error('Unable to search for books. Try again later.')
-        }
-    }
- */
+    // END OF BOOKS OF THE WEEK
 
 	
 	async function deleteBook(book) {
@@ -167,6 +87,57 @@
 	    }
     }
 
+
+
+    // Search books
+    let searchIdForm
+    let searchTitleForm
+    let searchAuthorForm
+    let searchId = ''
+    let searchAuthor = ''
+    let searchTitle = ''
+   
+    async function searchBooks(endpoint) {
+        try {
+            const response = await fetch(`${$BASE_URL}/api/${endpoint}`, {
+                credentials: 'include',
+                headers: { 'Content-Type': 'application/json' }
+            })
+
+            if (response.ok) {
+                const data = await response.json()
+                const dataList = Object.values(data)
+
+                if (dataList.length === 1) {
+                    books = [dataList[0]]
+                } else {
+                    books.push(dataList[0])
+                    books = books
+                }
+
+            } else {
+                Toastr.warning('Unable to retrieve books.')
+            }
+        } catch {
+            Toastr.error('Unable to retrieve books. Try again later.')
+        }
+    }
+
+    async function searchById() {
+        console.log(searchId)
+        searchBooks(`books/${searchId}`)
+    }
+
+    async function searchByTitle() {
+        searchBooks(`books/${searchTitle}`)
+    }
+
+    async function searchByAuthor() {
+        searchBooks(`authors/${searchAuthor}`)
+    }
+
+
+
     retrieveBooks()
 </script>
 
@@ -176,26 +147,27 @@
 </Router>
 </p>
 
-<!--SEARCH BOOKS-->
-<form id="searchBooksForm" bind:this={searchForm} on:submit|preventDefault={searchBooks}>
-    <label for="sortBooksDropDown">Sort by</label>
-    <select name="sortBooksDropDown" bind:value={selected}>
-        {#each sortBooksDropDown as value}
-            <option {value}>{value}</option>
-        {/each}
-    </select>
 
-    <label for="search_books_id">Id</label>
-    <input type="number" name="search_books_id" id="search_books_id" bind:value={searchId}>
-
-    <label for="search_books_author">Author</label>
-    <input type="text" name="search_books_author" id="search_books_author" bind:value={searchAuthor}>
-
-    <label for="search_books_title">Title</label>
-    <input type="text" name="search_books_title" id="search_books_title" bind:value={searchTitle}>
-
+<h3>Search books</h3>
+<form id="searchBooksForm" bind:this={searchIdForm} on:submit|preventDefault={searchById}>
+    <label for="search_books_id">Search by Id</label>
+    <input type="number" name="search_books_id" id="search_books_id" bind:value={searchId} required>
     <button type="submit">Search</button>
 </form>
+
+<form id="searchBooksForm" bind:this={searchTitleForm} on:submit|preventDefault={searchByTitle}>
+    <label for="search_books_title">Search by Title</label>
+    <input type="text" name="search_books_title" id="search_books_title" bind:value={searchTitle} required>
+    <button type="submit">Search</button>
+</form>
+
+<form id="searchBooksForm" bind:this={searchAuthorForm} on:submit|preventDefault={searchByAuthor}>
+    <label for="search_books_author">Search by Author</label>
+    <input type="text" name="search_books_author" id="search_books_author" bind:value={searchAuthor} required>
+    <button type="submit">Search</button>
+</form>
+
+
 
 <table>
 	<tr>
@@ -236,8 +208,6 @@
 </table>
 
 <style>
-    
-
     p {
         margin-left: 37.5px;
     }
