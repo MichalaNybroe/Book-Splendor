@@ -124,7 +124,6 @@
     }
 
     async function searchById() {
-        console.log(searchId)
         searchBooks(`books/${searchId}`)
     }
 
