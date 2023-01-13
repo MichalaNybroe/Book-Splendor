@@ -5,46 +5,46 @@ import { setBooks } from "../util/setBooks.js"
 
 const router = Router()
 
-router.get("/api/authors", adminGuard, async (req, res) => {
+router.get("/api/authors?", adminGuard, async (req, res) => {
      try {
-        const [authors,_] = await db.query("SELECT * FROM authors ORDER BY name ASC;")
-        
-        if (authors === undefined) {
-            res.status(400).send({ data: undefined, message: "Unable to retrieve authors."})
-        } else {
-            res.send({ data: authors }) }
+        if (!req.query.name) {
+            const [authors,_] = await db.query("SELECT * FROM authors ORDER BY name ASC;")
 
+            if (authors === undefined) {
+                res.status(400).send({ data: undefined, message: "Unable to retrieve authors."})
+            } else {
+                res.send({ data: authors }) }
+        } else {
+            const books = await db.query (
+                `SELECT 
+                    books.*, 
+                    authors_id, 
+                    authors.name AS author_name,
+                    genres_id,
+                    genres.name AS genre_name,
+                    series_id,
+                    series.title AS series_title
+                FROM books
+                    LEFT JOIN books_authors ON books.id = books_authors.books_id 
+                    LEFT JOIN authors ON books_authors.authors_id = authors.id
+                    LEFT JOIN books_genres ON books.id = books_genres.books_id
+                    LEFT JOIN genres ON books_genres.genres_id = genres.id
+                    LEFT JOIN series ON series.id = books.series_id
+                WHERE authors.name LIKE '%${req.query.name}%'`
+            )
+
+            if (books === undefined) {
+                res.status(400).send({ data: undefined, message: "Unable to retrieve books."})
+            } else {
+                const cleanedBooks = setBooks(books[0])
+                res.send({ data: cleanedBooks })
+            }  
+        }
+        
     } catch {
         res.status(500).send({ data: "Server error. "})
     }
 })
-
-//SEARCH BOOKS BY AUTHOR NAME
-router.get("/api/authors/:name", async (req, res) => {
-    try {
-        const books = await db.query (
-        `SELECT 
-            books.*, 
-            authors_id, 
-            authors.name AS author_name,
-            genres_id,
-            genres.name AS genre_name,
-            series_id,
-            series.title AS series_title
-        FROM books
-            LEFT JOIN books_authors ON books.id = books_authors.books_id 
-            LEFT JOIN authors ON books_authors.authors_id = authors.id
-            LEFT JOIN books_genres ON books.id = books_genres.books_id
-            LEFT JOIN genres ON books_genres.genres_id = genres.id
-            LEFT JOIN series ON series.id = books.series_id
-        WHERE authors.name LIKE '%${req.params.name}%'`
-        )
-        const cleanedBooks = setBooks(books)
-        res.send({ data: cleanedBooks })
-    } catch {
-        res.status(404).send({ data: undefined, message: "Unable to find books with search criteria." })
-    }
-}) 
 
 router.get("/api/authors/:id", async (req, res) => {
     try {

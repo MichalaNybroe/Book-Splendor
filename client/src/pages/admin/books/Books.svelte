@@ -109,7 +109,6 @@
                 const dataList = data.data
 
                 books = dataList
-                
             } else {
                 Toastr.warning('Unable to retrieve books.')
             }
