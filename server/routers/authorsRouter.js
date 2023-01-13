@@ -6,11 +6,11 @@ import { setBooks } from "../util/setBooks.js"
 const router = Router()
 
 router.get("/api/authors", adminGuard, async (req, res) => {
-    const [authors,_] = await db.query("SELECT * FROM authors ORDER BY name ASC;")
-    if (authors === undefined) {
-        res.status(400).send({ data: undefined, message: "Unable to retrieve authors."})
-    } else {
+    try {
+        const [authors,_] = await db.query("SELECT * FROM authors ORDER BY name ASC;")
         res.send({ data: authors })
+    } catch {
+        res.status(400).send({ data: undefined, message: "Unable to retrieve authors."})
     }
 })
 
@@ -64,15 +64,16 @@ router.get("/api/authors/:id", async (req, res) => {
 })
 
 router.post("/api/authors", loggedinGuard, adminGuard, async (req, res) => {
-    const name = req.body.name
+    try {
+        const name = req.body.name
+        if (!name) return res.status(400).send({ message: "Author name is undefined." })
 
-    if (!name) return res.status(400).send({ message: "Author name is undefined." })
-
-    const [authorRes, _] = await db.query("INSERT INTO authors(name) VALUE(?);", [name])
-    if (authorRes === undefined) {
+        const [authorRes, _] = await db.query("INSERT INTO authors(name) VALUE(?);", [name])
+        
+        res.send({ affectedRows: authorRes.affectedRows, message: "Author created." })
+    } catch {
         return res.status(404).send("Unable to create author.")
     }
-    res.send({ affectedRows: authorRes.affectedRows, message: "Author created." })
 })
 
 

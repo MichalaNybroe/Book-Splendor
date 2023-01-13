@@ -6,11 +6,11 @@ import { setBooks } from "../util/setBooks.js"
 const router = Router()
 
 router.get("/api/genres", async (req, res) => {
-    const [genres,_] = await db.query("SELECT * FROM genres ORDER BY name ASC;")
-    if (genres === undefined) {
-        res.status(400).send({ data: undefined, message: "Unable to retrieve genres."})
-    } else {
+    try {
+        const [genres,_] = await db.query("SELECT * FROM genres ORDER BY name ASC;")
         res.send({ data: genres })
+    } catch {
+        res.status(400).send({ data: undefined, message: "Unable to retrieve genres."})
     }
 })
 
@@ -45,11 +45,12 @@ router.post("/api/genres", loggedinGuard, adminGuard, async (req, res) => {
 
     if (!name) return res.status(400).send({ message: "Genre name is undefined." })
 
-    const [genreRes, _] = await db.query("INSERT INTO genres(name) VALUE(?);", [name])
-    if (genreRes === undefined) {
+    try {
+        const [genreRes, _] = await db.query("INSERT INTO genres(name) VALUE(?);", [name])
+        res.send({ affectedRows: genreRes.affectedRows, message: "Genre created." })
+    } catch {
         return res.status(404).send("Unable to create genre.")
     }
-    res.send({ affectedRows: genreRes.affectedRows, message: "Genre created." })
 })
 
 export default router
