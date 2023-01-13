@@ -5,30 +5,53 @@ import { setBooks } from "../util/setBooks.js"
 
 const router = Router()
 
-router.get("/api/books", async (req, res) => {
-    const [books, _] = await db.query(
-        `SELECT 
-            books.*, 
-            authors_id, 
-            authors.name AS author_name,
-            genres_id,
-            genres.name AS genre_name,
-            series_id,
-            series.title AS series_title
-        FROM books
-            LEFT JOIN books_authors ON books.id = books_authors.books_id 
-            LEFT JOIN authors ON books_authors.authors_id = authors.id
-            LEFT JOIN books_genres ON books.id = books_genres.books_id
-            LEFT JOIN genres ON books_genres.genres_id = genres.id
-            LEFT JOIN series ON series.id = books.series_id;`
-    )
-    
-    const cleanedBooks = setBooks(books)
+router.get("/api/books?", async (req, res) => {
+    let bookList = ''
+    try {
+        if(!req.query.title) {
+            const [books, _] = await db.query(
+                `SELECT 
+                    books.*, 
+                    authors_id, 
+                    authors.name AS author_name,
+                    genres_id,
+                    genres.name AS genre_name,
+                    series_id,
+                    series.title AS series_title
+                FROM books
+                    LEFT JOIN books_authors ON books.id = books_authors.books_id 
+                    LEFT JOIN authors ON books_authors.authors_id = authors.id
+                    LEFT JOIN books_genres ON books.id = books_genres.books_id
+                    LEFT JOIN genres ON books_genres.genres_id = genres.id
+                    LEFT JOIN series ON series.id = books.series_id;`
+            )
+            bookList = books
+        } else {
+            const [books, _] = await db.query (
+                `SELECT 
+                    books.*, 
+                    authors_id, 
+                    authors.name AS author_name,
+                    genres_id,
+                    genres.name AS genre_name,
+                    series_id,
+                    series.title AS series_title
+                FROM books
+                    LEFT JOIN books_authors ON books.id = books_authors.books_id 
+                    LEFT JOIN authors ON books_authors.authors_id = authors.id
+                    LEFT JOIN books_genres ON books.id = books_genres.books_id
+                    LEFT JOIN genres ON books_genres.genres_id = genres.id
+                    LEFT JOIN series ON series.id = books.series_id
+                WHERE books.title LIKE ?
+                OR series.title LIKE ?;`, ["%" + req.query.title + "%", "%" + req.query.title + "%"]
+            )
+            bookList = books
+        }
 
-    if (books === undefined) {
-        res.status(400).send({ data: undefined, message: "Unable to retrieve books." })
-    } else {
+        const cleanedBooks = setBooks(bookList)
         res.send({ data: cleanedBooks })
+    } catch {
+        res.status(400).send({ data: undefined, message: "Unable to retrieve books." })
     }
 })
 
@@ -64,38 +87,8 @@ router.get("/api/books/recommendations", async (req, res) => {
     }
 })
 
-//SEARCH BOOKS BY TITLE: BOOK OR SERIES
-router.get("/api/books/:title", async (req, res) => {
-    try {
-        const [books, _] = await db.query (
-            `SELECT 
-                books.*, 
-                authors_id, 
-                authors.name AS author_name,
-                genres_id,
-                genres.name AS genre_name,
-                series_id,
-                series.title AS series_title
-            FROM books
-                LEFT JOIN books_authors ON books.id = books_authors.books_id 
-                LEFT JOIN authors ON books_authors.authors_id = authors.id
-                LEFT JOIN books_genres ON books.id = books_genres.books_id
-                LEFT JOIN genres ON books_genres.genres_id = genres.id
-                LEFT JOIN series ON series.id = books.series_id
-            WHERE books.title LIKE '%${req.params.title}%'
-            OR WHERE series.title LIKE '%${req.params.title}%';`
-            )
-        
-        const cleanedBooks = setBooks(books)
-        res.send({ data: cleanedBooks })
-    } catch {
-        res.status(404).send({ data: undefined, message: "Unable to find books with search criteria." }) 
-    }
-  }) 
-
 router.get("/api/books/:id", async (req, res) => {
     try {
-        console.log('in book by id')
         const [books, _] = await db.query(
             `SELECT 
                 books.*, 
@@ -124,7 +117,7 @@ router.get("/api/books/:id", async (req, res) => {
         )
             
         const cleanedbooks= setBooks(books)
-        res.send({ data: cleanedbooks[0] })
+        res.send({ data: cleanedbooks })
     } catch {
         res.status(400).send({ data: undefined, message: `No book by ${req.params.id} id`})
     }

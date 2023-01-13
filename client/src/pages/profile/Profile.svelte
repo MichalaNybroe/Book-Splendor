@@ -33,7 +33,8 @@
                 const user = data.data
                 color = user.color
                 username = user.user_name
-                pictureSelect = Object.values(user.picture_number)
+                pictureSelect = [user.picture_number]
+                console.log(pictureSelect)
                 return user
             }
             const data = await response.json()
@@ -92,7 +93,10 @@
                 return
             }
             Toastr.success('Profile picture sucessfully updated.')
-            pictureSelect = pictureSelect
+            console.log(pictureSelect[0].id)
+            let id = pictureSelect[0].id
+            pictureSelect = options[id]
+            console.log(pictureSelect)
         } catch {
             Toastr.error('Unable to update user. Try again later.')
         }

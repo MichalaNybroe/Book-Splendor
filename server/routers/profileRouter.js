@@ -39,6 +39,8 @@ router.get("/api/profile/:id", async (req, res) => {
         user.reviews = reviews
         user.read = setBooks(read)
         user.want_to_read = setBooks(wantToRead)
+        delete user.password
+        user.admin = !!user.admin 
         res.send({ data: user })
     } catch {
         res.status(500).send({ data: undefined, message: "Failed fetching profile." })

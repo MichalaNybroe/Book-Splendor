@@ -78,7 +78,7 @@
 
             if (response.ok) {
                 const data = await response.json()
-                book = data.data
+                book = data.data[0]
 
                 title = book.title
                 description = book.description

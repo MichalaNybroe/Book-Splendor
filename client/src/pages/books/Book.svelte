@@ -23,7 +23,7 @@
 
             if (response.ok) {
                 const data = await response.json()
-                return data.data
+                return data.data[0]
             } else {
                 Toastr.warning('Unable to retrieve book.')
             }

@@ -106,15 +106,10 @@
 
             if (response.ok) {
                 const data = await response.json()
-                const dataList = Object.values(data)
+                const dataList = data.data
 
-                if (dataList.length === 1) {
-                    books = [dataList[0]]
-                } else {
-                    books.push(dataList[0])
-                    books = books
-                }
-
+                books = dataList
+                
             } else {
                 Toastr.warning('Unable to retrieve books.')
             }
@@ -128,11 +123,11 @@
     }
 
     async function searchByTitle() {
-        searchBooks(`books/${searchTitle}`)
+        searchBooks(`books?title=${searchTitle}`)
     }
 
     async function searchByAuthor() {
-        searchBooks(`authors/${searchAuthor}`)
+        searchBooks(`authors?name=${searchAuthor}`)
     }
 
 
