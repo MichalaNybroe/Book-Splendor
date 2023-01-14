@@ -8,20 +8,21 @@
     import Modal from 'svelte-simple-modal'
     import { writable } from 'svelte/store'
 
-    const modal = writable(null)
-    const showModal = () => modal.set(GDPR)
-
-    let nameInp = ''
-    let emailInp = ''
-    let passwordInp = ''
-    let passwordInpTwo = ''
-
     const navigate = useNavigate()
 
     if($user) {
         navigate('/')
         Toastr.info('You are already signed in.')
     }
+
+    const modal = writable(null)
+    const showModal = () => modal.set(GDPR)
+    let acceptData = false
+
+    let nameInp = ''
+    let emailInp = ''
+    let passwordInp = ''
+    let passwordInpTwo = ''
 
     async function signUp() {
         if (passwordInp !== passwordInpTwo) {
@@ -74,13 +75,20 @@
                 <input bind:value={passwordInp} type="password" id="signPassInp" placeholder="*********" name="passOne" required>
                 <label for="passsTwo">Reenter password:</label>
                 <input bind:value={passwordInpTwo} type="password" id="signPassInpTwo" placeholder="*********" name="passTwo" required>
-                <input type="submit" id="signSubmit" value="Sign Up">
+                <br>
+                <label>
+                    <input type=checkbox bind:checked={acceptData}>
+                    Accept data treatment to continue
+                </label>
+                <Modal show={$modal}>
+                    <button on:click={showModal}>Read our data compliance</button>
+                </Modal>
+                <br>
+                <button disabled={!acceptData} type="submit" id="signSubmit" value="Sign Up">Sign up</button>
         </form>
     </div>
     <Link to="/login">Return to Login</Link>
 </Router>
 
+
   
-<Modal show={$modal}>
-    <button on:click={showModal}>Data compliance</button>
-</Modal>
