@@ -78,7 +78,7 @@
                 <br>
                 <label>
                     <input type=checkbox bind:checked={acceptData}>
-                    Accept data treatment to continue
+                    Agree to data treatment to continue
                 </label>
                 <Modal show={$modal}>
                     <button on:click={showModal}>Read our data compliance</button>
