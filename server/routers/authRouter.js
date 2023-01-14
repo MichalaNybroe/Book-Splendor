@@ -24,6 +24,16 @@ function checkPasswordSecurity(req, res, next) {
     next()
 }
 
+function checkEmail(req, res, next) {
+    const mail = req.body.email
+    const regex = new RegExp("[a-z0-9]+@[a-z]+\.[a-z]{2,3}")
+    if (regex.test(mail)) {
+        next()
+    } else {
+        res.status(400).send({ message: "Not a valid email." })
+    }
+}
+
 router.post("/login", async (req, res) => {
     const { email, password } = req.body
 
@@ -81,7 +91,7 @@ router.post("/updatePassword", checkPasswordSecurity, (req, res) => {
 })
 
 
-router.post("/signUp", checkPasswordSecurity, async (req, res) => {
+router.post("/signUp", checkEmail, checkPasswordSecurity, async (req, res) => {
     const { username, email, password } = req.body
 
     try {
