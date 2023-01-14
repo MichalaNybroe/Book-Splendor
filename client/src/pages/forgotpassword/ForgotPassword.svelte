@@ -12,7 +12,6 @@
     Toastr.info('You are already signed in.')
     }
 
-
     let emailInp = ''
 
     async function forgotPassword() {
