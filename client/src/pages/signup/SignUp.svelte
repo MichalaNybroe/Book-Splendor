@@ -43,7 +43,8 @@
             username: nameInp,
             email: emailInp,
             password: passwordInp,
-            passwordTwo: passwordInpTwo
+            passwordTwo: passwordInpTwo,
+            acceptData: acceptData
         }
         
         try {

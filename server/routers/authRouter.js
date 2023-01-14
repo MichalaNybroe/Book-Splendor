@@ -102,8 +102,11 @@ router.post("/updatePassword", checkPasswordSecurity, async (req, res) => {
 
 
 router.post("/signUp", checkEmail, checkPasswordSecurity, async (req, res) => {
-    const { username, email, password } = req.body
+    const { username, email, password, acceptData } = req.body
 
+    if (!acceptData) {
+        return res.status(400).send({ message: "You must accept the data treatment to continue" })
+    } else { 
     try {
         const [success,_] = await db.query(`INSERT INTO users(user_name, email, password, admin, picture_number, color)
         VALUES(?,?,?,?,?,?);`, [username, email, await encryptPassword(password), false, 1, "#A3B18A"])
@@ -115,7 +118,7 @@ router.post("/signUp", checkEmail, checkPasswordSecurity, async (req, res) => {
         }
     } catch (error){
         return res.status(400).send({ message: "Invalid data."})
-    }
+    }}
 })
 
 async function randomPasswordGenerator() {
