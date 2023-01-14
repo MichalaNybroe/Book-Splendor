@@ -1,5 +1,6 @@
 <script>
-    import { Router, Link } from 'svelte-navigator'
+    import { Router, Link, useNavigate } from 'svelte-navigator'
+    import { user } from '../../store/auth.js'
     import { BASE_URL } from '../../store/globals.js'
     import * as Toastr from 'toastr'
     import '../../../node_modules/toastr/build/toastr.css'
@@ -8,6 +9,13 @@
     let emailInp = ''
     let passwordInp = ''
     let passwordInpTwo = ''
+
+    const navigate = useNavigate()
+
+    if($user) {
+        navigate('/')
+        Toastr.info('You are already signed in.')
+    }
 
     async function signUp() {
         if (passwordInp !== passwordInpTwo) {
