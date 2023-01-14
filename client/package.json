@@ -20,6 +20,7 @@
     "svelte-confirm": "^0.0.0",
     "svelte-multiselect": "^8.2.1",
     "svelte-navigator": "^3.2.2",
+    "svelte-simple-modal": "^1.4.6",
     "svelte-star-rating": "^2.0.1",
     "toastr": "^2.1.4"
   }

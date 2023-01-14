@@ -4,6 +4,12 @@
     import { BASE_URL } from '../../store/globals.js'
     import * as Toastr from 'toastr'
     import '../../../node_modules/toastr/build/toastr.css'
+    import GDPR from '../../components/GDPR.svelte'
+    import Modal from 'svelte-simple-modal'
+    import { writable } from 'svelte/store'
+
+    const modal = writable(null)
+    const showModal = () => modal.set(GDPR)
 
     let nameInp = ''
     let emailInp = ''
@@ -73,3 +79,8 @@
     </div>
     <Link to="/login">Return to Login</Link>
 </Router>
+
+  
+<Modal show={$modal}>
+    <button on:click={showModal}>Data compliance</button>
+</Modal>
