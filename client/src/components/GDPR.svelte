@@ -90,3 +90,11 @@
 <p>Du har ret til at indgive en klage til Datatilsynet, hvis du er utilfreds med den måde, vi behandler dine personoplysninger på. Du finder Datatilsynets kontaktoplysninger på www.datatilsynet.dk.</p>
 <br>
 <p>Vi vil generelt opfordre dig til at læse mere om GDPR, så du er opdateret på reglerne.</p>
+
+
+<style>
+    h1, h3, h4 {
+        margin-top: 10px;
+        margin-bottom: 5px;
+    }
+</style>
