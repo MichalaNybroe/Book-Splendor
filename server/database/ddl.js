@@ -139,7 +139,10 @@ if (isInDeleteMode) {
     db.execute(`INSERT INTO books(title, description, number, unreleased, img, series_id, recommended) VALUE (?, ?, ?, ?, ?, ?, ?);`, ["Before the Coffee Gets Cold: Tales from the Café", "This beautiful, simple tale tells the story of people who must face up to their past, in order to move on with their lives. Kawaguchi once again invites the reader to ask themselves: what would you change if you could travel back in time?", 2, false, "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1593780745i/54373691.jpg", 6, false])
     db.execute(`INSERT INTO books(title, description, number, unreleased, img, series_id, recommended) VALUE (?, ?, ?, ?, ?, ?, ?);`, ["Maybe Someday", "At twenty-two years old, Sydney has a great life: She's in college, working a steady job, in love with her wonderful boyfriend, Hunter, and rooming with her best friend, Tori. But everything changes when she discovers Hunter's cheating on her--and she is left trying to decide what to do next.", 1, false, "https://d28hgpri8am2if.cloudfront.net/book_images/onix/cvr9781476753164/maybe-someday-9781476753164_hr.jpg", 7, false])
     db.execute(`INSERT INTO books(title, description, number, unreleased, img, series_id, recommended) VALUE (?, ?, ?, ?, ?, ?, ?);`, ["Maybe Not", "When Warren has the opportunity to live with a female roommate, he instantly agrees. It could be an exciting change. Or maybe not.", 2, false, "https://d28hgpri8am2if.cloudfront.net/book_images/onix/cvr9781501125713/maybe-not-9781501125713_hr.jpg", 7, false])
-    db.execute(`INSERT INTO books(title, description, number, unreleased, img, series_id, recommended) VALUE (?, ?, ?, ?, ?, ?, ?);`, ["Witch King", "After being murdered, his consciousness dormant and unaware of the passing of time while confined in an elaborate water trap, Kai wakes to find a lesser mage attempting to harness Kai’s magic to his own advantage. That was never going to go well.", 1, true, "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1663769821l/57861689._SY475_.jpg", null, false])
+    db.execute(`INSERT INTO books(title, description, number, unreleased, img, series_id, recommended) VALUE (?, ?, ?, ?, ?, ?, ?);`, ["Witch King", "After being murdered, his consciousness dormant and unaware of the passing of time while confined in an elaborate water trap, Kai wakes to find a lesser mage attempting to harness Kai's magic to his own advantage. That was never going to go well.", 1, true, "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1663769821l/57861689._SY475_.jpg", null, false])
+    db.execute(`INSERT INTO books(title, description, number, unreleased, img, series_id, recommended) VALUE (?, ?, ?, ?, ?, ?, ?);`, ["Verity", "Lowen Ashleigh is a struggling writer on the brink of financial ruin when she accepts the job offer of a lifetime. Jeremy Crawford, husband of bestselling author Verity Crawford, has hired Lowen to complete the remaining books in a successful series his injured wife is unable to finish.", 1, false, "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1634158558i/59344312.jpg", null, false])
+    db.execute(`INSERT INTO books(title, description, number, unreleased, img, series_id, recommended) VALUE (?, ?, ?, ?, ?, ?, ?);`, ["Gone Girl", "Who are you? What have we done to each other? These are the questions Nick Dunne finds himself asking on the morning of his fifth wedding anniversary when his wife Amy suddenly disappears. The police suspect Nick. Amy's friends reveal that she was afraid of him, that she kept secrets from him. He swears it isn't true. A police examination of his computer shows strange searches. He says they weren't made by him. And then there are the persistent calls on his mobile phone.", 1, false, "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1554086139i/19288043.jpg", null, false])
+    db.execute(`INSERT INTO books(title, description, number, unreleased, img, series_id, recommended) VALUE (?, ?, ?, ?, ?, ?, ?);`, ["Sharp Objects", "Fresh from a brief stay at a psych hospital, reporter Camille Preaker faces a troubling assignment: she must return to her tiny hometown to cover the unsolved murder of a preteen girl and the disappearance of another. For years, Camille has hardly spoken to her neurotic, hypochondriac mother or to the half-sister she barely knows: a beautiful thirteen-year-old with an eerie grip on the town.", 1, false, "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1475695315i/18045891.jpg", null, false])
 
     //users_books
     db.execute(`INSERT INTO users_books(users_id, books_id, want_to_read, has_read) VALUE (?, ?, ?, ?);`, [2, 1, false, true])
@@ -169,6 +172,7 @@ if (isInDeleteMode) {
     db.execute(`INSERT INTO authors(name) VALUE (?);`, ["Martha Wells"])
     db.execute(`INSERT INTO authors(name) VALUE (?);`, ["Toshikazu Kawaguchi"])
     db.execute(`INSERT INTO authors(name) VALUE (?);`, ["Colleen Hoover"])
+    db.execute(`INSERT INTO authors(name) VALUE (?);`, ["Gillian Flynn"])
 
     //books_authors
     db.execute(`INSERT INTO books_authors(books_id, authors_id) VALUE (?, ?);`, [1, 1])
@@ -199,6 +203,9 @@ if (isInDeleteMode) {
     db.execute(`INSERT INTO books_authors(books_id, authors_id) VALUE (?, ?);`, [25, 9])
     db.execute(`INSERT INTO books_authors(books_id, authors_id) VALUE (?, ?);`, [26, 9])
     db.execute(`INSERT INTO books_authors(books_id, authors_id) VALUE (?, ?);`, [27, 7])
+    db.execute(`INSERT INTO books_authors(books_id, authors_id) VALUE (?, ?);`, [28, 9])
+    db.execute(`INSERT INTO books_authors(books_id, authors_id) VALUE (?, ?);`, [29, 10])
+    db.execute(`INSERT INTO books_authors(books_id, authors_id) VALUE (?, ?);`, [30, 10])
 
     //genres
     db.execute(`INSERT INTO genres(name) VALUE (?);`, ["High Fantasy"])
@@ -257,6 +264,9 @@ if (isInDeleteMode) {
     db.execute(`INSERT INTO books_genres(books_id, genres_id) VALUE (?, ?);`, [25, 3])
     db.execute(`INSERT INTO books_genres(books_id, genres_id) VALUE (?, ?);`, [26, 3])
     db.execute(`INSERT INTO books_genres(books_id, genres_id) VALUE (?, ?);`, [27, 7])
+    db.execute(`INSERT INTO books_genres(books_id, genres_id) VALUE (?, ?);`, [28, 4])
+    db.execute(`INSERT INTO books_genres(books_id, genres_id) VALUE (?, ?);`, [29, 4])
+    db.execute(`INSERT INTO books_genres(books_id, genres_id) VALUE (?, ?);`, [30, 4])
 }
 
 db.end()
