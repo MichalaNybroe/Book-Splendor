@@ -20,23 +20,28 @@ router.get("/api/reviews", adminGuard, async (req, res) => {
 router.post("/api/reviews", async (req, res) => {
     if (req.sesssion?.admin !== true) {
         try {
-            const { subject, review, rating, bookId, userId } = req.body
+            const [reviewCheck] = await db.query("SELECT * FROM reviews WHERE reviews.users_id=? AND reviews.books_id=?", [req.session.userid, req.body.bookId])
+            if (reviewCheck.length === 0) {
+                const { subject, review, rating, bookId, userId } = req.body
     
-            const [reviewRes, _] = await db.query("INSERT INTO reviews(subject, text, rating, books_id, users_id) VALUE(?, ?, ?, ?, ?);", [subject, review, rating, bookId, userId])
-            res.send({ affectedRows: reviewRes.affectedRows, message: "Review created." })
+                const [reviewRes, _] = await db.query("INSERT INTO reviews(subject, text, rating, books_id, users_id) VALUE(?, ?, ?, ?, ?);", [subject, review, rating, bookId, userId])
+                res.send({ affectedRows: reviewRes.affectedRows, message: "Review created." })
 
-            const [reviews] = await db.query(
-                `SELECT
-                    reviews.*,
-                    users.user_name AS username,
-                    users.picture_number AS user_picture
-                FROM reviews
-                    JOIN users ON users.id = reviews.users_id
-                WHERE reviews.id=?;`, [reviewRes.insertId])
+                const [reviews] = await db.query(
+                    `SELECT
+                        reviews.*,
+                        users.user_name AS username,
+                        users.picture_number AS user_picture
+                    FROM reviews
+                        JOIN users ON users.id = reviews.users_id
+                    WHERE reviews.id=?;`, [reviewRes.insertId])
 
-            const io = req.app.get('io')
-            io.emit(`Books.${bookId}`, reviews[0])
-            
+                const io = req.app.get('io')
+                io.emit(`Books.${bookId}`, reviews[0])
+                return
+            }
+
+            res.status(400).send({ message: "Only one review pr book." })
         } catch {
             return res.status(400).send("Unable to create review.")
         }
@@ -57,12 +62,18 @@ router.put("/api/reviews/:id", async (req, res) => {
     }
 })
 
-router.delete("/api/reviews/:id", adminGuard, async (req, res) => {
+router.delete("/api/reviews/:id", async (req, res) => {
     try {
-        const result = await db.query("DELETE FROM reviews WHERE reviews.id=?;", [req.params.id])
-        res.send({ data: result })
+        if (req.session.admin !== true) {
+            const [result] = await db.query("DELETE FROM reviews WHERE reviews.id=? AND reviews.users_id=?;", [req.params.id, req.session.userid])
+            res.send({ data: result })
+        } else {
+            const [result] = await db.query("DELETE FROM reviews WHERE reviews.id=?;", [req.params.id])
+            res.send({ data: result })
+        }
+        
     } catch {
-        res.status(404).send({ data: undefined, message: `No review with ${req.params.id} id`})
+        res.status(404).send({ data: undefined, message: "Unsucessfull deletetion of review."})
     }
 })
 
