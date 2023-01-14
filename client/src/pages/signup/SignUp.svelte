@@ -1,8 +1,23 @@
 <script>
-    import { Router, Link } from 'svelte-navigator'
+    import { Router, Link, useNavigate } from 'svelte-navigator'
+    import { user } from '../../store/auth.js'
     import { BASE_URL } from '../../store/globals.js'
     import * as Toastr from 'toastr'
     import '../../../node_modules/toastr/build/toastr.css'
+    import GDPR from '../../components/GDPR.svelte'
+    import Modal from 'svelte-simple-modal'
+    import { writable } from 'svelte/store'
+
+    const navigate = useNavigate()
+
+    if($user) {
+        navigate('/')
+        Toastr.info('You are already signed in.')
+    }
+
+    const modal = writable(null)
+    const showModal = () => modal.set(GDPR)
+    let acceptData = false
 
     let nameInp = ''
     let emailInp = ''
@@ -60,8 +75,20 @@
                 <input bind:value={passwordInp} type="password" id="signPassInp" placeholder="*********" name="passOne" required>
                 <label for="passsTwo">Reenter password:</label>
                 <input bind:value={passwordInpTwo} type="password" id="signPassInpTwo" placeholder="*********" name="passTwo" required>
-                <input type="submit" id="signSubmit" value="Sign Up">
+                <br>
+                <label>
+                    <input type=checkbox bind:checked={acceptData}>
+                    Agree to data treatment to continue
+                </label>
+                <Modal show={$modal}>
+                    <button on:click={showModal}>Read our data compliance</button>
+                </Modal>
+                <br>
+                <button disabled={!acceptData} type="submit" id="signSubmit" value="Sign Up">Sign up</button>
         </form>
     </div>
     <Link to="/login">Return to Login</Link>
 </Router>
+
+
+  

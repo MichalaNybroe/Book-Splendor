@@ -1,9 +1,16 @@
 <script>
-    import { Router, Link } from 'svelte-navigator'
+    import { Router, Link, useNavigate } from 'svelte-navigator'
     import { BASE_URL } from '../../store/globals.js'
+    import { user } from '../../store/auth.js'
     import * as Toastr from 'toastr'
     import '../../../node_modules/toastr/build/toastr.css'
 
+    const navigate = useNavigate()
+
+    if($user) {
+    navigate('/')
+    Toastr.info('You are already signed in.')
+    }
 
     let emailInp = ''
 

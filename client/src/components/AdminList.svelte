@@ -60,6 +60,7 @@
 		{#each columns as column}
 			<th>{column}</th>
 		{/each}
+        <th>Delete</th>
 	</tr>
 	
 	{#each list as row}
@@ -68,12 +69,12 @@
 			<td>{cell}</td>
 			{/each}
             <Confirm
-                confirmTitle="Delete"
-                themeColor="110"
-                let:confirm="{confirmThis}"
+            confirmTitle="Delete"
+            themeColor="110"
+            let:confirm="{confirmThis}"
             >
-                <button on:click={() => confirmThis(deleteRow, row)}>
-                    X
+                <button class="danger" on:click={()=> confirmThis(deleteRow, row)}>
+                    <i class="w3-margin-left fa fa-trash"></i>
                 </button>
             </Confirm>
 		</tr>

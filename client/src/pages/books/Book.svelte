@@ -119,11 +119,7 @@
             {#each book.genres as genre}
                 <Link to="/genres/{genre.id}/books"><Genres genre={genre}/></Link>
             {/each}
-            {#if book.unreleased === 'Released'}
-            {:else}
-            <p>{book.unreleased}</p>
-            {/if}
-            <!-- <p>{book.unreleased ? 'Unreleased' : 'Released'}</p> -->
+            <p>{book.unreleased ? 'Unreleased' : ''}</p>
             <p>Ratings</p>
             {#each [...book.reviews, ...reviewsFromSocket].reverse().slice(0, 5) as review}
                 <Review review={review}></Review>
