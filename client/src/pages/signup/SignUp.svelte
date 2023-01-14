@@ -33,6 +33,12 @@
             return Toastr.warning('The length of the password needs to be longer than 8.')
         }
 
+        const mail = emailInp
+        const regex = new RegExp("[a-z0-9]+@[a-z]+\.[a-z]{2,3}")
+        if (!regex.test(mail)) {
+            return Toastr.warning('Please enter a valid email.')
+        }
+
         const body = {
             username: nameInp,
             email: emailInp,
