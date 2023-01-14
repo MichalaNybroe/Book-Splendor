@@ -106,6 +106,45 @@
         updateMode = false
     }
 
+    let password
+    let passwordTwo
+
+    async function updatePassword() {
+        if (password !== passwordTwo) {
+            return Toastr.warning('The two passwords are not the same.')
+        }
+        
+        if (password.length <8) {
+            return Toastr.warning('The length of the password needs to be longer than 8.')
+        }
+
+        const body = {
+            email: $user.email,
+            password: password,
+            passwordTwo: passwordTwo
+        }
+
+        try {
+            const response = await fetch(`${$BASE_URL}/updatePassword`, {
+                method: 'POST',
+                credentials: 'include',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify(body)
+        })
+
+        if (!response.ok) {
+            const json = await response.json()
+            Toastr.warning(json.message)
+            return
+        }
+
+        const json = await response.json()
+        Toastr.success(json.message)
+        } catch {
+            Toastr.error('Unable to update password. Try again later.')
+        }
+    }
+
     async function deleteOwnProfile() {
         try {
             const response = await fetch(`${$BASE_URL}/api/users/${$user.id}`, {
@@ -142,6 +181,20 @@
         <MultiSelect on:change={() => updatePicture()} bind:selected={pictureSelect} options={pictures} loading={pictures.length===0} maxSelect={1}/>
         <input type="color" bind:value={color} style="height: 50px;" on:change|preventDefault={saveColor} id="colorInp">
         <input type="text" bind:value={username} on:change|preventDefault={updateUserName}>
+
+        <div>
+            <Confirm
+                confirmTitle="Update"
+                themeColor="110"
+                let:confirm="{confirmThis}"
+            >
+                <form on:submit|preventDefault={() => confirmThis(updatePassword)}>
+                    <input type="text" bind:value={password} required>
+                    <input type="text" bind:value={passwordTwo} required>
+                    <input type="submit" value="Update">
+                </form>
+            </Confirm>
+        </div>
 
         <Confirm
             confirmTitle="Delete"

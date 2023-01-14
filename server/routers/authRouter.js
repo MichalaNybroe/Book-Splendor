@@ -68,26 +68,36 @@ router.post("/logout", (req, res) => {
     }
 })
 
-//fjern når vi tænker scope?
 router.post("/forgotPassword",  async (req, res) => {
     const email = req.body.email
-    const link = "www.ja/updatePassword.ja" // hvad skal dette link være // hash værdi
+    const password = await randomPasswordGenerator()
 
     try {
-        await sendMail(email, email, "Password reset", `Please follow link to reset password. ${link}`)
-        res.status(200).send({ message: "An email has been sent to reset password." })
+        const [user, _] = await db.query("UPDATE users SET password=? WHERE email=?;", [await encryptPassword(password), email])
+        await sendMail(email, email, "Password reset", `Your password has been reset to: ${password}. Please remember to change your password once you login with a secure password.`)
+        
+        if (!user) {
+            return res.status(404).send({ message: "Unable to reset password." }) 
+        }
+        res.status(200).send({ message: "An email has been sent with your reset password." })
     } catch {
-        res.status(400).send({ data: undefined, message: "Unsuccessful." })
+        res.status(400).send({ data: undefined, message: "Unsuccessful reset of password." })
     }
 })
 
-//fjern når vi tænker scope?
-router.post("/updatePassword", checkPasswordSecurity, (req, res) => {
-    // how do we check link security?
+router.post("/updatePassword", checkPasswordSecurity, async (req, res) => {
     const { email, password } = req.body
 
-    db.query("UPDATE users SET(password=?) WHERE email=(?);", [password, email])
-    res.status(200).send({ message: "Password Updated." })
+    try {
+        const [user, _] = await db.query("UPDATE users SET password=? WHERE email=?;", [await encryptPassword(password), email])
+
+        if (!user) {
+            return res.status(404).send({ message: "Unable to update password." })
+        }
+        res.status(200).send({ message: "Password Updated." })
+    } catch {
+        res.status(400).send({ data: undefined, message: "Unsuccessful update of password." })
+    }
 })
 
 
@@ -107,5 +117,18 @@ router.post("/signUp", checkEmail, checkPasswordSecurity, async (req, res) => {
         return res.status(400).send({ message: "Invalid data."})
     }
 })
+
+async function randomPasswordGenerator() {
+    // https://dev.to/code_mystery/random-password-generator-using-javascript-6a
+    const chars = "0123456789abcdefghijklmnopqrstuvwxyz!@#$%^&*()ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+    const passwordLength = 12
+    let password = ""
+ for (var i = 0; i <= passwordLength; i++) {
+    let randomNumber = Math.floor(Math.random() * chars.length)
+    password += chars.substring(randomNumber, randomNumber +1)
+  }
+
+  return password
+}
 
 export default router
