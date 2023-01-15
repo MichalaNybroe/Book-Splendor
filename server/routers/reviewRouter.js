@@ -18,7 +18,7 @@ router.get("/api/reviews", adminGuard, async (req, res) => {
 })
 
 router.post("/api/reviews", async (req, res) => {
-    if (req.sesssion?.admin !== true) {
+    if (req.session?.admin !== true) {
         try {
             const [reviewCheck] = await db.query("SELECT * FROM reviews WHERE reviews.users_id=? AND reviews.books_id=?", [req.session.userid, req.body.bookId])
             if (reviewCheck.length === 0) {

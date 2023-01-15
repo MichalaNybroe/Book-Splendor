@@ -27,7 +27,6 @@
     .bookDiv img {
         height: 250px;
         display: block;
-        width: 150px;
         margin-left: auto;
         margin-right: auto;
     }

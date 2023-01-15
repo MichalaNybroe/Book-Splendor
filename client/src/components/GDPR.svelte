@@ -96,5 +96,10 @@
     h1, h3, h4 {
         margin-top: 10px;
         margin-bottom: 5px;
+        text-align: left;  
+    }
+
+    p {
+        text-align: left;   
     }
 </style>
