@@ -39,7 +39,7 @@
         {#if endpoint === 'genres'}
             <PageHeader header={`Books in ${books[0].genres[0].name} Genre`}></PageHeader>
         {:else if endpoint === 'authors'}
-            <PageHeader header={`Books by ${books[0].authors[0].name}`}></PageHeader>
+            <PageHeader header={'Books by Author'}></PageHeader>
         {:else}
         <PageHeader header={`Books in ${books[0].series_title}`}></PageHeader>
         {/if}
