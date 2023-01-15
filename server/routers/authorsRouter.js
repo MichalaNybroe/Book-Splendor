@@ -10,7 +10,7 @@ router.get("/api/authors?", adminGuard, async (req, res) => {
         if (!req.query.name) {
             const [authors,_] = await db.query("SELECT * FROM authors ORDER BY name ASC;")
 
-            if (authors === undefined) {
+            if (!authors) {
                 res.status(400).send({ data: undefined, message: "Unable to retrieve authors."})
             } else {
                 res.send({ data: authors }) }
@@ -33,7 +33,7 @@ router.get("/api/authors?", adminGuard, async (req, res) => {
                 WHERE authors.name LIKE '%${req.query.name}%'`
             )
 
-            if (books === undefined) {
+            if (!books) {
                 res.status(400).send({ data: undefined, message: "Unable to retrieve books."})
             } else {
                 const cleanedBooks = setBooks(books[0])
@@ -75,7 +75,7 @@ router.post("/api/authors", loggedinGuard, adminGuard, async (req, res) => {
 
         const [authorRes, _] = await db.query("INSERT INTO authors(name) VALUE(?);", [name])
         
-        if (authorRes === undefined) {
+        if (!authorRes) {
             return res.status(400).send("Unable to create author.")
         } else {
             res.send({ affectedRows: authorRes.affectedRows, message: "Author created." })

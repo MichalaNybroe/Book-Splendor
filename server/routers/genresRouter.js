@@ -8,7 +8,7 @@ const router = Router()
 router.get("/api/genres", async (req, res) => {
     try {
         const [genres,_] = await db.query("SELECT * FROM genres ORDER BY name ASC;")
-        if (genres === undefined) {
+        if (!genres) {
             res.status(400).send({ data: undefined, message: "Unable to retrieve genres."})
         } else {
             res.send({ data: genres })
@@ -35,7 +35,7 @@ router.get("/api/genres/:id", async (req, res) => {
             LEFT JOIN authors ON books_authors.authors_id = authors.id
         WHERE genres.id=?;`, [req.params.id]
         )
-        if (genresReq === undefined) {
+        if (!genresReq) {
             res.status(404).send({ data: undefined, message: "Unable to retrieve books in this genre." })
         } else {
             res.send({ data: setBooks(genresReq)})
@@ -52,7 +52,7 @@ router.post("/api/genres", loggedinGuard, adminGuard, async (req, res) => {
         if (!name) return res.status(400).send({ message: "Genre name is undefined." })
     
         const [genreRes, _] = await db.query("INSERT INTO genres(name) VALUE(?);", [name])
-        if (genreRes === undefined) {
+        if (!genreRes) {
             return res.status(404).send("Unable to create genre.")
         }
         res.send({ affectedRows: genreRes.affectedRows, message: "Genre created." })

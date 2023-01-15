@@ -17,7 +17,7 @@
             if(response.ok) {
                 const data = await response.json()
                 const books = data.data
-                console.log(books)
+                
                 return books
             } else {
                 const data = await response.json()
