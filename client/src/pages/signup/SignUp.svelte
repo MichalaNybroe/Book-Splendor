@@ -69,7 +69,6 @@
     }
 </script>
 
-
 <Router primary={false}>
     <div id="signBox">
         <form id="signForm" action="/singUp" method="POST" on:submit|preventDefault={signUp}>
@@ -96,6 +95,3 @@
     </div>
     <Link to="/login">Return to Login</Link>
 </Router>
-
-
-  

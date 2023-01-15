@@ -206,7 +206,7 @@
 
         <Button on:click={() => exitEditMode()}>Exit Edit</Button>
     {:else}
-        <Button on:click={() => enterEditMode()}>Edit Profile</Button>
+        <Button class="create" on:click={() => enterEditMode()}>Edit Profile</Button>
     {/if}
 
     <h3>Want to read</h3>
