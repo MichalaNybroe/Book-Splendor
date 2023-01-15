@@ -225,9 +225,13 @@
 
     <h3>Own Reviews</h3>
     <div id="reviewList">
-        {#each user.reviews as review}
+        {#each user.reviews as review, i}         
+       
+        
             <h5><UsersReview review={review}></UsersReview></h5>
-        {/each}
+            {#if i % 5 === 0}
+            {/if}
+            {/each}
     </div>
 {/await}
 
