@@ -178,9 +178,17 @@
 
     {#if updateMode === true}
         <PageHeader header={'Edit Profile'}></PageHeader>
+        <h4>Change icon</h4>
         <MultiSelect on:change={() => updatePicture()} bind:selected={pictureSelect} options={pictures} loading={pictures.length===0} maxSelect={1}/>
+        <br>
+        <h4>Change banner color</h4>
         <input type="color" bind:value={color} style="height: 50px;" on:change|preventDefault={saveColor} id="colorInp">
+        <br>
+        <br>
+        <h4>Change username</h4>
         <input type="text" bind:value={username} on:change|preventDefault={updateUserName}>
+        <br>  
+        <br>  
 
         <div>
             <Confirm
@@ -189,22 +197,32 @@
                 let:confirm="{confirmThis}"
             >
                 <form on:submit|preventDefault={() => confirmThis(updatePassword)}>
-                    <input type="text" bind:value={password} required>
-                    <input type="text" bind:value={passwordTwo} required>
-                    <input type="submit" value="Update">
+                    <h4>Change password</h4>
+                    <input type="text" placeholder="New password" bind:value={password} required>
+                    <br>
+                    <br>
+                    <input type="text" placeholder="Repeat new password" bind:value={passwordTwo} required>
+                    <br>
+                    <br>
+                    <Button class="create" type="submit">Update</Button>
+                    
                 </form>
             </Confirm>
         </div>
 
-        <Confirm
-            confirmTitle="Delete"
-            themeColor="110"
-            let:confirm="{confirmThis}"
-        >
-            <Button class="danger" on:click={() => confirmThis(deleteOwnProfile)}>Delete User</Button>
-        </Confirm>
+        <br>
+        <Button class="create" on:click={() => exitEditMode()}>Exit Edit</Button>
 
-        <Button on:click={() => exitEditMode()}>Exit Edit</Button>
+        <div class="right">
+            <Confirm
+                confirmTitle="Delete"
+                themeColor="110"
+                let:confirm="{confirmThis}"
+            >
+                <Button class="deleteUser" on:click={() => confirmThis(deleteOwnProfile)}>Delete User</Button>
+            </Confirm>
+        </div>
+        
     {:else}
         <Button class="create" on:click={() => enterEditMode()}>Edit Profile</Button>
     {/if}
@@ -246,8 +264,16 @@
         width: 20%;
     }
 
+    h4 {
+        margin-bottom: 4px;
+    }
+
     h3 {
         margin-top: 20px;
         margin-bottom: 50px;
+    }
+
+    .right {
+        float: right;
     }
 </style>
