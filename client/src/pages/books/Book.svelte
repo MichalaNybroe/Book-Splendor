@@ -190,7 +190,7 @@
                 <p>{book.unreleased ? 'Unreleased' : ''}</p>
                 <h4>Description</h4>
                 <p>{book.description}</p>
-                {#if $user}
+                {#if $user && $user.admin === false}
                     <h4>Set status</h4>
                     <label>
                         <input type="checkbox" bind:checked={has_read} on:change={() => setHasRead(book)}>
@@ -215,7 +215,7 @@
            
 
 
-            {#if $user}
+            {#if $user && $user.admin === false}
             <div id="leaveReview">
                 <form on:submit|preventDefault={leaveReview}>
 
