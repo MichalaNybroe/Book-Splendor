@@ -1,5 +1,5 @@
 import { Router } from "express"
-import { adminGuard, loggedinGuard } from "../util/guard.js"
+import { adminGuard } from "../util/guard.js"
 import db from "../database/connection.js"
 import { setBooks } from "../util/setBooks.js"
 
@@ -45,7 +45,7 @@ router.get("/api/series/:id", async (req, res) => {
     }
 })
 
-router.post("/api/series", loggedinGuard, adminGuard, async (req, res) => {
+router.post("/api/series", adminGuard, async (req, res) => {
     try {
         const { title } = req.body
 

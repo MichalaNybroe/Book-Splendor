@@ -1,5 +1,5 @@
 import { Router } from "express"
-import { adminGuard, loggedinGuard } from "../util/guard.js"
+import { adminGuard } from "../util/guard.js"
 import db from "../database/connection.js"
 import { setBooks } from "../util/setBooks.js"
 
@@ -30,7 +30,7 @@ router.get("/api/authors?", adminGuard, async (req, res) => {
                     LEFT JOIN books_genres ON books.id = books_genres.books_id
                     LEFT JOIN genres ON books_genres.genres_id = genres.id
                     LEFT JOIN series ON series.id = books.series_id
-                WHERE authors.name LIKE '%${req.query.name}%'`
+                WHERE authors.name LIKE ?;`, ["%" + req.query.name + "%"]
             )
 
             if (!books) {
@@ -68,7 +68,7 @@ router.get("/api/authors/:id", async (req, res) => {
     }
 })
 
-router.post("/api/authors", loggedinGuard, adminGuard, async (req, res) => {
+router.post("/api/authors", adminGuard, async (req, res) => {
     try {
         const name = req.body.name
         if (!name) return res.status(400).send({ message: "Author name is undefined." })

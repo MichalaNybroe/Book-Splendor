@@ -1,12 +1,10 @@
 import { Router } from "express"
-import { adminGuard, loggedinGuard, userGuard } from "../util/guard.js"
+import { adminGuard, loggedinGuard } from "../util/guard.js"
 import db from "../database/connection.js"
 
 const router = Router()
 
 router.use(loggedinGuard)
-
-// user hent egne, opret, opdater og slet
 
 router.get("/api/reviews", adminGuard, async (req, res) => {
     try {
@@ -54,9 +52,14 @@ router.put("/api/reviews/:id", async (req, res) => {
     try {
         const { subject, text, rating } = req.body
 
+        if (req.session.admin !== true) {
         const [reviewRes, _] = await db.query("UPDATE reviews SET subject = ?, text = ?, rating = ? WHERE id=? AND users_id=?;", [subject, text, rating, req.params.id, req.session.userId])
     
         res.send({ affectedRows: reviewRes.affectedRows})
+        return
+        }
+
+        res.status(401).send({ message: "Unauthorized to update this review"})
     } catch {
         return res.status(500).send({ message: "Unsucessfull update of review." })
     }

@@ -1,11 +1,11 @@
 import { Router } from "express"
-import { adminGuard, loggedinGuard } from "../util/guard.js"
+import { adminGuard } from "../util/guard.js"
 import db from "../database/connection.js"
 import { setBooks } from "../util/setBooks.js"
 
 const router = Router()
 
-router.get("/api/genres", async (req, res) => {
+router.get("/api/genres", adminGuard, async (req, res) => {
     try {
         const [genres,_] = await db.query("SELECT * FROM genres ORDER BY name ASC;")
         if (!genres) {
@@ -45,7 +45,7 @@ router.get("/api/genres/:id", async (req, res) => {
     }
 })
 
-router.post("/api/genres", loggedinGuard, adminGuard, async (req, res) => {
+router.post("/api/genres", adminGuard, async (req, res) => {
     try {
         const { name } = req.body
 

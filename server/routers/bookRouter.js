@@ -160,7 +160,7 @@ router.get("/api/books/:id", async (req, res) => {
     }
 })
 
-router.post("/api/books", loggedinGuard, adminGuard, checkBookInput, async (req, res) => {
+router.post("/api/books", adminGuard, checkBookInput, async (req, res) => {
     try {
         const { title, description, number, series, unreleased, img, authors, genres} = req.body
 
@@ -180,7 +180,7 @@ router.post("/api/books", loggedinGuard, adminGuard, checkBookInput, async (req,
     }
 })
 
-router.put("/api/books/:id", loggedinGuard, adminGuard, checkBookInput, async (req, res) => {
+router.put("/api/books/:id", adminGuard, checkBookInput, async (req, res) => {
     try {
         const { title, description, number, series, unreleased, img, authors, genres} = req.body
 
@@ -203,7 +203,7 @@ router.put("/api/books/:id", loggedinGuard, adminGuard, checkBookInput, async (r
 })
 
 // save book of the week id
-router.patch("/api/books/:id", loggedinGuard, adminGuard, async (req, res) => {
+router.patch("/api/books/:id", adminGuard, async (req, res) => {
     try {
         const { recommended } = req.body
 
@@ -221,6 +221,10 @@ router.patch("/api/books/:id", loggedinGuard, adminGuard, async (req, res) => {
 // mark book as read 
 router.post("/api/books/:id/hasRead", loggedinGuard, async (req, res) => {
     try {
+        if ( req.session.admin === true) {
+           res.status(401).send({ message: "Not authorized." })
+           return
+        }
         const { userid, hasRead } = req.body
         const [book, _] = await db.query("INSERT INTO users_books (users_id, books_id, has_read) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE users_id = ?, books_id = ?, has_read = ?;", [userid, req.params.id, hasRead, userid, req.params.id, hasRead])
         if(!book) {
@@ -236,6 +240,10 @@ router.post("/api/books/:id/hasRead", loggedinGuard, async (req, res) => {
 // mark book as want to read 
 router.post("/api/books/:id/wantToRead", loggedinGuard, async (req, res) => {
     try {
+        if ( req.session.admin === true) {
+            res.status(401).send({ message: "Not authorized." })
+            return
+        }
         const { userid, wantToRead } = req.body
 
         const [book, _] = await db.query("INSERT INTO users_books (users_id, books_id, want_to_read) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE users_id = ?, books_id = ?, want_to_read = ?;", [userid, req.params.id, wantToRead, userid, req.params.id, wantToRead])
@@ -249,7 +257,7 @@ router.post("/api/books/:id/wantToRead", loggedinGuard, async (req, res) => {
    
 })
 
-router.delete("/api/books/:id", loggedinGuard, adminGuard, async (req, res) => {
+router.delete("/api/books/:id", adminGuard, async (req, res) => {
     try {
         const result = await db.query("DELETE FROM books WHERE books.id=?;", [req.params.id])
         if (!result) {

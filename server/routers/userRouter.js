@@ -68,18 +68,4 @@ router.delete("/api/users/:id", async (req, res, next) => {
     } 
 })
 
-router.delete("/api/users/:userid/reviews/:reviewid", async (req, res) => {
-    if (req.session.userid === Number(req.params.userid)) {
-        try {
-            const result = await db.query("DELETE FROM reviews WHERE users_id=? AND id=?;", [req.params.userid, req.params.reviewid])
-            res.send({ data: result })
-        } catch {
-            res.status(404).send({ data: undefined, message: `No user with ${req.params.id} id`})
-        }
-    } else {
-        return res.status(401).send({ message: "Not authorized." })
-    }
-})
-
-
 export default router
