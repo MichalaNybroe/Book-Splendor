@@ -69,29 +69,103 @@
     }
 </script>
 
-<Router primary={false}>
-    <div id="signBox">
-        <form id="signForm" action="/singUp" method="POST" on:submit|preventDefault={signUp}>
-            <h3>Sign up</h3>
-                <label for="name">Username:</label>
-                <input bind:value={nameInp} type="text" id="signNameInp" placeholder="May Flower" name="name" required>
-                <label for="email">Email:</label>
-                <input bind:value={emailInp} type="email" id="signEmailInp" placeholder="flower@mail.dk" name="email" required>
-                <label for="passOne">Password:</label>
-                <input bind:value={passwordInp} type="password" id="signPassInp" placeholder="*********" name="passOne" required>
-                <label for="passsTwo">Reenter password:</label>
-                <input bind:value={passwordInpTwo} type="password" id="signPassInpTwo" placeholder="*********" name="passTwo" required>
-                <br>
-                <label>
-                    <input type=checkbox bind:checked={acceptData}>
-                    Agree to data treatment to continue
-                </label>
-                <Modal show={$modal}>
-                    <button on:click={showModal}>Read our data compliance</button>
-                </Modal>
-                <br>
-                <button disabled={!acceptData} type="submit" id="signSubmit" value="Sign Up">Sign up</button>
-        </form>
+<div id="outer">
+    <div id="container">
+        <Router primary={false}>
+            <div id="signBox">
+                <form id="signForm" action="/singUp" method="POST" on:submit|preventDefault={signUp}>
+                    <h1>Sign up!</h1>
+                    <br>
+                    <label for="name">Username:</label>
+                    <br>
+                    <input bind:value={nameInp} type="text" id="signNameInp" placeholder="May Flower" name="name" required>
+                    <br>
+                    <br>
+                    <label for="email">Email:</label>
+                    <br>
+                    <input bind:value={emailInp} type="email" id="signEmailInp" placeholder="flower@mail.dk" name="email" required>
+                    <br>
+                    <br>
+                    <label for="passOne">Password:</label>
+                    <br>
+                    <input bind:value={passwordInp} type="password" id="signPassInp" placeholder="*********" name="passOne" required>
+                    <br>
+                    <br>
+                    <label for="passsTwo">Reenter password:</label>
+                    <br>
+                    <input bind:value={passwordInpTwo} type="password" id="signPassInpTwo" placeholder="*********" name="passTwo" required>
+                    <br>
+                    <br>
+                    <label>
+                        <input type=checkbox style="width: 20px" bind:checked={acceptData}>
+                        Agree to continue
+                    </label>
+                    <br>
+                    <Modal show={$modal}>
+                        <button class="create" on:click={showModal}>Read our data compliance</button>
+                    </Modal>
+                    <br>
+                    <br>
+                    <button disabled={!acceptData} type="submit" id="signSubmit" value="Sign Up">Sign up</button>
+                    <br>
+                    <br>
+                    <Link to="/login">Return to Login</Link>
+                    <br>
+                    <br>
+                </form>
+            </div>
+            
+        </Router>
     </div>
-    <Link to="/login">Return to Login</Link>
-</Router>
+</div>
+
+<style>
+    form {
+        text-align: center;
+    }
+
+    h1 {
+        color: #474544;
+        font-size: 32px;
+        font-weight: 700;
+        letter-spacing: 7px;
+        text-align: center;
+        text-transform: uppercase;
+        margin-top: 10px;
+  }
+
+    #container {
+        border: solid 3px #474544;
+        max-width: 768px;
+        margin: 60px auto;
+        position: relative;
+  }
+
+  .create {
+        background: none;
+        border: solid 1px #474544;
+        color: #474544;
+        cursor: pointer;
+        display: inline-block;
+        font-family: "Helvetica", Arial, sans-serif;
+        font-size: 0.875em;
+        font-weight: bold;
+        outline: none;
+        padding: 5px 15px;
+        width: 210px; 
+    }
+
+    .create:hover {
+        background: #474544;
+        color: #f2f3eb;
+    }
+
+    #outer {
+        height: 50vh;
+    }
+
+    input {
+        width: 203px;
+    }
+
+</style>

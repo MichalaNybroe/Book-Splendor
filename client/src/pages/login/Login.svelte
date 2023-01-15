@@ -50,41 +50,46 @@
     }
 </script>
 
-<div id="container">
 
-<Router primary={false}>
-    <div id="loginBox">
-        <form action="/login" method="POST" id="loginForm" on:submit|preventDefault={login}>
-            <h1>Sign In!</h1>
-            <br />
-            <label for="email">Email:</label>
+<div id="outer">
+    <div id="container">
+
+        <Router primary={false}>
+            <div id="loginBox">
+                <form action="/login" method="POST" id="loginForm" on:submit|preventDefault={login}>
+                    <h1>Sign In!</h1>
+                    <br>
+                    <label for="email">Email:</label>
+                    <br>
+                    <input
+                        type="email"
+                        name="email"
+                        placeholder="your@mail.dk"
+                        id="email"
+                        bind:value={emailInp}/>
+                    <br>
+                    <br>
+                    <label for="password">Password:</label>
+                    <br>
+                    <input
+                        type="password"
+                        name="password"
+                        placeholder="*********"
+                        id="password"
+                        bind:value={passwordInp}
+                    />
+                    <br>
+                    <br>
+                    <Button class="login">Login </Button>
+                    <Link to="/forgotPassword"><p  id="forgotPW">Forgot your password?</p></Link>
+                    <br>
+                    <Link to="/signUp"><p id="signUp">Sign Up</p></Link>
+                </form>
+            </div>
             <br>
-            <input
-                type="email"
-                name="email"
-                placeholder="your@mail.dk"
-                id="email"
-                bind:value={emailInp}/>
-            <br />
-            <br>
-            <label for="password">Password:</label>
-            <br>
-            <input
-                type="password"
-                name="password"
-                placeholder="*********"
-                id="password"
-                bind:value={passwordInp}
-            />
-            <br />
-            <br>
-            <Button class="login">Login </Button>
-            <Link to="/forgotPassword"><p  id="forgotPW">Forgot your password?</p></Link>
-            <Link to="/signUp"><p id="signUp">Sign Up</p></Link>
-        </form>
+        </Router>
+
     </div>
-</Router>
-
 </div>
 
 
@@ -100,6 +105,7 @@
         letter-spacing: 7px;
         text-align: center;
         text-transform: uppercase;
+        margin-top: 10px;
   }
 
     #container {
@@ -109,4 +115,7 @@
         position: relative;
   }
 
+    #outer {
+        height: 50vh;
+    }
 </style>

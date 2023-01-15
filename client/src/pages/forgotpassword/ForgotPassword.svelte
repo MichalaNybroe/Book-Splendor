@@ -36,21 +36,86 @@
     }
 </script>
 
-<Router primary={false}>
-    <div id="forgotBox">
-        <form id="forgotForm" on:submit|preventDefault={forgotPassword}>
-            <h3>
-                Enter email and we will send you a mail with your new password.
-            </h3>
-            <p>Remember to change your password after.</p>
-            <input
-                bind:value={emailInp}
-                type="email"
-                id="forgotEmailInp"
-                placeholder="shelter@mail.dk"
-            />
-            <input type="submit" id="forgotSubmit" value="Reset" />
-        </form>
+<div id="outer">
+    <div id="container">
+
+        <Router primary={false}>
+            <div id="forgotBox">
+                <form id="forgotForm" on:submit|preventDefault={forgotPassword}>
+                    <h1>Forgot Password?</h1>
+                    <br>
+                    <h3>Enter email and we will send you a mail with your new password.</h3>
+                    <br>
+                    <p>Remember to change your password after.</p>
+                    <br>
+                    <input
+                        bind:value={emailInp}
+                        type="email"
+                        id="forgotEmailInp"
+                        placeholder="yourmailhere@mail.dk"
+                    />
+                    <br>
+                    <br>
+                    <input class="create" type="submit" id="forgotSubmit" value="Reset" />
+                    <br>
+                    <br>
+                    <Link to="/login" class="link">Return to Login</Link>
+                    <br>
+                    <br>
+                </form>
+            </div>
+   
+        </Router>
     </div>
-    <Link to="/login" class="link">Return to Login</Link>
-</Router>
+</div>
+
+
+<style>
+    form {
+        text-align: center;
+    }
+
+    h1 {
+        color: #474544;
+        font-size: 32px;
+        font-weight: 700;
+        letter-spacing: 7px;
+        text-align: center;
+        text-transform: uppercase;
+        margin-top: 10px;
+  }
+
+    #container {
+        border: solid 3px #474544;
+        max-width: 768px;
+        margin: 60px auto;
+        position: relative;
+  }
+
+    .create {
+        background: none;
+        border: solid 1px #474544;
+        color: #474544;
+        cursor: pointer;
+        display: inline-block;
+        font-family: "Helvetica", Arial, sans-serif;
+        font-size: 0.875em;
+        font-weight: bold;
+        outline: none;
+        padding: 5px 15px;
+        width: 210px; 
+    }
+
+    .create:hover {
+        background: #474544;
+        color: #f2f3eb;
+    }
+
+    #outer {
+        height: 50vh;
+    }
+
+    input {
+        width: 203px;
+    }
+</style>
