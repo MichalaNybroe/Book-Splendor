@@ -284,6 +284,10 @@
     #profilebanner {
         display: flex;
         align-items: center;
+    }
 
+    img {
+        border-radius: 50%;
+        border: 5px solid #181818;
     }
 </style>
