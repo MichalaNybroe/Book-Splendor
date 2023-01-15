@@ -155,7 +155,7 @@
     }
 
 </script>
-
+<div class="center-container">
 {#if utilMode === false}
     <PageHeader header={'Create Book'}></PageHeader>
     <form on:submit|preventDefault={handleSubmit}
@@ -228,13 +228,16 @@
         <br>
         <input type="text" placeholder="Lord of the Rings" bind:value={newData} required>
         <br>
-        <br>
+ 
         <Button class="create">Create {!selectedOption ? 'Element' : selectedOption}</Button>
     </form>
     <p>
     <Button class="goback" on:click={exitUtilMode}>Back to Book</Button>
     </p>
 {/if}
+
+</div>
+
 <style>
     form {
         margin-left: 5%;

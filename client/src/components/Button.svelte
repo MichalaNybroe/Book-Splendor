@@ -31,6 +31,7 @@
         font-weight: bold;
         outline: none;
         margin-bottom: 10px;
+        margin-top: 10px;
     }
 
     button:hover {

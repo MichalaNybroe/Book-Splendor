@@ -173,7 +173,7 @@
     <div id="profilebanner" style="background-color: {color};color:white">
         <img id="profilePicture" src="/profilPictures/{pictureSelect[0].id}.png" alt="Profile." height="200">
 
-        <PageHeader header={username}></PageHeader>
+        <h1 class="center">{username}</h1>
     </div>
 
     {#if updateMode === true}
@@ -268,7 +268,22 @@
         margin-bottom: 50px;
     }
 
+    h1 {
+        font-size: 60px;
+    }
+
     .right {
         float: right;
+    }
+
+    .center {
+        text-align: center;
+        margin-left: 25%;
+    }
+
+    #profilebanner {
+        display: flex;
+        align-items: center;
+
     }
 </style>
