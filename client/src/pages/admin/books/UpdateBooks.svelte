@@ -149,74 +149,71 @@
 {#await insertBook()}
     <p>Loading...</p>
 {:then _}
+    
     <PageHeader header={`Update: "${title}"`}></PageHeader>
-    <form on:submit|preventDefault={handleSubmit}
-    id="create_book_form"
-    method="POST"
-    action="/createbook">
+    <div class="center-container">
+        <form on:submit|preventDefault={handleSubmit}
+        id="create_book_form"
+        method="POST"
+        action="/createbook">
 
-        <div class="title">
-            <label for="title">Title</label>
+            <div class="title">
+                <label for="title">Title</label>
+                <br>
+                <input type="text" placeholder="Title" name="title" id="title" bind:value={title} required>
+            </div>
             <br>
-            <input type="text" placeholder="Title" name="title" id="title" bind:value={title} required>
-        </div>
-        <br>
-        <div class="number">
-            <label for="number">Number</label>
+            <div class="number">
+                <label for="number">Number</label>
+                <br>
+                <input type="number" placeholder=1 name="number" id="number" min=1 bind:value={number} required>
+            </div>
             <br>
-            <input type="number" placeholder=1 name="number" id="number" min=1 bind:value={number} required>
-        </div>
-        <br>
-        <div class="multiselect">
-            <label for="series">Series</label>
-            <MultiSelect bind:selected={selectedSeries} options={series} loading={series.length===0} maxSelect={1} name="series" id="series"/>
-        </div>
-        <br>
-        <div class="multiselect">
-            <label for="authors">Authors</label>
-            <MultiSelect bind:selected={selectedAuthors} options={authors} loading={authors.length===0} minSelect={1} name="authors" required/>
-        </div>
-        <br>
-        <div class="description">
-            <label for="description">Description</label>
+            <div class="multiselect">
+                <label for="series">Series</label>
+                <MultiSelect bind:selected={selectedSeries} options={series} loading={series.length===0} maxSelect={1} name="series" id="series"/>
+            </div>
             <br>
-            <textarea name="description" placeholder="Description" id="description" cols="30" rows="5" bind:value={description} required/>
-        </div>
-        <br>
-        <div class="book_img">
-            <label for="book_img">Image</label>
+            <div class="multiselect">
+                <label for="authors">Authors</label>
+                <MultiSelect bind:selected={selectedAuthors} options={authors} loading={authors.length===0} minSelect={1} name="authors" required/>
+            </div>
             <br>
-            <input type="text" placeholder="Image" name="img" id="book_img" bind:value={book_img} required>
-        </div>
-        <br>
-        <div class="multiselect">
-            <label for="genres">Genres</label>
-            <MultiSelect bind:selected={selectedGenres} options={genres} loading={genres.length===0} minSelect={1} name="genres" required/>
-        </div>
-        <br>
-        <div class="releaseStatus">
-            <label for="unreleased">Unreleased</label>
-            <input bind:checked={unreleased} type="checkbox" name="unreleased" id="unreleased">        
-        </div>
-        <br>
-        <div class="submit">
-            <Button class="create">Update Book</Button>
-        </div>
-    </form>
+            <div class="description">
+                <label for="description">Description</label>
+                <br>
+                <textarea name="description" placeholder="Description" id="description" cols="30" rows="5" bind:value={description} required/>
+            </div>
+            <br>
+            <div class="book_img">
+                <label for="book_img">Image</label>
+                <br>
+                <input type="text" placeholder="Image" name="img" id="book_img" bind:value={book_img} required>
+            </div>
+            <br>
+            <div class="multiselect">
+                <label for="genres">Genres</label>
+                <MultiSelect bind:selected={selectedGenres} options={genres} loading={genres.length===0} minSelect={1} name="genres" required/>
+            </div>
+            <br>
+            <div class="releaseStatus">
+                <label for="unreleased">Unreleased</label>
+                <input bind:checked={unreleased} type="checkbox" name="unreleased" id="unreleased">        
+            </div>
+            <br>
+            <div class="submit">
+                <Button class="create">Update Book</Button>
+            </div>
+        </form>
 
-    <p>
-    <Button class="goback" on:click={() => navigate(-1)}>Go back</Button>
-    </p>
+        <div id="goback">
+            <p>
+                <Button class="goback" on:click={() => navigate(-1)}>Go back</Button>
+            </p>
+        </div>
+    </div>
 {/await}
 <style>
-    form {
-        margin-left: 5%;
-    }
-
-    p {
-        margin-left: 5%;
-    }
-
     input {
         width: 50%;
         font-family: Georgia, 'Times New Roman', Times, serif;
@@ -231,7 +228,7 @@
     }
 
     .multiselect {
-        width: 51%
+        width: 50.5%
     }
 
     #number {
@@ -251,4 +248,17 @@
         width: 20%;
     }
 
+    .center-container {
+        display: grid;
+        grid-template-columns: 20% 80% 20%;
+    }
+
+    .center-container  form {
+        grid-row: 1;
+        grid-column: 2;
+    }
+
+    #goback {
+        grid-row: 2;
+    }
 </style>
