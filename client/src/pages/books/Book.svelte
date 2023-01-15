@@ -211,14 +211,13 @@
             </form>
 
             <h4>Set status</h4>
-           
             <label>
-            <input type="checkbox" bind:checked={hasRead} on:change={() => setHasRead(book)}>
-            Has read
+                <input type="checkbox" bind:checked={hasRead} on:change={() => setHasRead(book)}>
+                Has read
             </label>
             <label>
-            <input type="checkbox" bind:checked={wantToRead} on:change={() => setWantToRead(book)}>
-            Want to read
+                <input type="checkbox" bind:checked={wantToRead} on:change={() => setWantToRead(book)}>
+                Want to read
             </label>
 
             {/if}
