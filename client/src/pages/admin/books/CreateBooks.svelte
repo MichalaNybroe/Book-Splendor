@@ -155,7 +155,7 @@
     }
 
 </script>
-
+<div class="center-container">
 {#if utilMode === false}
     <PageHeader header={'Create Book'}></PageHeader>
     <form on:submit|preventDefault={handleSubmit}
@@ -209,11 +209,11 @@
         <br>
         <div class="submit">
             <Button class="create">Create Book</Button>
+        
         </div>
     </form>
     <p>
     <Button class="create" on:click={enterUtilMode}>UtilMode</Button>
-    <br>
     <br>
     <Button class="goback" on:click={() => navigate(-1)}>Go back</Button>
     </p>
@@ -228,13 +228,16 @@
         <br>
         <input type="text" placeholder="Lord of the Rings" bind:value={newData} required>
         <br>
-        <br>
+ 
         <Button class="create">Create {!selectedOption ? 'Element' : selectedOption}</Button>
     </form>
     <p>
     <Button class="goback" on:click={exitUtilMode}>Back to Book</Button>
     </p>
 {/if}
+
+</div>
+
 <style>
     form {
         margin-left: 5%;
@@ -258,7 +261,7 @@
     }
 
     .multiselect {
-        width: 51%
+        width: 51%;
     }
 
     #number {
@@ -277,5 +280,7 @@
     .releaseStatus {
         width: 20%;
     }
+
+ 
 
 </style>

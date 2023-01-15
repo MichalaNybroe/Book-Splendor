@@ -203,7 +203,6 @@
             <Button class="create">Update Book</Button>
         </div>
     </form>
-    <br>
 
     <p>
     <Button class="goback" on:click={() => navigate(-1)}>Go back</Button>

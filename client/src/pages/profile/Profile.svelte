@@ -173,14 +173,22 @@
     <div id="profilebanner" style="background-color: {color};color:white">
         <img id="profilePicture" src="/profilPictures/{pictureSelect[0].id}.png" alt="Profile." height="200">
 
-        <PageHeader header={username}></PageHeader>
+        <h1 class="center">{username}</h1>
     </div>
 
     {#if updateMode === true}
         <PageHeader header={'Edit Profile'}></PageHeader>
+        <h4>Change icon</h4>
         <MultiSelect on:change={() => updatePicture()} bind:selected={pictureSelect} options={pictures} loading={pictures.length===0} maxSelect={1}/>
+        <br>
+        <h4>Change banner color</h4>
         <input type="color" bind:value={color} style="height: 50px;" on:change|preventDefault={saveColor} id="colorInp">
+        <br>
+        <br>
+        <h4>Change username</h4>
         <input type="text" bind:value={username} on:change|preventDefault={updateUserName}>
+        <br>  
+        <br>  
 
         <div>
             <Confirm
@@ -189,50 +197,55 @@
                 let:confirm="{confirmThis}"
             >
                 <form on:submit|preventDefault={() => confirmThis(updatePassword)}>
-                    <input type="text" bind:value={password} required>
-                    <input type="text" bind:value={passwordTwo} required>
-                    <input type="submit" value="Update">
+                    <h4>Change password</h4>
+                    <input type="text" placeholder="New password" bind:value={password} required>
+                    <br>
+                    <br>
+                    <input type="text" placeholder="Repeat new password" bind:value={passwordTwo} required>
+                    <br>
+                    <br>
+                    <Button class="create" type="submit">Update</Button>
+                    
                 </form>
             </Confirm>
         </div>
 
-        <Confirm
-            confirmTitle="Delete"
-            themeColor="110"
-            let:confirm="{confirmThis}"
-        >
-            <Button class="danger" on:click={() => confirmThis(deleteOwnProfile)}>Delete User</Button>
-        </Confirm>
+        <Button class="create" on:click={() => exitEditMode()}>Exit Edit</Button>
 
-        <Button on:click={() => exitEditMode()}>Exit Edit</Button>
+        <div class="right">
+            <Confirm
+                confirmTitle="Delete"
+                themeColor="110"
+                let:confirm="{confirmThis}"
+            >
+                <Button class="deleteUser" on:click={() => confirmThis(deleteOwnProfile)}>Delete User</Button>
+            </Confirm>
+        </div>
+        
     {:else}
         <div id="editProfile">
-            <Button on:click={() => enterEditMode()}>Edit Profile</Button>
+            <Button class="create" on:click={() => enterEditMode()}>Edit Profile</Button>
         </div>
     {/if}
 
     <h3>Want to read</h3>
     <div id="toReadList">
-        {#each user?.want_to_read as book}
+        {#each user?.want_to_read.slice(0,5) as book}
             <h5><Book book={book}></Book></h5>
         {/each}
     </div>
 
     <h3>Read</h3>
     <div id="readList">
-        {#each user?.read as book}
+        {#each user?.read.slice(0,5) as book}
             <h5><Book book={book}></Book></h5>
         {/each}
     </div>
 
     <h3>Own Reviews</h3>
     <div id="reviewList">
-        {#each user.reviews as review, i}         
-       
-        
+        {#each user.reviews.slice(0,5) as review}         
             <h5><UsersReview review={review}></UsersReview></h5>
-            {#if i % 5 === 0}
-            {/if}
             {/each}
     </div>
 {/await}
@@ -248,9 +261,31 @@
         width: 20%;
     }
 
+    h4 {
+        margin-bottom: 4px;
+    }
+
     h3 {
         margin-top: 20px;
         margin-bottom: 50px;
+    }
+
+    h1 {
+        font-size: 60px;
+    }
+
+    .right {
+        float: right;
+    }
+
+    .center {
+        text-align: center;
+        margin-left: 25%;
+    }
+
+    #profilebanner {
+        display: flex;
+        align-items: center;
     }
 
     img {

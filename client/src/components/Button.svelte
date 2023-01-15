@@ -30,6 +30,8 @@
         font-size: 0.875em;
         font-weight: bold;
         outline: none;
+        margin-bottom: 10px;
+        margin-top: 10px;
     }
 
     button:hover {
@@ -117,7 +119,7 @@
         font-weight: bold;
         outline: none;
         padding: 5px 15px;
-        width: 115px; 
+        width: 122px; 
     }
 
     .create:hover {
@@ -136,7 +138,7 @@
         font-weight: bold;
         outline: none;
         padding: 5px 15px;
-        width: 115px;    
+        width: 122px;    
     }
 
     .goback:hover {
