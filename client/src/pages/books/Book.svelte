@@ -219,17 +219,17 @@
             <div id="leaveReview">
                 <form on:submit|preventDefault={leaveReview}>
 
-                <h4>Give review!</h4>
+                <h4>Leave a review!</h4>
 
-                <label for="subject">Subjectline</label>
-                <input type="text" name="subject" bind:value={subject} required max="50">
-                <label for="review">Review</label>
-                <textarea name="review" placeholder="My Review is..." cols="30" rows="5" required maxlength="1000" bind:value={reviewText}></textarea>
-                <label for="ratingForm">Rating</label>
+                <h3>Subjectline</h3>
+                <input type="text" id="subject" name="subject" bind:value={subject} required max="50">
+                <h3>Review</h3>
+                <textarea name="review" id="reviewText" placeholder="My Review is..." cols="30" rows="5" required maxlength="1000" bind:value={reviewText}></textarea>
+                <h3>Rating</h3> 
                 <input type="number" min="0" max="5" name="ratingForm" bind:value={rating} required>
-
+                <p>
                 <Button class="create">Leave Review</Button>
-
+                </p>
                 </form>
             </div>
             {/if}
@@ -242,7 +242,7 @@
         width: 100%;
         display: flex;
         flex-wrap: wrap;
-        gap: 50px;
+        gap: 2%;
     }
 
     h5 {
@@ -281,5 +281,24 @@
 
     #leaveReview {
         margin-top: 50px;
+        width: 34%;
     }
+
+    h3 {
+        margin-bottom: 5px;
+        margin-top: 5px;
+    }
+
+    #subject {
+        width: 100%;
+    }
+
+    #reviewText {
+        overflow: auto;
+        width: 100%;
+        height: 150px;
+        resize: none;
+        font-family: Georgia, 'Times New Roman', Times, serif;
+    }
+
 </style>
