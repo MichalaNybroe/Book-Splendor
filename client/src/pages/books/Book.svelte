@@ -227,9 +227,9 @@
                 <textarea name="review" id="reviewText" placeholder="My Review is..." cols="30" rows="5" required maxlength="1000" bind:value={reviewText}></textarea>
                 <h3>Rating</h3> 
                 <input type="number" min="0" max="5" name="ratingForm" bind:value={rating} required>
-                <p>
+                <br>
                 <Button class="create">Leave Review</Button>
-                </p>
+                
                 </form>
             </div>
             {/if}
