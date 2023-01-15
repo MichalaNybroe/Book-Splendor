@@ -3,12 +3,22 @@
   import * as Toastr from 'toastr'
   import '../../../node_modules/toastr/build/toastr.css'
 
+  let name = ''
+  let email = ''
+  let subject = ''
+  let message = ''
+
   async function handleSubmit() {
+    const regex = new RegExp("[a-z0-9]+@[a-z]+\.[a-z]{2,3}")
+        if (!regex.test(email)) {
+            return Toastr.warning('Please enter a valid email.')
+        }
+
     const body = {
-      name: document.getElementById("name").value,
-      email: document.getElementById("email").value,
-      subject: document.getElementById("subject").value,
-      message: document.getElementById("message").value,
+      name: name,
+      email: email,
+      subject: subject,
+      message: message,
     }
 
     try {
@@ -45,7 +55,7 @@
   >
     <div class="name">
       <label for="name" />
-      <input type="text" placeholder="Name" name="name" id="name" required />
+      <input type="text" placeholder="Name" name="name" id="name" required bind:value={name}/>
     </div>
     <div class="email">
       <label for="email" />
@@ -55,12 +65,12 @@
         name="email"
         id="email"
         required
+        bind:value={email}
       />
     </div>
     <div class="subject">
       <label for="subject" />
-      <select placeholder="Subject" name="subject" id="subject" required>
-        <option disabled hidden selected>I'd like to ask a question</option>
+      <select placeholder="Subject" name="subject" id="subject" required bind:value={subject}>
         <option>I'd like to ask a question</option>
         <option>I'd like to start a book club</option>
       </select>
@@ -74,6 +84,7 @@
         cols="30"
         rows="5"
         required
+        bind:value={message}
       />
     </div>
     <div class="submit">
