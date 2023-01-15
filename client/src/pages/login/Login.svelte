@@ -96,6 +96,18 @@
 <style>
     form {
         text-align: center;
+        padding: 40px;
+    }
+
+    
+    h1 {
+        color: #474544;
+        font-size: 32px;
+        font-weight: 700;
+        letter-spacing: 7px;
+        text-align: center;
+        text-transform: uppercase;
+        margin-top: 10px;
     }
 
     #container {
@@ -107,7 +119,7 @@
   }
 
     #outer {
-        height: 50vh;
+        height: 60vh;
     }
 
     input {

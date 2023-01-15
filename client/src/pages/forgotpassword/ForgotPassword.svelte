@@ -73,6 +73,7 @@
 <style>
     form {
         text-align: center;
+        padding: 40px;
     }
 
     h1 {
@@ -112,7 +113,7 @@
     }
 
     #outer {
-        height: 50vh;
+        height: 60vh;
     }
 
     input {

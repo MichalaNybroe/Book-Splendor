@@ -122,6 +122,7 @@
 <style>
     form {
         text-align: center;
+        padding: 40px;
     }
 
     h1 {
@@ -139,6 +140,7 @@
         max-width: 768px;
         margin: 60px auto;
         position: relative;
+        margin-top: -50px;
   }
 
   .create {
@@ -161,7 +163,7 @@
     }
 
     #outer {
-        height: 50vh;
+        height: 60vh;
     }
 
     input {
