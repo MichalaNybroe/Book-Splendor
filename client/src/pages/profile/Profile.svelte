@@ -250,4 +250,9 @@
         margin-top: 20px;
         margin-bottom: 50px;
     }
+
+    img {
+        border-radius: 50%;
+        border: 5px solid #181818;
+    }
 </style>
