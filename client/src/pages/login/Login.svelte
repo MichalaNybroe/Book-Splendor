@@ -55,7 +55,7 @@
 <Router primary={false}>
     <div id="loginBox">
         <form action="/login" method="POST" id="loginForm" on:submit|preventDefault={login}>
-            <h1>Sign In!</h1>
+            <h2>Sign In!</h2>
             <br />
             <label for="email">Email:</label>
             <br>
@@ -79,8 +79,10 @@
             <br />
             <br>
             <Button class="login">Login </Button>
-            <Link to="/forgotPassword"><p  id="forgotPW">Forgot your password?</p></Link>
-            <Link to="/signUp"><p id="signUp">Sign Up</p></Link>
+            <div id="links">
+                <Link to="/forgotPassword"><p  id="forgotPW">Forgot your password?</p></Link>
+                <Link to="/signUp"><p id="signUp">Sign Up</p></Link>
+            </div>
         </form>
     </div>
 </Router>
@@ -93,20 +95,39 @@
         text-align: center;
     }
 
-    h1 {
+    h2 {
         color: #474544;
         font-size: 32px;
         font-weight: 700;
         letter-spacing: 7px;
         text-align: center;
         text-transform: uppercase;
+        padding: 30px;
   }
 
     #container {
         border: solid 3px #474544;
         max-width: 768px;
         margin: 60px auto;
+        margin-bottom: 480px;
         position: relative;
+  }
+
+  input {
+    color: #5a5a5a;
+    font: inherit;
+    margin: 0;
+  }
+
+  #loginBox label {
+    font-size: 20px;
+  }
+
+  #links {
+    margin-top: 20px;
+    display: block;
+    gap: 10px;
+    margin-bottom: 50px;
   }
 
 </style>

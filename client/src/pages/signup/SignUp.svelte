@@ -95,3 +95,14 @@
     </div>
     <Link to="/login">Return to Login</Link>
 </Router>
+
+<style>
+    h3 {
+        font-size: 30px;
+        margin-bottom: 20px;
+    }
+
+    #signBox {
+        margin-bottom: 30px;
+    }
+</style>

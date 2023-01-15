@@ -40,7 +40,7 @@
     <div id="forgotBox">
         <form id="forgotForm" on:submit|preventDefault={forgotPassword}>
             <h3>
-                Enter email and we will send you a mail with your new password.
+                Enter your email and we will send you a mail with your new password.
             </h3>
             <p>Remember to change your password after.</p>
             <input
@@ -54,3 +54,14 @@
     </div>
     <Link to="/login" class="link">Return to Login</Link>
 </Router>
+
+<style>
+h3 {
+        font-size: 30px;
+        margin-bottom: 20px;
+    }
+
+#forgotBox {
+    margin-bottom: 30px;
+}
+</style>

@@ -53,5 +53,10 @@
 
   #content {
     margin: 100px 180px;
+    
+  }
+
+  body {
+    min-height: 100%;
   }
 </style>
