@@ -67,6 +67,21 @@
         color: black;
     }
 
+    /* TIL ALTERNATIV NAVBAR 
+    .logout{
+        color: #A3B18A;
+        cursor: pointer;
+        font-family: 'Habibi';
+        font-size: 48px;
+        text-transform: uppercase;
+        font-size: 48px;
+        font-weight: 600;
+        letter-spacing: 7px;
+        text-align: center;
+        text-transform: uppercase;
+        margin-top: 10px;
+    } */
+
 	.danger {
 		color:black;
         font-size: x-large;

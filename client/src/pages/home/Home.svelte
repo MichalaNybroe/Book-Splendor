@@ -190,5 +190,6 @@
 
     .main-container {
         height: 100%;
+        margin-bottom: 3%;
     }
 </style>

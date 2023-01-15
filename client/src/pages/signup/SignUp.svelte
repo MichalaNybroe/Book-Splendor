@@ -74,7 +74,7 @@
         <Router primary={false}>
             <div id="signBox">
                 <form id="signForm" action="/singUp" method="POST" on:submit|preventDefault={signUp}>
-                    <h1>Sign up!</h1>
+                    <h2>Sign up!</h2>
                     <br>
                     <label for="name">Username:</label>
                     <br>
@@ -125,7 +125,7 @@
         padding: 40px;
     }
 
-    h1 {
+    h2 {
         color: #474544;
         font-size: 32px;
         font-weight: 700;
@@ -133,7 +133,17 @@
         text-align: center;
         text-transform: uppercase;
         margin-top: 10px;
-  }
+    }
+
+/*     h1 {
+        color: #474544;
+        font-size: 32px;
+        font-weight: 700;
+        letter-spacing: 7px;
+        text-align: center;
+        text-transform: uppercase;
+        margin-top: 10px;
+  } */
 
     #container {
         border: solid 3px #474544;

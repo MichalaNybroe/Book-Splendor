@@ -43,7 +43,7 @@
         <Router primary={false}>
             <div id="forgotBox">
                 <form id="forgotForm" on:submit|preventDefault={forgotPassword}>
-                    <h1>Forgot Password?</h1>
+                    <h2>Forgot Password?</h2>
                     <br>
                     <h3>Enter email and we will send you a mail with your new password.</h3>
                     <br>
@@ -77,7 +77,7 @@
         padding: 40px;
     }
 
-    h1 {
+    h2 {
         color: #474544;
         font-size: 32px;
         font-weight: 700;
@@ -85,7 +85,17 @@
         text-align: center;
         text-transform: uppercase;
         margin-top: 10px;
-  }
+    }
+
+ /*    h1 {
+        color: #474544;
+        font-size: 32px;
+        font-weight: 700;
+        letter-spacing: 7px;
+        text-align: center;
+        text-transform: uppercase;
+        margin-top: 10px;
+  } */
 
     #container {
         border: solid 3px #474544;

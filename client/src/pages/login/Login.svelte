@@ -57,7 +57,7 @@
         <Router primary={false}>
             <div id="loginBox">
                 <form action="/login" method="POST" id="loginForm" on:submit|preventDefault={login}>
-                    <h1>Sign In!</h1>
+                    <h2>Sign In!</h2>
                     <br>
                     <label for="email">Email:</label>
                     <br>
@@ -99,8 +99,7 @@
         padding: 40px;
     }
 
-    
-    h1 {
+    h2 {
         color: #474544;
         font-size: 32px;
         font-weight: 700;
@@ -109,6 +108,16 @@
         text-transform: uppercase;
         margin-top: 10px;
     }
+    
+  /*   h1 {
+        color: #474544;
+        font-size: 32px;
+        font-weight: 700;
+        letter-spacing: 7px;
+        text-align: center;
+        text-transform: uppercase;
+        margin-top: 10px;
+    } */
 
     #container {
         border: solid 3px #474544;

@@ -45,12 +45,14 @@
         {/if}
         
         <br>
+        <div class="books-container">
         {#each books as book, i}
             <h5><Book book={book}></Book></h5>
             {#if i % 5 === 0}
                 <br>
             {/if}
         {/each}
+        </div>
     </div>
 {/await}
 

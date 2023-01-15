@@ -10,6 +10,17 @@ h1 {
   font-size: 48px;  
 }
 
+/* TIL ALTERNATIV NAVBAR 
+h1 {
+  color: #474544;
+  font-size: 48px;
+  font-weight: 600;
+  letter-spacing: 7px;
+  text-align: center;
+  text-transform: uppercase;
+  margin-top: 10px;
+} */
+
 a {
     font-family: 'Habibi';
     text-decoration: none;
