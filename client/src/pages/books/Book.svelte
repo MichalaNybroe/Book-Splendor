@@ -94,6 +94,40 @@
     let subject = ''
     let reviewText = ''
 
+
+    // Mark as has read
+    async function setHasRead(book) {
+
+        book.hasRead = !book.hasRead
+        
+        const body = {
+            userid: $user.id,
+            hasRead: book.hasRead
+        }
+
+        try {
+            console.log(book)
+            console.log(body)
+            const response = await fetch(`${$BASE_URL}/api/books/${book.id}/hasRead`, {
+            method: 'POST',
+            credentials: 'include',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(body)
+        })
+        if (!response.ok) {
+            const json = await response.json()
+            Toastr.warning(json.message)
+            return
+        }
+            Toastr.success('Book marked as read.')
+        } catch {
+            Toastr.error(`Unable to mark book as read. Try again later.`)
+            return
+        }
+    }
+    
+    let hasRead = false
+
 </script>
 
 
@@ -144,6 +178,14 @@
             <Button class="create">Leave Review</Button>
 
             </form>
+
+            <h4>Set status</h4>
+           
+            <label>
+            <input type="checkbox" bind:checked={hasRead} on:change={() => setHasRead(book)}>
+            Has read
+            </label>
+
             {/if}
     {/await}
 </Router>

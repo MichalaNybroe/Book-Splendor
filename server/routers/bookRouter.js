@@ -181,6 +181,22 @@ router.patch("/api/books/:id", loggedinGuard, adminGuard, async (req, res) => {
    
 })
 
+// mark book as read 
+router.post("/api/books/:id/hasRead", loggedinGuard, async (req, res) => {
+    try {
+        const { userid, hasRead } = req.body
+
+        const [book, _] = await db.query("INSERT INTO users_books (users_id, books_id, has_read) VALUE (?, ?, ?);", [userid, req.params.id, hasRead])
+        if(!book) {
+            return res.status(404).send({ message: "Book not found." })
+        }
+        res.send({ affectedRows: book.affectedRows })
+    } catch {
+        res.status(500).send("Book could not be marked as read.")
+    }
+   
+})
+
 router.delete("/api/books/:id", loggedinGuard, adminGuard, async (req, res) => {
     try {
         const result = await db.query("DELETE FROM books WHERE books.id=?;", [req.params.id])
