@@ -252,13 +252,12 @@
     }
 
     #book img{
-        width: 400px;
+        height: 640px;
         margin-left: 100px; 
     }
 
     #book {
         display: flex;
-        flex-wrap: wrap;
         gap: 100px
     }
 
