@@ -88,7 +88,7 @@
         }
             Toastr.success('Thank you for the review!.')
         } catch {
-            Toastr.error(`Unable to give review. Try again later.`)
+            Toastr.error('Unable to leave review. Try again later.')
             return
         }
     }
@@ -122,7 +122,7 @@
         }
             Toastr.success('Book status updated.')
         } catch {
-            Toastr.error(`Unable to update book status. Try again later.`)
+            Toastr.error('Unable to update book status. Try again later.')
             return
         }
     }
@@ -150,7 +150,7 @@
         }
             Toastr.success('Book status updated.')
         } catch {
-            Toastr.error(`Unable to book status. Try again later.`)
+            Toastr.error('Unable to update book status. Try again later.')
             return
         }
     }

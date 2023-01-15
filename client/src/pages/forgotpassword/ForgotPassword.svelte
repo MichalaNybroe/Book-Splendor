@@ -18,6 +18,7 @@
         try {
             const response = await fetch(`${$BASE_URL}/forgotPassword`, {
                 method: 'POST',
+                credentials: 'include',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ email: emailInp }),
             })
