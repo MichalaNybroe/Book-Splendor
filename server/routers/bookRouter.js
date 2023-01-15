@@ -89,7 +89,7 @@ router.get("/api/books/recommendations", async (req, res) => {
 
 router.get("/api/books/:id", async (req, res) => {
     try {
-        if(req.session.userid != null && req.session.admin === false) {  
+        if(req.session.userid !== null && req.session.admin === false) {  
         const [books, _] = await db.query(
             `SELECT 
                 books.*, 
@@ -117,8 +117,8 @@ router.get("/api/books/:id", async (req, res) => {
                 LEFT JOIN series ON series.id = books.series_id
                 LEFT JOIN reviews ON reviews.books_id = books.id
                 LEFT JOIN users ON users.id = reviews.users_id
-                LEFT JOIN users_books ON books.id = users_books.books_id
-            WHERE books.id=? AND users_books.users_id=?;`, [req.params.id, req.session.userid]
+                LEFT JOIN users_books ON books.id = users_books.books_id AND users_books.users_id = ?
+            WHERE books.id=?;`, [req.session.userid, req.params.id]
             )     
         const cleanedbooks= setBooks(books)
         cleanedbooks.has_read = !!cleanedbooks.has_read
