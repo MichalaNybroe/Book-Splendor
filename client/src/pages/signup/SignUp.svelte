@@ -10,7 +10,7 @@
 
     const navigate = useNavigate()
 
-    if($user) {
+    if ($user) {
         navigate('/')
         Toastr.info('You are already signed in.')
     }

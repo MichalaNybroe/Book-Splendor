@@ -9,7 +9,7 @@
 
     if($user) {
         navigate('/')
-        Toastr.info('You are signed in.')
+        Toastr.info('You are signed in. If you wish to change your password, you can do so by going to your profilepage and enter edit mode.')
     }
 
     let emailInp = ''

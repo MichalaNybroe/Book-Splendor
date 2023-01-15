@@ -74,12 +74,16 @@ router.post("/forgotPassword",  async (req, res) => {
 
     try {
         const [user, _] = await db.query("UPDATE users SET password=? WHERE email=?;", [await encryptPassword(password), email])
+        if (user.affectedRows === 0) {
+            res.send({ message: "An email has been sent with your reset password. If your email is a user." })
+            return
+        }
         await sendMail(email, email, "Password reset", `Your password has been reset to: ${password}. Please remember to change your password once you login with a secure password.`)
         
         if (!user) {
             return res.status(404).send({ message: "Unable to reset password." }) 
         }
-        res.status(200).send({ message: "An email has been sent with your reset password." })
+        res.status(200).send({ message: "An email has been sent with your reset password. If your email is a user." })
     } catch {
         res.status(400).send({ data: undefined, message: "Unsuccessful reset of password." })
     }
@@ -117,6 +121,7 @@ router.post("/signUp", checkEmail, checkPasswordSecurity, async (req, res) => {
             res.status(200).send({ message: "Successfull signup." })
         }
     } catch (error){
+        console.log(error)
         return res.status(400).send({ message: "Invalid data."})
     }}
 })
