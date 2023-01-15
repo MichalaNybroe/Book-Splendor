@@ -209,11 +209,11 @@
         <br>
         <div class="submit">
             <Button class="create">Create Book</Button>
+        
         </div>
     </form>
     <p>
     <Button class="create" on:click={enterUtilMode}>UtilMode</Button>
-    <br>
     <br>
     <Button class="goback" on:click={() => navigate(-1)}>Go back</Button>
     </p>

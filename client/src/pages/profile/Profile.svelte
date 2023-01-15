@@ -210,7 +210,6 @@
             </Confirm>
         </div>
 
-        <br>
         <Button class="create" on:click={() => exitEditMode()}>Exit Edit</Button>
 
         <div class="right">
