@@ -228,26 +228,22 @@
 
     <h3>Want to read</h3>
     <div id="toReadList">
-        {#each user?.want_to_read as book}
+        {#each user?.want_to_read.slice(0,5) as book}
             <h5><Book book={book}></Book></h5>
         {/each}
     </div>
 
     <h3>Read</h3>
     <div id="readList">
-        {#each user?.read as book}
+        {#each user?.read.slice(0,5) as book}
             <h5><Book book={book}></Book></h5>
         {/each}
     </div>
 
     <h3>Own Reviews</h3>
     <div id="reviewList">
-        {#each user.reviews as review, i}         
-       
-        
+        {#each user.reviews.slice(0,5) as review}         
             <h5><UsersReview review={review}></UsersReview></h5>
-            {#if i % 5 === 0}
-            {/if}
             {/each}
     </div>
 {/await}
