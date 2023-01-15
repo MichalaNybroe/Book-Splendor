@@ -98,24 +98,26 @@
         text-align: center;
     }
 
-    h1 {
-        color: #474544;
-        font-size: 32px;
-        font-weight: 700;
-        letter-spacing: 7px;
-        text-align: center;
-        text-transform: uppercase;
-        margin-top: 10px;
-  }
-
     #container {
         border: solid 3px #474544;
         max-width: 768px;
         margin: 60px auto;
+        margin-bottom: 480px;
         position: relative;
   }
 
     #outer {
         height: 50vh;
     }
+
+    input {
+        color: #5a5a5a;
+        font: inherit;
+        margin: 0;
+    }
+
+    #loginBox label {
+        font-size: 20px;
+    }
+
 </style>
