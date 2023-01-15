@@ -50,10 +50,8 @@
 </main>
 
 <style>
-
   #content {
-    margin: 100px 180px;
-    
+    margin: 70px 180px;
   }
 
   body {

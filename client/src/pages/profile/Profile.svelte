@@ -290,11 +290,12 @@
 
     img {
         border-radius: 50%;
-        border: 5px solid #181818;
+        border: 5px solid rgba(0,0,0,0.2);
     }
 
     #editProfile {
         float: right;
         border-bottom: 1px solid #EEE;
+        margin-top: 0px;
     }
 </style>
