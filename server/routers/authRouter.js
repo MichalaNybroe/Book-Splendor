@@ -75,7 +75,7 @@ router.post("/forgotPassword",  async (req, res) => {
     try {
         const [user, _] = await db.query("UPDATE users SET password=? WHERE email=?;", [await encryptPassword(password), email])
         if (user.affectedRows === 0) {
-            res.status(400).send({ message: "An email has been sent with your reset password. If your email is a user." })
+            res.send({ message: "An email has been sent with your reset password. If your email is a user." })
             return
         }
         await sendMail(email, email, "Password reset", `Your password has been reset to: ${password}. Please remember to change your password once you login with a secure password.`)
