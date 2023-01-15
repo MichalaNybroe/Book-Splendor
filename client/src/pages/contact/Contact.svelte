@@ -120,6 +120,7 @@
     letter-spacing: 7px;
     text-align: center;
     text-transform: uppercase;
+    margin-top: 30px;
   }
 
   .email {

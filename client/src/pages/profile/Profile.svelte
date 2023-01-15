@@ -206,7 +206,9 @@
 
         <Button on:click={() => exitEditMode()}>Exit Edit</Button>
     {:else}
-        <Button on:click={() => enterEditMode()}>Edit Profile</Button>
+        <div id="editProfile">
+            <Button on:click={() => enterEditMode()}>Edit Profile</Button>
+        </div>
     {/if}
 
     <h3>Want to read</h3>
@@ -254,5 +256,10 @@
     img {
         border-radius: 50%;
         border: 5px solid #181818;
+    }
+
+    #editProfile {
+        float: right;
+        border-bottom: 1px solid #EEE;
     }
 </style>

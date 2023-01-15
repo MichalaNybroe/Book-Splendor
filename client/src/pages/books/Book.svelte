@@ -161,62 +161,127 @@
 <Router primary={false}>
     {#await getBook()}
         <p>Loading...</p>
-    {:then book} 
-            <PageHeader header={book.title}></PageHeader>
+    {:then book}
+        <div id="book">
             <img id="bookCover" src="{book.img}" alt="Book cover.">
-            {#if book.average_rating === null}
-                <p>No reviews</p>
-            {:else}
-                <StarRating rating={book.average_rating}></StarRating>
+
+            <div id="bookInfo">
+                <PageHeader header={book.title}></PageHeader>
+                {#if book.average_rating === null}
+                    <p>No reviews</p>
+                {:else}
+                    <StarRating rating={book.average_rating} config={{size: 35}}></StarRating>
+                {/if}
+                {#if book.series_id === null}
+                {:else}
+                    <h3><Link to="/series/{book.series_id}/books"><p>{book.series_title} {book.number}</p></Link></h3>
+                {/if}
+
+                <h4>Authors</h4>
+                {#each book.authors as author}
+                    <h3><Link to="/authors/{author.id}/books"><Author author={author}/></Link></h3>
+                {/each}
+
+                <h4>Genres</h4>
+                {#each book.genres as genre}
+                    <h3><Link to="/genres/{genre.id}/books"><Genres genre={genre}/></Link></h3>
+                {/each}
+
+                <p>{book.unreleased ? 'Unreleased' : ''}</p>
+                <h4>Description</h4>
+                <p>{book.description}</p>
+                {#if $user}
+                    <h4>Set status</h4>
+                    <label>
+                        <input type="checkbox" bind:checked={has_read} on:change={() => setHasRead(book)}>
+                        Has read
+                    </label>
+                    <label>
+                        <input type="checkbox" bind:checked={want_to_read} on:change={() => setWantToRead(book)}>
+                        Want to read
+                    </label>
+                {/if}
+            </div>
+        </div>
+
+        <div id="review">
+            <h4>Reviews</h4>
+            <div id="bookReviews">
+                {#each [...book.reviews, ...reviewsFromSocket].reverse().slice(0, 5) as review}
+                    <h5><Review review={review}></Review></h5>
+                {/each}
+            </div>
+            
+           
+
+
+            {#if $user}
+            <div id="leaveReview">
+                <form on:submit|preventDefault={leaveReview}>
+
+                <h4>Give review!</h4>
+
+                <label for="subject">Subjectline</label>
+                <input type="text" name="subject" bind:value={subject} required max="50">
+                <label for="review">Review</label>
+                <textarea name="review" placeholder="My Review is..." cols="30" rows="5" required maxlength="1000" bind:value={reviewText}></textarea>
+                <label for="ratingForm">Rating</label>
+                <input type="number" min="0" max="5" name="ratingForm" bind:value={rating} required>
+
+                <Button class="create">Leave Review</Button>
+
+                </form>
+            </div>
             {/if}
-            {#if book.series_id === null}
-            {:else}
-            <Link to="/series/{book.series_id}/books"><p>{book.series_title} {book.number}</p></Link>
-            {/if}
-            <h4>Authors</h4>
-            {#each book.authors as author}
-                <Link to="/authors/{author.id}/books"><Author author={author}/></Link>
-            {/each}
-            <h4>Genres</h4>
-            {#each book.genres as genre}
-                <Link to="/genres/{genre.id}/books"><Genres genre={genre}/></Link>
-            {/each}
-            <p>{book.unreleased ? 'Unreleased' : ''}</p>
-            <p>Ratings</p>
-            {#each [...book.reviews, ...reviewsFromSocket].reverse().slice(0, 5) as review}
-                <Review review={review}></Review>
-            {/each}
-            <h4>Description</h4>
-            <p>{book.description}</p>
-
-
-            {#if $user} 
-            <form on:submit|preventDefault={leaveReview}>
-
-            <h4>Give review!</h4>
-
-            <label for="subject">Subjectline</label>
-            <input type="text" name="subject" bind:value={subject} required max="50">
-            <label for="review">Review</label>
-            <textarea name="review" placeholder="My Review is..." cols="30" rows="5" required maxlength="1000" bind:value={reviewText}></textarea>
-            <label for="ratingForm">Rating</label>
-            <input type="number" min="0" max="5" name="ratingForm" bind:value={rating} required>
-
-            <Button class="create">Leave Review</Button>
-
-            </form>
-
-            <h4>Set status</h4>
-            <label>
-                <input type="checkbox" bind:checked={has_read} on:change={() => setHasRead(book)}>
-                Has read
-            </label>
-            <label>
-                <input type="checkbox" bind:checked={want_to_read} on:change={() => setWantToRead(book)}>
-                Want to read
-            </label>
-
-            {/if}
+        </div>
     {/await}
 </Router>
+
+<style>
+    #bookReviews {
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 50px;
+    }
+
+    h5 {
+        width: 15%;
+        border: 2px solid #EEE;
+        padding: 10px;
+    }
+
+    #book img{
+        width: 400px;
+        margin-left: 100px; 
+    }
+
+    #book {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 100px
+    }
+
+    #bookInfo  {
+        margin: 50px 0 0 100px;
+    }
+
+    #bookInfo h4 {
+        margin-top: 20px;
+        font-size: 22px;
+    }
+
+    #review {
+        margin: 70px 50px;
+    }
+
+    #review h4 {
+        font-size: 22px;
+        margin-bottom: 20px;
+    }
+
+    #leaveReview {
+        margin-top: 50px;
+    }
+</style>
 
