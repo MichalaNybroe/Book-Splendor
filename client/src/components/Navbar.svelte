@@ -37,7 +37,7 @@
     <nav>
         <h1 class="margin-left">
         <Link to="/"><img src="/favicon.png" alt="Book-Splendor icon" height="50px"></Link>
-        {#if $user === null}
+        {#if !$user}
             <Link to="/">Home</Link>
             <Link to="/books">Books</Link>
             <Link to="/contact">Contact</Link>
@@ -52,10 +52,10 @@
             <Link to="/admin/reviews">Reviews</Link>
         {/if}
 
-        {#if $user !== null}
-            <Button class="logout" on:click={logout}>Logout</Button>
-        {:else}
+        {#if !$user}
             <Button class="logout" on:click="{() => navigate("/login")}">Login</Button>
+        {:else}
+            <Button class="logout" on:click={logout}>Logout</Button>
          {/if}
         </h1>
       </nav>

@@ -252,7 +252,7 @@ router.post("/api/books/:id/wantToRead", loggedinGuard, async (req, res) => {
 router.delete("/api/books/:id", loggedinGuard, adminGuard, async (req, res) => {
     try {
         const result = await db.query("DELETE FROM books WHERE books.id=?;", [req.params.id])
-        if (result === undefined) {
+        if (!result) {
           res.status(404).send({ data: undefined, message: `No book with ${req.params.id} id`})
         } else {
             res.send({ data: result })

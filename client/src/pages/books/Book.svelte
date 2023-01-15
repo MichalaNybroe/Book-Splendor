@@ -167,12 +167,12 @@
 
             <div id="bookInfo">
                 <PageHeader header={book.title}></PageHeader>
-                {#if book.average_rating === null}
+                {#if !book.average_rating}
                     <p>No reviews</p>
                 {:else}
                     <StarRating rating={book.average_rating} config={{size: 35}}></StarRating>
                 {/if}
-                {#if book.series_id === null}
+                {#if !book.series_id}
                 {:else}
                     <h3><Link to="/series/{book.series_id}/books"><p>{book.series_title} {book.number}</p></Link></h3>
                 {/if}
