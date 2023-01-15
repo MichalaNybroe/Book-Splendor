@@ -106,8 +106,6 @@
         }
 
         try {
-            console.log(book)
-            console.log(body)
             const response = await fetch(`${$BASE_URL}/api/books/${book.id}/hasRead`, {
             method: 'POST',
             credentials: 'include',
@@ -125,8 +123,41 @@
             return
         }
     }
-    
+
     let hasRead = false
+
+
+
+    // Mark as has read
+    async function setWantToRead(book) {
+
+        book.wantToRead = !book.wantToRead
+
+        const body = {
+            userid: $user.id,
+            wantToRead: book.wantToRead
+        }
+
+        try {
+            const response = await fetch(`${$BASE_URL}/api/books/${book.id}/wantToRead`, {
+            method: 'POST',
+            credentials: 'include',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(body)
+        })
+        if (!response.ok) {
+            const json = await response.json()
+            Toastr.warning(json.message)
+            return
+        }
+            Toastr.success('Book marked as want to read.')
+        } catch {
+            Toastr.error(`Unable to mark book as want to read. Try again later.`)
+            return
+        }
+    }
+
+    let wantToRead = false
 
 </script>
 
@@ -184,6 +215,10 @@
             <label>
             <input type="checkbox" bind:checked={hasRead} on:change={() => setHasRead(book)}>
             Has read
+            </label>
+            <label>
+            <input type="checkbox" bind:checked={wantToRead} on:change={() => setWantToRead(book)}>
+            Want to read
             </label>
 
             {/if}
