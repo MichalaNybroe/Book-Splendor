@@ -5,7 +5,7 @@
     import * as Toastr from 'toastr'
     import '../../node_modules/toastr/build/toastr.css'
     import { Confirm } from 'svelte-confirm'
-    import PageHeader from './PageHeader.svelte';
+    import PageHeader from './PageHeader.svelte'
 
     if($user?.admin !== true) {
         const navigate = useNavigate()
