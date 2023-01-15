@@ -261,7 +261,7 @@
     }
 
     .multiselect {
-        width: 51%
+        width: 51%;
     }
 
     #number {
@@ -280,5 +280,7 @@
     .releaseStatus {
         width: 20%;
     }
+
+ 
 
 </style>
