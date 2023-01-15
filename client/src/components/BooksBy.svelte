@@ -43,7 +43,7 @@
         {:else}
         <PageHeader header={`Books in ${books[0].series_title}`}></PageHeader>
         {/if}
-
+        
         <br>
         {#each books as book, i}
             <h5><Book book={book}></Book></h5>
