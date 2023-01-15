@@ -220,3 +220,8 @@
     {/await}
 </Router>
 
+<style>
+    img {
+        height: 500px;
+    }
+</style>
