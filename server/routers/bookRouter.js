@@ -89,6 +89,7 @@ router.get("/api/books/recommendations", async (req, res) => {
 
 router.get("/api/books/:id", async (req, res) => {
     try {
+        if(req.session.userid != null && req.session.admin === false) {  
         const [books, _] = await db.query(
             `SELECT 
                 books.*, 
@@ -98,6 +99,9 @@ router.get("/api/books/:id", async (req, res) => {
                 genres.name AS genre_name,
                 series_id,
                 series.title AS series_title,
+                users_books.users_id AS users_books_users_id,
+                users_books.want_to_read AS want_to_read,
+                users_books.has_read AS has_read,
                 reviews.id AS review_id,
                 reviews.subject AS review_subject,
                 reviews.text AS review_text,
@@ -113,11 +117,44 @@ router.get("/api/books/:id", async (req, res) => {
                 LEFT JOIN series ON series.id = books.series_id
                 LEFT JOIN reviews ON reviews.books_id = books.id
                 LEFT JOIN users ON users.id = reviews.users_id
-            WHERE books.id=?;`, [req.params.id]
-        )
-            
+                LEFT JOIN users_books ON books.id = users_books.books_id
+            WHERE books.id=? AND users_books.users_id=?;`, [req.params.id, req.session.userid]
+            )     
         const cleanedbooks= setBooks(books)
+        cleanedbooks.has_read = !!cleanedbooks.has_read
+        cleanedbooks.want_to_read = !!cleanedbooks.want_to_read
         res.send({ data: cleanedbooks })
+        } else {
+            const [books, _] = await db.query(
+                `SELECT 
+                    books.*, 
+                    authors_id, 
+                    authors.name AS author_name,
+                    genres_id,
+                    genres.name AS genre_name,
+                    series_id,
+                    series.title AS series_title,
+                    reviews.id AS review_id,
+                    reviews.subject AS review_subject,
+                    reviews.text AS review_text,
+                    reviews.rating AS review_rating,
+                    users.user_name AS review_user_name,
+                    users.picture_number AS review_user_picture,
+                    (SELECT AVG(reviews.rating) FROM reviews WHERE reviews.books_id = books.id) AS average_rating
+                FROM books
+                    LEFT JOIN books_authors ON books.id = books_authors.books_id 
+                    LEFT JOIN authors ON books_authors.authors_id = authors.id
+                    LEFT JOIN books_genres ON books.id = books_genres.books_id
+                    LEFT JOIN genres ON books_genres.genres_id = genres.id
+                    LEFT JOIN series ON series.id = books.series_id
+                    LEFT JOIN reviews ON reviews.books_id = books.id
+                    LEFT JOIN users ON users.id = reviews.users_id
+                WHERE books.id=?;`, [req.params.id]
+            )
+                
+            const cleanedbooks= setBooks(books)
+            res.send({ data: cleanedbooks })
+        } 
     } catch {
         res.status(404).send({ data: undefined, message: `No book by ${req.params.id} id`})
     }
@@ -185,8 +222,7 @@ router.patch("/api/books/:id", loggedinGuard, adminGuard, async (req, res) => {
 router.post("/api/books/:id/hasRead", loggedinGuard, async (req, res) => {
     try {
         const { userid, hasRead } = req.body
-
-        const [book, _] = await db.query("INSERT INTO users_books (users_id, books_id, has_read) VALUE (?, ?, ?);", [userid, req.params.id, hasRead])
+        const [book, _] = await db.query("INSERT INTO users_books (users_id, books_id, has_read) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE users_id = ?, books_id = ?, has_read = ?;", [userid, req.params.id, hasRead, userid, req.params.id, hasRead])
         if(!book) {
             return res.status(404).send({ message: "Book not found." })
         }
@@ -202,7 +238,7 @@ router.post("/api/books/:id/wantToRead", loggedinGuard, async (req, res) => {
     try {
         const { userid, wantToRead } = req.body
 
-        const [book, _] = await db.query("INSERT INTO users_books (users_id, books_id, want_to_read) VALUE (?, ?, ?);", [userid, req.params.id, wantToRead])
+        const [book, _] = await db.query("INSERT INTO users_books (users_id, books_id, want_to_read) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE users_id = ?, books_id = ?, want_to_read = ?;", [userid, req.params.id, wantToRead, userid, req.params.id, wantToRead])
         if(!book) {
             return res.status(404).send({ message: "Book not found." })
         }

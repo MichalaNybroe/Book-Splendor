@@ -24,7 +24,10 @@
 
             if (response.ok) {
                 const data = await response.json()
-                return data.data[0]
+                const book = data.data[0]
+                has_read = book.has_read
+                want_to_read = book.want_to_read
+                return book
             } else {
                 Toastr.warning('Unable to retrieve book.')
             }
@@ -93,16 +96,16 @@
     let rating = 0
     let subject = ''
     let reviewText = ''
+    let has_read = 0
+    let want_to_read = 0
 
 
     // Mark as has read
     async function setHasRead(book) {
-
-        book.hasRead = !book.hasRead
         
         const body = {
             userid: $user.id,
-            hasRead: book.hasRead
+            hasRead: has_read
         }
 
         try {
@@ -117,25 +120,20 @@
             Toastr.warning(json.message)
             return
         }
-            Toastr.success('Book marked as read.')
+            Toastr.success('Book status updated.')
         } catch {
-            Toastr.error(`Unable to mark book as read. Try again later.`)
+            Toastr.error(`Unable to update book status. Try again later.`)
             return
         }
     }
 
-    let hasRead = false
 
-
-
-    // Mark as has read
+    // Mark as want to read
     async function setWantToRead(book) {
-
-        book.wantToRead = !book.wantToRead
 
         const body = {
             userid: $user.id,
-            wantToRead: book.wantToRead
+            wantToRead: want_to_read
         }
 
         try {
@@ -150,14 +148,12 @@
             Toastr.warning(json.message)
             return
         }
-            Toastr.success('Book marked as want to read.')
+            Toastr.success('Book status updated.')
         } catch {
-            Toastr.error(`Unable to mark book as want to read. Try again later.`)
+            Toastr.error(`Unable to book status. Try again later.`)
             return
         }
     }
-
-    let wantToRead = false
 
 </script>
 
@@ -212,14 +208,15 @@
 
             <h4>Set status</h4>
             <label>
-                <input type="checkbox" bind:checked={hasRead} on:change={() => setHasRead(book)}>
+                <input type="checkbox" bind:checked={has_read} on:change={() => setHasRead(book)}>
                 Has read
             </label>
             <label>
-                <input type="checkbox" bind:checked={wantToRead} on:change={() => setWantToRead(book)}>
+                <input type="checkbox" bind:checked={want_to_read} on:change={() => setWantToRead(book)}>
                 Want to read
             </label>
 
             {/if}
     {/await}
 </Router>
+
