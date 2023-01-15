@@ -168,4 +168,8 @@
         width: 203px;
     }
 
+    #signBox label {
+        font-size: 20px;
+    }
+
 </style>
