@@ -135,13 +135,6 @@
     retrieveBooks()
 </script>
 
-<p>
-<Router primary={false}>
-    <Link to="/admin/books/create">Create Book</Link>
-</Router>
-</p>
-
-
 <PageHeader header={'Search Books'}></PageHeader>
 <form id="searchBooksForm" bind:this={searchIdForm} on:submit|preventDefault={searchById}>
     <label for="search_books_id">Search by Id</label>
@@ -162,6 +155,11 @@
 </form>
 
 
+<p>
+    <Router primary={false}>
+        <Link to="/admin/books/create">Create Book</Link>
+    </Router>
+</p>
 
 <table>
 	<tr>
@@ -206,8 +204,7 @@
         margin-left: 37.5px;
     }
 
-    input,
-    select {
+    input {
         color: #5a5a5a;
         font: inherit;
         margin: 0;
@@ -248,8 +245,7 @@
         text-align: left;
     }
 
-    input,
-    select {
+    input {
         background: none;
         border: none;
         border-bottom: solid 2px #474544;
@@ -262,4 +258,9 @@
     td {
     border-top: 1px solid #EEE;
    }
+
+   #searchBooksForm{
+    display: flex;
+    display: inline-block
+}
 </style>
