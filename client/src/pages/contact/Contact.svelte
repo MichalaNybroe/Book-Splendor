@@ -104,7 +104,7 @@
   #container {
     border: solid 3px #474544;
     max-width: 768px;
-    margin: 60px auto 220px;
+    margin: 60px auto 350px;
     position: relative;
   }
 

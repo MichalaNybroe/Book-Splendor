@@ -141,7 +141,6 @@
             body: JSON.stringify(body)
         })
 
-        // Do we need this
         if (!response.ok) {
             const json = await response.json()
             Toastr.warning(json.message)
@@ -155,6 +154,7 @@
     }
 
 </script>
+
 <div class="center-container">
 {#if utilMode === false}
     <PageHeader header={'Create Book'}></PageHeader>
@@ -209,31 +209,39 @@
         <br>
         <div class="submit">
             <Button class="create">Create Book</Button>
-        
         </div>
+    
     </form>
-    <p>
-    <Button class="create" on:click={enterUtilMode}>UtilMode</Button>
-    <br>
-    <Button class="goback" on:click={() => navigate(-1)}>Go back</Button>
-    </p>
+
+    <div id="buttonDiv">
+        <h3>Create Util for Book</h3>
+        <p><Button class="create" on:click={enterUtilMode}>UtilMode</Button></p>
+        <br>
+        <p><Button class="goback" on:click={() => navigate(-1)}>Go back</Button></p>
+    </div>
+    
 
     
 {:else}
 <PageHeader header={'Create Book Util'}></PageHeader>
-    <form on:submit|preventDefault={handleUtilSubmit}>
-        <div class="multiselect">
-        <MultiSelect bind:selected={selectedOption} options={options} loading={options.length===0} maxSelect={1} required></MultiSelect>
-        </div>
-        <br>
-        <input type="text" placeholder="Lord of the Rings" bind:value={newData} required>
-        <br>
- 
-        <Button class="create">Create {!selectedOption ? 'Element' : selectedOption}</Button>
-    </form>
-    <p>
-    <Button class="goback" on:click={exitUtilMode}>Back to Book</Button>
-    </p>
+    <div id="util">
+        <form on:submit|preventDefault={handleUtilSubmit}>
+            <label for="util">Choose Util to Create</label>
+            <div class="multiselect">
+                <MultiSelect bind:selected={selectedOption} options={options} loading={options.length===0} maxSelect={1} required name="util"></MultiSelect>
+            </div>
+            <br>
+            <label for="input">Enter name or title</label>
+            <br>
+            <input type="text" placeholder="Lord of the Rings" bind:value={newData} required name="input">
+            <br>
+    
+            <Button class="create">Create {!selectedOption ? 'Element' : selectedOption}</Button>
+        </form>
+        <p>
+        <Button class="goback" on:click={exitUtilMode}>Back to Book</Button>
+        </p>
+    </div>
 {/if}
 
 </div>
@@ -261,7 +269,7 @@
     }
 
     .multiselect {
-        width: 51%;
+        width: 50.5%;
     }
 
     #number {
@@ -281,6 +289,32 @@
         width: 20%;
     }
 
- 
+    .center-container {
+        display: grid;
+        grid-template-columns: 20% 80% 20%;
+    }
+
+    #buttonDiv {
+        grid-column: 2;
+        grid-row: 2;
+        margin-top: 80px;
+        align-items: center;
+    }
+
+    #buttonDiv h3 {
+        margin-bottom: 20px;
+    }
+
+    #util {
+        margin-bottom: 400px;
+    }
+
+    #util label {
+        font-size: 20px;
+    }
+
+    #util input {
+        height: 23px
+    }
 
 </style>
