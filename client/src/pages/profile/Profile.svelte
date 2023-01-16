@@ -198,13 +198,13 @@
             >
                 <form on:submit|preventDefault={() => confirmThis(updatePassword)}>
                     <h4>Change password</h4>
-                    <input type="text" placeholder="New password" bind:value={password} required>
+                    <input type="password" placeholder="New password" bind:value={password} required>
                     <br>
                     <br>
-                    <input type="text" placeholder="Repeat new password" bind:value={passwordTwo} required>
+                    <input type="password" placeholder="Repeat new password" bind:value={passwordTwo} required>
                     <br>
                     <br>
-                    <Button class="create" type="submit">Update</Button>
+                    <Button class="create" type="submit">Update Password</Button>
                     
                 </form>
             </Confirm>
@@ -290,7 +290,8 @@
 
     img {
         border-radius: 50%;
-        border: 5px solid rgba(0,0,0,0.2);
+        border: 2px solid rgba(0,0,0,0.2);
+        margin: 20px 0 20px 20px;
     }
 
     #editProfile {
