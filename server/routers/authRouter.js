@@ -6,11 +6,10 @@ import { comparePassword, encryptPassword } from "../util/encryption.js"
 import { sendMail } from "../util/mail.js"
 
 import rateLimit from "express-rate-limit"
-/*const limiter = rateLimit({
+const limiter = rateLimit({
     windowMs: 15 * 60 * 1000,
     max: 6
 })
-router.use(limiter)*/
 
 function checkPasswordSecurity(req, res, next) {
     const { password, passwordTwo } = req.body
@@ -34,7 +33,7 @@ function checkEmail(req, res, next) {
     }
 }
 
-router.post("/login", async (req, res) => {
+router.post("/login", limiter, async (req, res) => {
     const { email, password } = req.body
 
     try {
@@ -68,7 +67,7 @@ router.post("/logout", (req, res) => {
     }
 })
 
-router.post("/forgotPassword",  async (req, res) => {
+router.post("/forgotPassword", limiter, async (req, res) => {
     const email = req.body.email
     const password = await randomPasswordGenerator()
 
@@ -89,7 +88,7 @@ router.post("/forgotPassword",  async (req, res) => {
     }
 })
 
-router.post("/updatePassword", checkPasswordSecurity, async (req, res) => {
+router.post("/updatePassword", limiter, checkPasswordSecurity, async (req, res) => {
     const { email, password } = req.body
 
     try {
@@ -105,7 +104,7 @@ router.post("/updatePassword", checkPasswordSecurity, async (req, res) => {
 })
 
 
-router.post("/signUp", checkEmail, checkPasswordSecurity, async (req, res) => {
+router.post("/signUp", limiter, checkEmail, checkPasswordSecurity, async (req, res) => {
     const { username, email, password, acceptData } = req.body
 
     if (!acceptData) {
