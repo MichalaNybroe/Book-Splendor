@@ -99,9 +99,9 @@ if (isInDeleteMode) {
     db.execute(`INSERT INTO users(email, user_name, password, admin, picture_number, color) 
     VALUES (?, ?, ?, ?, ?, ?);`, [process.env.ADMIN_EMAIL, "adminOne", await encryptPassword(process.env.ADMIN_PASSWORD), true, 2, "#FF5733"])
     db.execute(`INSERT INTO users(email, user_name, password, admin, picture_number, color) 
-    VALUES (?, ?, ?, ?, ?, ?);`, [process.env.USER_EMAIL, "mayFlower", await encryptPassword(process.env.USER_PASSWORD), false, 6, "#30EBF3"])
+    VALUES (?, ?, ?, ?, ?, ?);`, [process.env.USER_EMAIL, "mayFlower", await encryptPassword(process.env.USER_PASSWORD), false, 3, "#A9E2E5"])
     db.execute(`INSERT INTO users(email, user_name, password, admin, picture_number, color) 
-    VALUES (?, ?, ?, ?, ?, ?);`, [process.env.SECOND_USER_EMAIL, "Lilly Madelaine", await encryptPassword(process.env.USER_PASSWORD), false, 6, "#30EBF3"])
+    VALUES (?, ?, ?, ?, ?, ?);`, [process.env.SECOND_USER_EMAIL, "Lilly Madelaine", await encryptPassword(process.env.USER_PASSWORD), false, 2, "#A9E2E5"])
 
     //series
     db.execute(`INSERT INTO series(title) VALUE (?);`, ["Lord of the Rings"])
