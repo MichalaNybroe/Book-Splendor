@@ -61,26 +61,17 @@
         cursor: pointer;
         font-family: 'Habibi';
         font-size: 48px;
+        text-transform: uppercase;
+        font-weight: 600;
+        letter-spacing: 4px;
+        text-align: center;
+        margin-top: 10px;
+        margin-left: 4%;
     }
 
     .logout:hover {
         color: black;
     }
-
-    /* TIL ALTERNATIV NAVBAR 
-    .logout{
-        color: #A3B18A;
-        cursor: pointer;
-        font-family: 'Habibi';
-        font-size: 48px;
-        text-transform: uppercase;
-        font-size: 48px;
-        font-weight: 600;
-        letter-spacing: 7px;
-        text-align: center;
-        text-transform: uppercase;
-        margin-top: 10px;
-    } */
 
 	.danger {
 		color:black;

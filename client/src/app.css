@@ -7,24 +7,20 @@ h1, h2, h3, h4, h5 {
 }
 
 h1 {
-  font-size: 48px;  
-}
-
-/* TIL ALTERNATIV NAVBAR 
-h1 {
+  font-size: 48px;
   color: #474544;
   font-size: 48px;
   font-weight: 600;
-  letter-spacing: 7px;
+  letter-spacing: 4px;
   text-align: center;
   text-transform: uppercase;
   margin-top: 10px;
-} */
+} 
 
 a {
-    font-family: 'Habibi';
-    text-decoration: none;
-    color: #A3B18A;
+  font-family: 'Habibi';
+  text-decoration: none;
+  color: #A3B18A;
 }
 
 a:hover {
