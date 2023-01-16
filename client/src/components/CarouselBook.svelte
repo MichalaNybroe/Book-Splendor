@@ -18,7 +18,7 @@
                 <br>
                 {#if !carouselbook.series_id}
                 {:else}
-                    <h3>{carouselbook.series_title} {carouselbook.number}</h3>
+                    <h3><Link to="/series/{carouselbook.series_id}/books">{carouselbook.series_title} {carouselbook.number}</Link></h3>
                 {/if}
                 <br>
                 {#each carouselbook.authors as author, index}
