@@ -16,7 +16,8 @@ router.post("/contact", checkEmail, async (req, res) => {
     const {name, email, subject, message} = req.body
     const mail = `Name: ${name} \n Sender: ${email} \n Message: ${message}`
     try {
-        sendMail("Book Splendor", "customerService@bookSplendor.dk", subject, mail)    
+        sendMail("Book Splendor", "customerService@bookSplendor.dk", subject, mail)
+        res.send({ message: "Mail has been forwarded." })  
     } catch {
         res.status(500).send( { message: "Success." })
     }
