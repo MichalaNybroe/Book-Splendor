@@ -202,6 +202,7 @@
 <style>
     p {
         margin-left: 37.5px;
+        margin-bottom: 37.5px;
     }
 
     input {
@@ -234,7 +235,8 @@
 
     form,
     table {
-        padding: 37.5px;
+        /* padding: 37.5px; */
+        margin-bottom: 37.5px;
     }
 
     table {
@@ -256,11 +258,16 @@
     }
 
     td {
-    border-top: 1px solid #EEE;
-   }
+        border-top: 1px solid #EEE;
+    }
 
-   #searchBooksForm{
-    display: flex;
-    display: inline-block
-}
+    #searchBooksForm {
+        display: flex;
+        display: inline-block
+    }
+
+    #search_books_id {
+        width: 50px;
+    }
+
 </style>

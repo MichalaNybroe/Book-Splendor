@@ -30,19 +30,18 @@
         },
         body: JSON.stringify(body),
       })
-
       if (!response.ok) {
         const json = await response.json()
         Toastr.warning(json.message)
         return
       }
-
       const json = await response.json()
       Toastr.success('We have received your message.')
     } catch {
       Toastr.error('Unable to deliver message. Try again later.')
     }
   }
+  
 </script>
 
 <div id="container">

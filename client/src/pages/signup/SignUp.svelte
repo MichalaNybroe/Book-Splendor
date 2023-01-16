@@ -173,7 +173,7 @@
     }
 
     #outer {
-        height: 60vh;
+        height: 80vh;
     }
 
     input {

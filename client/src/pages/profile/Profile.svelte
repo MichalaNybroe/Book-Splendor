@@ -244,9 +244,11 @@
 
     <h3>Own Reviews</h3>
     <div id="reviewList">
-        {#each user.reviews.slice(0,5) as review}         
-            <h5><UsersReview review={review}></UsersReview></h5>
-            {/each}
+        {#each user.reviews.slice(0,4) as review}         
+        <div class="reviewItems">    
+        <h4><UsersReview review={review}></UsersReview></h4>
+        </div>    
+        {/each}
     </div>
 {/await}
 
@@ -297,5 +299,10 @@
         float: right;
         border-bottom: 1px solid #EEE;
         margin-top: 0px;
+    }
+
+    .reviewItems {
+        padding: 4px;
+        width: 250px;
     }
 </style>

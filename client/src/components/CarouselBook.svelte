@@ -16,9 +16,11 @@
             <div class="flex-child">
                 <h3>{carouselbook.title}</h3>
                 <br>
-                <h4>{carouselbook.series_title} {carouselbook.number}</h4>
+                {#if !carouselbook.series_id}
+                {:else}
+                    <h3>{carouselbook.series_title} {carouselbook.number}</h3>
+                {/if}
                 <br>
-                    
                 {#each carouselbook.authors as author, index}
                     <Link to="/authors/{author.id}/books">{author.name}
                         {#if index < (carouselbook.authors.length-1)}, 

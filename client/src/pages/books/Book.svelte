@@ -86,7 +86,7 @@
             Toastr.warning(json.message)
             return
         }
-            Toastr.success('Thank you for the review!.')
+            Toastr.success('Thank you for the review!')
         } catch {
             Toastr.error('Unable to leave review. Try again later.')
             return
