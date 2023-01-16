@@ -282,8 +282,8 @@
 
     .center {
         text-align: center;
-        margin-right: 200px;
-        margin-left: 150px;
+        margin-right: 20%;
+        margin-left: 15%;
     }
 
     #profilebanner {
