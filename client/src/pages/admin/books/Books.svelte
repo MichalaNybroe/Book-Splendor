@@ -235,7 +235,6 @@
 
     form,
     table {
-        /* padding: 37.5px; */
         margin-bottom: 37.5px;
     }
 

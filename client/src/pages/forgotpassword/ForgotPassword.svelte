@@ -87,16 +87,6 @@
         margin-top: 10px;
     }
 
- /*    h1 {
-        color: #474544;
-        font-size: 32px;
-        font-weight: 700;
-        letter-spacing: 7px;
-        text-align: center;
-        text-transform: uppercase;
-        margin-top: 10px;
-  } */
-
     #container {
         border: solid 3px #474544;
         max-width: 768px;

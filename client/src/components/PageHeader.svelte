@@ -8,6 +8,5 @@
     h2 {
         font-size: 30px;
         margin-bottom: 50px;
-        /* margin-top: -50px; */   
     }
 </style>
