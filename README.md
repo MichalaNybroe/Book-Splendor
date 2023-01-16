@@ -2,6 +2,7 @@
 Exam project in NodeJs.
 [Link to exam project description.](https://docs.google.com/document/d/1j1CeNNemhCCEhuVvSgk5E1cxRZFJT5AY8TkRGTp2428/edit#)
 
+The idea of the project is to create a website for book enthusiasts both to keep track of their own reading lists, to explore other reads and potentially have a network of friends - whose brain is also full of amazing stories!
 
 ## Set-up
 
