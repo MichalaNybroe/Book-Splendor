@@ -80,7 +80,6 @@
             body: JSON.stringify(body)
         })
 
-        // Do we need this?
         if (!response.ok) {
             const json = await response.json()
             Toastr.warning(json.message)
