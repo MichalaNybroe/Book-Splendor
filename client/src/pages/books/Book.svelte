@@ -207,12 +207,14 @@
         <div id="review">
             <h4>Reviews</h4>
             <div id="bookReviews">
+                {#if book.reviews.length === 0}
+                <h5>No reviews yet</h5>
+                {:else}
                 {#each [...book.reviews, ...reviewsFromSocket].reverse().slice(0, 5) as review}
                     <h5><Review review={review}></Review></h5>
                 {/each}
+                {/if}
             </div>
-            
-           
 
 
             {#if $user && $user.admin === false}
