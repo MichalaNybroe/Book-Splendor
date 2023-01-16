@@ -177,50 +177,53 @@
     </div>
 
     {#if updateMode === true}
-        <PageHeader header={'Edit Profile'}></PageHeader>
-        <h4>Change icon</h4>
-        <MultiSelect on:change={() => updatePicture()} bind:selected={pictureSelect} options={pictures} loading={pictures.length===0} maxSelect={1}/>
-        <br>
-        <h4>Change banner color</h4>
-        <input type="color" bind:value={color} style="height: 50px;" on:change|preventDefault={saveColor} id="colorInp">
-        <br>
-        <br>
-        <h4>Change username</h4>
-        <input type="text" bind:value={username} on:change|preventDefault={updateUserName}>
-        <br>  
-        <br>  
+        <div id="update">
+            <PageHeader header={'Edit Profile'}></PageHeader>
+            <div id="edit">
+                <h4>Change icon</h4>
+                <MultiSelect on:change={() => updatePicture()} bind:selected={pictureSelect} options={pictures} loading={pictures.length===0} maxSelect={1}/>
+                <br>
+                <h4>Change banner color</h4>
+                <input type="color" bind:value={color} style="height: 50px;" on:change|preventDefault={saveColor} id="colorInp">
+                <br>
+                <br>
+                <h4>Change username</h4>
+                <input type="text" bind:value={username} on:change|preventDefault={updateUserName}>
+                <br>  
+                <br>  
 
-        <div>
-            <Confirm
-                confirmTitle="Update"
-                themeColor="110"
-                let:confirm="{confirmThis}"
-            >
-                <form on:submit|preventDefault={() => confirmThis(updatePassword)}>
-                    <h4>Change password</h4>
-                    <input type="password" placeholder="New password" bind:value={password} required>
-                    <br>
-                    <br>
-                    <input type="password" placeholder="Repeat new password" bind:value={passwordTwo} required>
-                    <br>
-                    <br>
-                    <Button class="create" type="submit">Update Password</Button>
-                    
-                </form>
-            </Confirm>
+                <div>
+                    <Confirm
+                        confirmTitle="Update"
+                        themeColor="110"
+                        let:confirm="{confirmThis}"
+                    >
+                        <form on:submit|preventDefault={() => confirmThis(updatePassword)}>
+                            <h4>Change password</h4>
+                            <input type="password" placeholder="New password" bind:value={password} required>
+                            <br>
+                            <br>
+                            <input type="password" placeholder="Repeat new password" bind:value={passwordTwo} required>
+                            <br>
+                            <br>
+                            <Button class="create" type="submit">Update Password</Button>
+                            
+                        </form>
+                    </Confirm>
+                </div>
+                <div class="right">
+                    <Confirm
+                        confirmTitle="Delete"
+                        themeColor="110"
+                        let:confirm="{confirmThis}"
+                    >
+                        <Button class="deleteUser" on:click={() => confirmThis(deleteOwnProfile)}>Delete User</Button>
+                    </Confirm>
+                </div>
+                <Button class="create" on:click={() => exitEditMode()}>Exit Edit</Button>
+            </div>
         </div>
 
-        <Button class="create" on:click={() => exitEditMode()}>Exit Edit</Button>
-
-        <div class="right">
-            <Confirm
-                confirmTitle="Delete"
-                themeColor="110"
-                let:confirm="{confirmThis}"
-            >
-                <Button class="deleteUser" on:click={() => confirmThis(deleteOwnProfile)}>Delete User</Button>
-            </Confirm>
-        </div>
         
     {:else}
         <div id="editProfile">
@@ -295,6 +298,15 @@
         border-radius: 50%;
         border: 2px solid rgba(0,0,0,0.2);
         margin: 20px 0 20px 20px;
+    }
+
+    #update {
+        margin-top: 20px;
+    }
+
+    #edit {
+        margin: 20px 50px;
+        width: 50%;   
     }
 
     #editProfile {
