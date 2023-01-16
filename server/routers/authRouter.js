@@ -120,8 +120,7 @@ router.post("/signUp", checkEmail, checkPasswordSecurity, async (req, res) => {
         } else {
             res.status(200).send({ message: "Successfull signup." })
         }
-    } catch (error){
-        console.log(error)
+    } catch {
         return res.status(400).send({ message: "Invalid data."})
     }}
 })
