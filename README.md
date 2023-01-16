@@ -14,6 +14,7 @@ Exam project in NodeJs.
 ### Client
 1. Install dependencies from package.json `npm i`
 2. Build client `npm run build`
+3. Preview `npm run preview`
 
 Alternatively you might want to work with the project as in development using `nodemon.cmd .\app.js` in server and `npm run dev` in client.
 
