@@ -39,7 +39,7 @@ router.post("/api/reviews", async (req, res) => {
                 return
             }
 
-            res.status(400).send({ message: "Only one review pr book." })
+            res.status(400).send({ message: "You may only leave one review pr book." })
         } catch {
             return res.status(400).send("Unable to create review.")
         }

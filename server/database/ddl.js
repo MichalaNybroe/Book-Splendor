@@ -180,6 +180,10 @@ if (isInDeleteMode) {
     db.execute(`INSERT INTO reviews(users_id, subject, text, rating, books_id) VALUE (?, ?, ?, ?, ?);`, [3, "Intrigued!", "I enjoyed it so much!!", 5, 1])
     db.execute(`INSERT INTO reviews(users_id, subject, text, rating, books_id) VALUE (?, ?, ?, ?, ?);`, [3, "Still good", "A tad long but so interesting! Can recommend!", 4, 2])
     db.execute(`INSERT INTO reviews(users_id, subject, text, rating, books_id) VALUE (?, ?, ?, ?, ?);`, [3, "Still good", "Also a tad long but so interesting! Can recommend!", 4, 3])
+    db.execute(`INSERT INTO reviews(users_id, subject, text, rating, books_id) VALUE (?, ?, ?, ?, ?);`, [3, "So interesting!", "I find myself deeply committed to this book and honestly its like looking in a mirror! If you find comedy and robots intriquing. Must recommend!", 4, 7])
+    db.execute(`INSERT INTO reviews(users_id, subject, text, rating, books_id) VALUE (?, ?, ?, ?, ?);`, [3, "Huge fangirl!!", "Feyre sure kicks ass! And I hope to see more of that Rhys guy!!!!", 4, 11])
+    db.execute(`INSERT INTO reviews(users_id, subject, text, rating, books_id) VALUE (?, ?, ?, ?, ?);`, [3, "Dark, dangerous and enthralling!", "Faries as they really are from the old sagas. Decception - even when faries cannot lie. A must read.", 5, 19])
+    db.execute(`INSERT INTO reviews(users_id, subject, text, rating, books_id) VALUE (?, ?, ?, ?, ?);`, [3, "Bought it for the cover - stayed for the story", "Time travelling while enjoying a hot brew - what can be better!", 4   , 23])
 
     //authors
     db.execute(`INSERT INTO authors(name) VALUE (?);`, ["J.R.R. Tolkien"])
