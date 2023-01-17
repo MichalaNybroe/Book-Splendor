@@ -113,11 +113,12 @@
 
    table {
        padding: 37.5px;
+       width: 100%;
    }
 
-   table {
-       width: 90%;
-   }
+   th {
+        min-width: 70px;
+    }
 
    tr {
        text-align: left;
