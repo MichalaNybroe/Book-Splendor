@@ -161,6 +161,9 @@ if (isInDeleteMode) {
     db.execute(`INSERT INTO books(title, description, number, unreleased, img, series_id, recommended) VALUE (?, ?, ?, ?, ?, ?, ?);`, ["Dragons of Summer Flame", "Once merely creatures of legend, the dragons have returned to Krynn. But with their arrival comes the departure of the old gods—and all healing magic. As war threatens to engulf the land, lifelong friends reunite for an adventure that will change their lives and shape their world forever... When Tanis, Sturm, Caramon, Raistlin, Flint, and Tasslehoff see a woman use a blue crystal staff to heal a villager, they wonder if it's a sign the gods have not abandoned them after all. Fueled by this glimmer of hope, the Companions band together to uncover the truth behind the gods' absence—though they aren't the only ones with an interest in the staff. No one expected them to be heroes. Least of all, them.", 4, false, "https://m.media-amazon.com/images/I/81on8DjmRsL.jpg", 9, false])
     db.execute(`INSERT INTO books(title, description, number, unreleased, img, series_id, recommended) VALUE (?, ?, ?, ?, ?, ?, ?);`, ["Ready Player One", "IN THE YEAR 2044, reality is an ugly place. The only time teenage Wade Watts really feels alive is when he's jacked into the virtual utopia known as the OASIS. Wade's devoted his life to studying the puzzles hidden within this world's digital confines, puzzles that are based on their creator's obsession with the pop culture of decades past and that promise massive power and fortune to whoever can unlock them. But when Wade stumbles upon the first clue, he finds himself beset by players willing to kill to take this ultimate prize. The race is on, and if Wade's going to survive, he'll have to win—and confront the real world he's always been so desperate to escape.", 1, false, "https://prod-bb-images.akamaized.net/book-covers/coverimage-9788758824109-publizon-2022-04-24t03-02.jpg?w=400", 10, false])
     db.execute(`INSERT INTO books(title, description, number, unreleased, img, series_id, recommended) VALUE (?, ?, ?, ?, ?, ?, ?);`, ["Ready Player Two", "IN THE YEAR 2044, reality is an ugly place. The only time teenage Wade Watts really feels alive is when he's jacked into the virtual utopia known as the OASIS. Wade's devoted his life to studying the puzzles hidden within this world's digital confines, puzzles that are based on their creator's obsession with the pop culture of decades past and that promise massive power and fortune to whoever can unlock them. But when Wade stumbles upon the first clue, he finds himself beset by players willing to kill to take this ultimate prize. The race is on, and if Wade's going to survive, he'll have to win—and confront the real world he's always been so desperate to escape.", 2, false, "https://images.penguinrandomhouse.com/cover/9781524761349", 10, false])
+    db.execute(`INSERT INTO books(title, description, number, unreleased, img, series_id, recommended) VALUE (?, ?, ?, ?, ?, ?, ?);`, ["Shadow and Bone", "Surrounded by enemies, the once-great nation of Ravka has been torn in two by the Shadow Fold, a swath of near impenetrable darkness crawling with monsters who feast on human flesh. Now its fate may rest on the shoulders of one lonely refugee.", 1, false, "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1339533695i/10194157.jpg", 12, false])
+    db.execute(`INSERT INTO books(title, description, number, unreleased, img, series_id, recommended) VALUE (?, ?, ?, ?, ?, ?, ?);`, ["Siege and Storm", "Surrounded by enemies, the once-great nation of Ravka has been torn in two by the Shadow Fold, a swath of near impenetrable darkness crawling with monsters who feast on human flesh. Now its fate may rest on the shoulders of one lonely refugee.", 2, false, "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1362166252i/14061955.jpg", 12, false])
+    db.execute(`INSERT INTO books(title, description, number, unreleased, img, series_id, recommended) VALUE (?, ?, ?, ?, ?, ?, ?);`, ["Ruin and Rising", "Surrounded by enemies, the once-great nation of Ravka has been torn in two by the Shadow Fold, a swath of near impenetrable darkness crawling with monsters who feast on human flesh. Now its fate may rest on the shoulders of one lonely refugee.", 3, false, "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1392398530i/14061957.jpg", 12, false])
     
 
     //users_books
@@ -199,6 +202,7 @@ if (isInDeleteMode) {
     db.execute(`INSERT INTO authors(name) VALUE (?);`, ["Margaret Weis"])
     db.execute(`INSERT INTO authors(name) VALUE (?);`, ["Tracy Hickman"])
     db.execute(`INSERT INTO authors(name) VALUE (?);`, ["Ernest Cline"])
+    db.execute(`INSERT INTO authors(name) VALUE (?);`, ["Leigh Bardugo"])
 
     //books_authors
     db.execute(`INSERT INTO books_authors(books_id, authors_id) VALUE (?, ?);`, [1, 1])
@@ -249,6 +253,9 @@ if (isInDeleteMode) {
     db.execute(`INSERT INTO books_authors(books_id, authors_id) VALUE (?, ?);`, [41, 12])
     db.execute(`INSERT INTO books_authors(books_id, authors_id) VALUE (?, ?);`, [42, 13])
     db.execute(`INSERT INTO books_authors(books_id, authors_id) VALUE (?, ?);`, [43, 13])
+    db.execute(`INSERT INTO books_authors(books_id, authors_id) VALUE (?, ?);`, [44, 14])
+    db.execute(`INSERT INTO books_authors(books_id, authors_id) VALUE (?, ?);`, [45, 14])
+    db.execute(`INSERT INTO books_authors(books_id, authors_id) VALUE (?, ?);`, [46, 14])
 
     //genres
     db.execute(`INSERT INTO genres(name) VALUE (?);`, ["High Fantasy"])
@@ -339,6 +346,12 @@ if (isInDeleteMode) {
     db.execute(`INSERT INTO books_genres(books_id, genres_id) VALUE (?, ?);`, [42, 6])
     db.execute(`INSERT INTO books_genres(books_id, genres_id) VALUE (?, ?);`, [43, 5])
     db.execute(`INSERT INTO books_genres(books_id, genres_id) VALUE (?, ?);`, [43, 6])
+    db.execute(`INSERT INTO books_genres(books_id, genres_id) VALUE (?, ?);`, [44, 6])
+    db.execute(`INSERT INTO books_genres(books_id, genres_id) VALUE (?, ?);`, [44, 7])
+    db.execute(`INSERT INTO books_genres(books_id, genres_id) VALUE (?, ?);`, [45, 6])
+    db.execute(`INSERT INTO books_genres(books_id, genres_id) VALUE (?, ?);`, [45, 7])
+    db.execute(`INSERT INTO books_genres(books_id, genres_id) VALUE (?, ?);`, [46, 6])
+    db.execute(`INSERT INTO books_genres(books_id, genres_id) VALUE (?, ?);`, [46, 7])
 }
 
 db.end()
