@@ -119,6 +119,7 @@
     <PageHeader header={"Books of the week"}></PageHeader>
 
     <div class="main-container">
+        <!--https://vadimkorr.github.io/svelte-carousel/?ref=madewithsvelte.com-->
         <Carousel  
             {timingFunction}
             {arrows}
