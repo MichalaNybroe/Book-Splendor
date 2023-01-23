@@ -49,6 +49,12 @@ Alternatively you might want to work with the project as in development using `n
 - Clicking on create book the admin can create a new book and on here they might also click on util to create a series, an author or a genre. This is meant to increase the user experience for when new books are to be registered to the platform.
   PICTURE + PICTURE
 
+### Other
+- One might sign up as a normal user.
+- One might apply for new password via email.
+- One might send a message to the admin team.
+- Via use of sockets one might see new reviews in real time being displayed on the different books.
+  PICTURES
 
 ## Collaborators
 Silke Jensen [silkemarie](https://github.com/silkemarie)  
